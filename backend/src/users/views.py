@@ -14,6 +14,9 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 
+# Password Reset
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
 
 class RegisterView(APIView):
     permission_classes = [
@@ -82,3 +85,65 @@ class ActivateAccount(APIView):
             return Response({'success': 'Your account has been activated!'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Activation link is invalid'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RequestPasswordReset(APIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+
+    def post(self, request):
+        data = request.data
+        email = data['email']
+
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
+
+            current_site = get_current_site(request)
+            mail_subject = 'Nerastar Password Reset'
+            message = render_to_string('users/request_password_reset.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': PasswordResetTokenGenerator().make_token(user),
+            })
+            to_email = email
+            email = EmailMessage(
+                mail_subject, message, to=[to_email]
+            )
+            email.send()
+
+            return Response({'success': 'An email has been sent to you with further instructions!'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'A user with this email does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PasswordResetConfirm(APIView):
+    permission_classes = [
+        permissions.AllowAny
+    ]
+    
+    def post(self, request):
+        data = self.request.data
+        uidb64 = data['uid']
+        token = data['token']
+        password = data['password']
+        password2 = data['password2']
+
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(pk=uid)
+        except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user is not None and PasswordResetTokenGenerator().check_token(user, token):
+            if password == password2:
+                if len(password) < 8:
+                    return Response({'error': 'Password must be at least 8 characters'}, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    user.set_password(password)
+                    user.save()
+                    return Response({'success': 'Your password has been reset!'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Link is invalid'}, status=status.HTTP_400_BAD_REQUEST)

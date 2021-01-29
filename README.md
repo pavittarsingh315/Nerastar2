@@ -17,3 +17,7 @@
 
 1. Integrated custom user account activation email
 2. Have to figure out a way to integrate acc_activation_email.html with the build folder
+
+## Fourth Commit:
+
+1. Setup password reset functionality
