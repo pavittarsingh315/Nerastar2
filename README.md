@@ -12,3 +12,8 @@
 1. Added django-cors-headers and pip froze requirements
 2. Started users app and created custom user model and registration view and url
 3. Token, media, and user app urls set up
+
+## Third Commit
+
+1. Integrated custom user account activation email
+2. Have to figure out a way to integrate acc_activation_email.html with the build folder
