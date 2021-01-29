@@ -21,3 +21,7 @@
 ## Fourth Commit:
 
 1. Setup password reset functionality
+
+## Fifth Commit:
+
+1. Setup basic react boilerplate
