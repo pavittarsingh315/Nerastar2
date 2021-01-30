@@ -3,8 +3,10 @@ User = get_user_model()
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions
+from rest_framework import permissions, generics
 from rest_framework import status
+
+from .serializers import UserSerializer
 
 # these are all the imports for user email verification
 from django.contrib.sites.shortcuts import get_current_site
@@ -16,6 +18,13 @@ from django.core.mail import EmailMessage
 
 # Password Reset
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+
+
+class GetUserView(generics.RetrieveAPIView):
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
 
 
 class RegisterView(APIView):

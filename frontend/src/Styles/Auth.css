@@ -1,0 +1,47 @@
+/* Login Page Styles */
+.login {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 64px;
+}
+
+.login__avatar {
+  margin: 8px;
+  background-color: var(--primary-color) !important;
+}
+
+.login__label {
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.login__form {
+  width: 100%;
+  margin: 24px;
+}
+
+.login__btn {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.login__links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login__links > div > a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.login__copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.65;
+}

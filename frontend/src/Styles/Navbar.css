@@ -1,0 +1,91 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+  min-height: 70px;
+}
+
+.navbar__left > img {
+  height: 40px;
+  width: 40px;
+}
+
+.navbar__left > h3 {
+  font-size: 25px;
+  padding-left: 10px;
+}
+
+.navbar__left {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.navbar__center {
+  display: flex;
+  flex: 0.35;
+  align-items: center;
+  justify-content: center;
+}
+
+.navbar__search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: var(--third-color);
+  width: 100%;
+  border-radius: 10px;
+}
+
+.navbar__search > svg {
+  color: grey;
+}
+
+.navbar__search > form {
+  display: flex;
+  flex: 0.98;
+  align-items: center;
+}
+
+.navbar__search > form > input {
+  border: none;
+  background-color: transparent;
+  flex: 1;
+  outline: none;
+}
+
+/* Change color of placeholder text for Chrome, Firefox, Opera, Safari */
+.navbar__search > form > input::placeholder {
+  color: grey;
+}
+
+/* Change color of placeholder text for IE */
+.navbar__search > form > input:-ms-input-placeholder {
+  color: grey;
+}
+
+/* Change color of placeholder text for Edge */
+.navbar__search > form > input::-ms-input-placeholder {
+  color: grey;
+}
+
+.navbar__search > form > button {
+  display: none;
+}
+
+.navbar__right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__icon > button {
+  color: var(--primary-color);
+}
+
+/* Color of badge on notification icon */
+.navbar__icon > button > span > span > span {
+  color: white;
+  background-color: var(--primary-color);
+}
