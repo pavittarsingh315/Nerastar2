@@ -14,7 +14,7 @@ import {
 import axios from 'axios';
 
 
-export const isAuthenticated = () => async (dispatch, getState) => {
+export const checkAuthentication = () => async (dispatch, getState) => {
     const access = getState().auth.access
 
     if (access) {
@@ -58,6 +58,7 @@ export const loadUser = () => async (dispatch, getState) => {
                 payload: res.data
             })
         }).catch(err => {
+            console.log(err.response.data, err.response.status)
             dispatch(newAccessToken())
         })
 }
@@ -84,7 +85,7 @@ export const newAccessToken = () => async (dispatch, getState) => {
                 })
                 dispatch(loadUser())
             }).catch(err =>{
-                console.log(err)
+                console.log(err.response.data, err.response.status)
                 dispatch({ type: USER_LOAD_FAIL })
             })
     } else {
@@ -102,16 +103,14 @@ export const login = (email, password) => async dispatch => {
 
     const body = JSON.stringify({ email, password })
 
-    await axios.post('http://localhost:8000/api/jwtoken/', body, config)
+    await axios.post('http://localhost:8000/api/users/login/', body, config)
         .then(res => {
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: res.data
             })
-
-            dispatch(loadUser());
         }).catch(err => {
-            console.log(err)
+            console.log(err.response.data, err.response.status)
             dispatch({ type: LOGIN_FAIL })
         })
 }

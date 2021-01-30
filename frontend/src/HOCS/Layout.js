@@ -6,14 +6,12 @@ import Container from '@material-ui/core/Container';
 
 // Redux
 import { connect } from 'react-redux';
-import { loadUser, isAuthenticated } from '../redux/actions/auth';
+import { loadUser, checkAuthentication } from '../redux/actions/auth';
 
 function Layout(props) {
-
     useEffect(() => {
-        props.isAuthenticated();
+        props.checkAuthentication();
         props.loadUser();
-        console.log('hello user how is your day?')
     }, [])
 
     const headerStyle = {
@@ -32,11 +30,13 @@ function Layout(props) {
 
     return (
         <div>
-            <div style={headerStyle}>
-                <Container>
-                    <Navbar />
-                </Container>
-            </div>
+            {props.isAuthenticated ? (
+                <div style={headerStyle}>
+                    <Container>
+                        <Navbar />
+                    </Container>
+                </div>
+            ) : null}
             <Container>
                 <div style={bodyStyle}>
                     {props.children}
@@ -46,4 +46,8 @@ function Layout(props) {
     )
 }
 
-export default connect(null, { loadUser, isAuthenticated })(Layout);
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { loadUser, checkAuthentication })(Layout);

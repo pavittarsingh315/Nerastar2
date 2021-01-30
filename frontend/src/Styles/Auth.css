@@ -12,7 +12,7 @@
 }
 
 .login__label {
-  font-weight: 500;
+  font-weight: 900;
   font-size: 30px;
 }
 
@@ -32,6 +32,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-weight: 600;
 }
 
 .login__links > div > a {
@@ -44,4 +45,5 @@
   align-items: center;
   justify-content: center;
   opacity: 0.65;
+  font-weight: 600;
 }

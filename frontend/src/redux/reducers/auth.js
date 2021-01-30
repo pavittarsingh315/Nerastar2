@@ -52,8 +52,10 @@ export default function(state = initialState, action) {
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
+            // the ...payload puts the user object thats also in the response into the state
             return {
                 ...state,
+                ...payload,
                 isAuthenticated: true,
                 access: payload.access,
                 refresh: payload.refresh
