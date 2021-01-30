@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 64px;
 }
 
 .login__avatar {
@@ -46,4 +45,59 @@
   justify-content: center;
   opacity: 0.65;
   font-weight: 600;
+}
+
+/* Register Page Styles */
+.register {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.register__avatar {
+  margin: 8px;
+  background-color: var(--primary-color) !important;
+}
+
+.register__label {
+  font-weight: 900;
+  font-size: 30px;
+}
+
+.register__form {
+  width: 100%;
+  margin-top: 24px;
+}
+
+.register__btn {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.register__link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-weight: 600;
+}
+
+.register__link > a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.register__copyright {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.65;
+  font-weight: 600;
+}
+
+.register__btn:disabled,
+.register__btn[disabled] {
+  background-color: var(--third-color) !important;
+  color: #666666 !important;
 }

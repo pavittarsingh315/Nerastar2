@@ -52,7 +52,7 @@ function Login({ login, isAuthenticated }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        login(email, password);
+        login(email, password, rememberMe);
         setForm({email: '', password: ''})
     }
 

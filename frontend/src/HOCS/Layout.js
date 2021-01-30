@@ -6,13 +6,12 @@ import Container from '@material-ui/core/Container';
 
 // Redux
 import { connect } from 'react-redux';
-import { loadUser, checkAuthentication } from '../redux/actions/auth';
+import { loadUser } from '../redux/actions/auth';
 
-function Layout(props) {
+function Layout({ loadUser, isAuthenticated, children}) {
     useEffect(() => {
-        props.checkAuthentication();
-        props.loadUser();
-    }, [])
+        loadUser();
+    }, [loadUser])
 
     const headerStyle = {
         boxShadow: '0px 6px 10px -9px rgba(117, 137, 235, 1)',
@@ -30,7 +29,7 @@ function Layout(props) {
 
     return (
         <div>
-            {props.isAuthenticated ? (
+            {isAuthenticated ? (
                 <div style={headerStyle}>
                     <Container>
                         <Navbar />
@@ -39,7 +38,7 @@ function Layout(props) {
             ) : null}
             <Container>
                 <div style={bodyStyle}>
-                    {props.children}
+                    {children}
                 </div>
             </Container>
         </div>
@@ -50,4 +49,4 @@ const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps, { loadUser, checkAuthentication })(Layout);
+export default connect(mapStateToProps, { loadUser })(Layout);

@@ -5,47 +5,12 @@ import {
     USER_LOAD_FAIL,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    AUTHENTICATED_SUCCESS,
-    AUTHENTICATED_FAIL,
+    LOGIN_SUCCESS_SESSION,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
     REGISTER_FAIL
 } from './types';
 import axios from 'axios';
-
-
-export const checkAuthentication = () => async (dispatch, getState) => {
-    const access = getState().auth.access
-
-    if (access) {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        };
-
-        const body = JSON.stringify({ token: access })
-
-        await axios.post('http://localhost:8000/api/jwtoken/verify/', body, config)
-            .then(res => {
-                if (res.data.code !== 'token_not_valid') {
-                    dispatch({
-                        type: AUTHENTICATED_SUCCESS
-                    });
-                } else {
-                    dispatch({
-                        type: AUTHENTICATED_FAIL
-                    });
-                }
-            })
-
-    } else {
-        dispatch({
-            type: AUTHENTICATED_FAIL
-        });
-    }
-};
 
 
 export const loadUser = () => async (dispatch, getState) => {
@@ -74,7 +39,6 @@ export const newAccessToken = () => async (dispatch, getState) => {
             }
         }
 
-        const refresh = localStorage.getItem('refresh')
         const body = JSON.stringify({ refresh })
 
         await axios.post('http://localhost:8000/api/jwtoken/refresh/', body, config)
@@ -94,7 +58,7 @@ export const newAccessToken = () => async (dispatch, getState) => {
 }
 
 
-export const login = (email, password) => async dispatch => {
+export const login = (email, password, rememberMe) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -105,14 +69,53 @@ export const login = (email, password) => async dispatch => {
 
     await axios.post('http://localhost:8000/api/users/login/', body, config)
         .then(res => {
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: res.data
-            })
+            if (rememberMe) {
+                dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: res.data
+                })
+            } else {
+                dispatch({
+                    type: LOGIN_SUCCESS_SESSION,
+                    payload: res.data
+                })
+            }
         }).catch(err => {
             console.log(err.response.data, err.response.status)
             dispatch({ type: LOGIN_FAIL })
         })
+}
+
+
+export const register = (name, username, email, password, password2) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ name, username, email, password, password2 });
+
+    await axios.post('http://localhost:8000/api/users/register/', body, config)
+        .then(res => {
+            dispatch({
+                type: REGISTER_SUCCESS,
+                payload: res.data
+            })
+            console.log(res.data)
+        }).catch(err => {
+            console.log(err.response.data)
+            dispatch({
+                type: REGISTER_FAIL
+            })
+        })
+};
+
+
+export const logout = () => dispatch => {
+    dispatch({
+        type: LOGOUT_SUCCESS
+    })
 }
 
 
