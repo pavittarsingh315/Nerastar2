@@ -136,7 +136,12 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication'
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'NON_FIELD_ERRORS_KEY': 'error',
 }
 
 SIMPLE_JWT = {

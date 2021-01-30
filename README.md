@@ -32,3 +32,8 @@
 2. Setup PrivateRoute and integrated redux for auth.
 3. We can login and loadUser and check if authenticated when page is loaded
 4. In auth actions, implemented the functionality of the refresh token to send a request and get a new access token.
+
+## Seventh Commit:
+
+1. Made a custom login serializer and view. Changed minor styles
+2. Changed some actions and reducers to be more efficient and correct.
