@@ -63,12 +63,12 @@ function Register({ register, isAuthenticated }) {
 
     return (
         <Container component="main" style={{ maxWidth: '500px' }}>
-            <div className='register'>
-                <Avatar className='register__avatar'>
+            <div className='auth'>
+                <Avatar className='auth__avatar'>
                     <AccountCircleIcon />
                 </Avatar>
-                <h1 className='register__label'>Register</h1>
-                <form className='register__form' noValidate onSubmit={handleSubmit}>
+                <h1 className='auth__label'>Register</h1>
+                <form className='auth__form' noValidate onSubmit={handleSubmit}>
                     <InputField
                         name="name"
                         value={name}
@@ -153,7 +153,7 @@ function Register({ register, isAuthenticated }) {
                 </form>
             </div>
             <Box mt={5}>
-                <div className='register__copyright'>
+                <div className='auth__copyright'>
                     Copyright © PSJ {new Date().getFullYear()}.
                 </div>
             </Box>

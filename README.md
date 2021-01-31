@@ -38,7 +38,7 @@
 1. Made a custom login serializer and view. Changed minor styles
 2. Changed some actions and reducers to be more efficient and correct.
 
-## Eigth Conmmit:
+## Eigth Commit:
 
 1. Changed lifetime of tokens. Got rid of checkAuthentication action and integrated it into loadUser which is much more efficient
 2. Got rid of urls that i dont need anymore
@@ -46,3 +46,8 @@
 4. Did that because material-ui v5 doesnt have that annoying strictmode transtion error and it works good.
 5. Added Remember me functionality by storing remember me tokens in localstorage while non remember me tokens in sessionstorage
 6. Created registration functionality and logout functionality
+
+## Ninth Commit:
+
+1. Changed some classes in auth.css cause some of them were the exact same so i made it more compact
+2. Created actions to activate account, request password reset, and reset password

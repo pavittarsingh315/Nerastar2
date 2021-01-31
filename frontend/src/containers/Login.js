@@ -62,12 +62,12 @@ function Login({ login, isAuthenticated }) {
 
     return (
         <Container component="div" style={{ maxWidth: '500px' }} >
-            <div className='login'>
-                <Avatar className='login__avatar'>
+            <div className='auth'>
+                <Avatar className='auth__avatar'>
                     <AccountCircleIcon />
                 </Avatar>
-                <h1 className='login__label'>Login</h1>
-                <form className='login__form' noValidate onSubmit={e => handleSubmit(e)}>
+                <h1 className='auth__label'>Login</h1>
+                <form className='auth__form' noValidate onSubmit={e => handleSubmit(e)}>
                     <InputField
                         value={email}
                         name="email"
@@ -102,7 +102,7 @@ function Login({ login, isAuthenticated }) {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        className='login__btn'
+                        className='auth__btn'
                     >
                         Sign In
                     </Button>
@@ -121,7 +121,7 @@ function Login({ login, isAuthenticated }) {
                 </form>
             </div>
             <Box mt={2}>
-                <div className='login__copyright'>
+                <div className='auth__copyright'>
                     Copyright © PSJ {new Date().getFullYear()}.
                 </div>
             </Box>

@@ -8,7 +8,13 @@ import {
     LOGIN_SUCCESS_SESSION,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    ACTIVATION_SUCCESS,
+    ACTIVATION_FAIL,
+    PASSWORD_RESET_SUCCESS,
+    PASSWORD_RESET_FAIL,
+    PASSWORD_RESET_CONFIRM_SUCCESS,
+    PASSWORD_RESET_CONFIRM_FAIL
 } from './types';
 import axios from 'axios';
 
@@ -110,6 +116,78 @@ export const register = (name, username, email, password, password2) => async di
             })
         })
 };
+
+
+export const activate = (uid, token) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ uid, token });
+
+    await axios.post('http://localhost:8000/api/users/activate/', body, config)
+        .then(res => {
+            dispatch({
+                type: ACTIVATION_SUCCESS,
+            })
+            console.log(res.data)
+        }).catch(err => {
+            console.log(err.response.data)
+            dispatch({
+                type: ACTIVATION_FAIL
+            })
+        })
+}
+
+
+export const reset_password = (email) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({email});
+
+    await axios.post('http://localhost:8000/api/users/reset-password/', body, config)
+        .then(res => {
+            dispatch({
+                type: PASSWORD_RESET_SUCCESS,
+            })
+            console.log(res.data)
+        }).catch(err => {
+            console.log(err.response.data)
+            dispatch({
+                type: PASSWORD_RESET_FAIL
+            })
+        })
+}
+
+
+export const reset_password_confirm = (uid, token, password, password2) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    const body = JSON.stringify({ uid, token, password, password2 });
+
+    await axios.post('http://localhost:8000/api/users/reset-password-confirm/', body, config)
+        .then(res => {
+            dispatch({
+                type: PASSWORD_RESET_CONFIRM_SUCCESS,
+            })
+            console.log(res.data)
+        }).catch(err => {
+            console.log(err.response.data)
+            dispatch({
+                type: PASSWORD_RESET_CONFIRM_FAIL
+            })
+        })
+}
 
 
 export const logout = () => dispatch => {
