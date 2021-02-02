@@ -1,0 +1,157 @@
+/* HomePage HOC Styles */
+.homepage__divider {
+  background-color: var(--third-color) !important;
+  margin: 125px 0 !important;
+  margin-right: 30px !important;
+}
+
+.homepage__left {
+  flex: 0.73;
+}
+
+.homepage__right {
+  flex: 0.27;
+}
+
+.homepage__rightInner {
+  border: 1px solid var(--third-color);
+  border-radius: 30px;
+  position: fixed;
+}
+
+/* Left Widgets */
+.leftwidgets {
+  flex: 0.2;
+  min-width: 205px;
+}
+
+.leftwidgets__profile {
+  text-decoration: none;
+  color: black;
+}
+
+.leftwidgetoption {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.leftwidgetoption > .MuiSvgIcon-root {
+  padding: 20px;
+  color: var(--primary-color);
+}
+
+.leftwidgetoption > .MuiAvatar-root {
+  padding: 12px;
+}
+
+.leftwidgetoption > .MuiAvatar-root > img {
+  border-radius: 20px;
+}
+
+.leftwidgetoption > h2 {
+  font-size: 20px;
+  margin-right: 20px;
+}
+
+.leftwidgetoption:hover {
+  background-color: var(--third-color);
+  border-radius: 30px;
+  transition: color 100ms ease-out;
+}
+
+/* Posts */
+.feed {
+  flex: 0.8;
+  border: 1px solid var(--third-color);
+  border-radius: 15px;
+  margin: 0px 30px;
+  cursor: pointer;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0px 15px 15px 15px;
+}
+
+.post__header {
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+}
+
+.post__header > p {
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.post__media > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+}
+
+.post__media > iframe {
+  border-radius: 30px;
+}
+
+/* Right Menu */
+.rightmenu {
+  margin: 15px 10px 0px;
+}
+
+.rightmenu__header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.rightmenu__header > img {
+  width: 90%;
+  height: 90%;
+  margin: auto;
+  border-radius: 30px;
+}
+
+.rightmenu__headerText {
+  display: flex;
+  align-items: center;
+  justify-content: space-around !important;
+  padding: 10px 0px;
+}
+
+.rightmenu__headerText > h3 {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.rightmenu__headerText > span {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--primary-color);
+}
+
+.rightmenu__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.rightmenu__navOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px;
+  color: var(--primary-color);
+}
+
+.rightmenu__navOption:hover {
+  background-color: var(--third-color);
+  transition: color 100ms ease-out;
+  cursor: pointer;
+  border-radius: 15px;
+}

@@ -82,6 +82,7 @@
 
 .navbar__icon > button {
   color: var(--primary-color);
+  margin: 0 5px;
 }
 
 /* Color of badge on notification icon */

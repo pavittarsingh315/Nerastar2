@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Layout from './HOCS/Layout';
 import PrivateRoute from './PrivateRoute';
+
+// HOCS
+import Layout from './HOCS/Layout';
+import HomePage from './HOCS/HomePage';
+
 
 // Redux
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
 // Containers
-import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
 import VerifyAccount from './containers/VerifyAccount';
@@ -22,7 +25,7 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            <PrivateRoute exact path='/' component={Home} />
+            <PrivateRoute exact path='/' component={HomePage} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/reset-password' component={ResetPassword} />

@@ -9,7 +9,6 @@ import { logout } from '../redux/actions/auth';
 // Material Ui
 import SearchIcon from '@material-ui/icons/Search';
 import HomeIcon from '@material-ui/icons/Home';
-import AddIcon from '@material-ui/icons/Add';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Badge from '@material-ui/core/Badge';
@@ -48,15 +47,6 @@ function Navbar({ logout }) {
                         <Tooltip title='Home' arrow enterDelay={0} leaveDelay={25}>
                             <IconButton>
                                 <HomeIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                </Link>
-                <Link to='/create'>
-                    <div className='navbar__icon'>
-                        <Tooltip title='Create Post' arrow enterDelay={0} leaveDelay={25}>
-                            <IconButton>
-                                <AddIcon />
                             </IconButton>
                         </Tooltip>
                     </div>
