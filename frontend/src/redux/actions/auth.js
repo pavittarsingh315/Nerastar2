@@ -14,7 +14,8 @@ import {
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
-    PASSWORD_RESET_CONFIRM_FAIL
+    PASSWORD_RESET_CONFIRM_FAIL,
+    GET_ALERTS
 } from './types';
 import axios from 'axios';
 
@@ -29,7 +30,6 @@ export const loadUser = () => async (dispatch, getState) => {
                 payload: res.data
             })
         }).catch(err => {
-            console.log(err.response.data, err.response.status)
             dispatch(newAccessToken())
         })
 }
@@ -55,7 +55,6 @@ export const newAccessToken = () => async (dispatch, getState) => {
                 })
                 dispatch(loadUser())
             }).catch(err =>{
-                console.log(err.response.data, err.response.status)
                 dispatch({ type: USER_LOAD_FAIL })
             })
     } else {
@@ -87,7 +86,14 @@ export const login = (email, password, rememberMe) => async dispatch => {
                 })
             }
         }).catch(err => {
-            console.log(err.response.data, err.response.status)
+            const alerts = {
+                msg: err.response.data,
+                status: err.response.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
             dispatch({ type: LOGIN_FAIL })
         })
 }
@@ -108,9 +114,23 @@ export const register = (name, username, email, password, password2) => async di
                 type: REGISTER_SUCCESS,
                 payload: res.data
             })
-            console.log(res.data)
+            const alerts = {
+                msg: res.data,
+                status: res.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
         }).catch(err => {
-            console.log(err.response.data)
+            const alerts = {
+                msg: err.response.data,
+                status: err.response.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
             dispatch({
                 type: REGISTER_FAIL
             })
@@ -132,9 +152,23 @@ export const activate = (uid, token) => async dispatch => {
             dispatch({
                 type: ACTIVATION_SUCCESS,
             })
-            console.log(res.data)
+            const alerts = {
+                msg: res.data,
+                status: res.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
         }).catch(err => {
-            console.log(err.response.data)
+            const alerts = {
+                msg: err.response.data,
+                status: err.response.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
             dispatch({
                 type: ACTIVATION_FAIL
             })
@@ -156,9 +190,23 @@ export const reset_password = (email) => async dispatch => {
             dispatch({
                 type: PASSWORD_RESET_SUCCESS,
             })
-            console.log(res.data)
+            const alerts = {
+                msg: res.data,
+                status: res.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
         }).catch(err => {
-            console.log(err.response.data)
+            const alerts = {
+                msg: err.response.data,
+                status: err.response.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
             dispatch({
                 type: PASSWORD_RESET_FAIL
             })
@@ -180,9 +228,23 @@ export const reset_password_confirm = (uid, token, password, password2) => async
             dispatch({
                 type: PASSWORD_RESET_CONFIRM_SUCCESS,
             })
-            console.log(res.data)
+            const alerts = {
+                msg: res.data,
+                status: res.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
         }).catch(err => {
-            console.log(err.response.data)
+            const alerts = {
+                msg: err.response.data,
+                status: err.response.status
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
+            })
             dispatch({
                 type: PASSWORD_RESET_CONFIRM_FAIL
             })

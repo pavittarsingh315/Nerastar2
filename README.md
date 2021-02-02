@@ -51,3 +51,9 @@
 
 1. Changed some classes in auth.css cause some of them were the exact same so i made it more compact
 2. Created actions to activate account, request password reset, and reset password
+
+## Tenth Commit:
+
+1. Created a new alerts reducer which displays error messages or any alerts. It also has an action which clears the alert
+2. Created a custom alert component with its own timeout and everything
+3. Replaced all the console.logs in auth actions to use the alerts

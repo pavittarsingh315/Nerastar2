@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import Alerts from '../components/Alerts';
 
 // Material Ui
 import Container from '@material-ui/core/Container';
@@ -24,7 +25,7 @@ function Layout({ loadUser, isAuthenticated, children}) {
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'space-between',
-        marginTop: '85px'
+        marginTop: '85px',
     }
 
     return (
@@ -37,6 +38,7 @@ function Layout({ loadUser, isAuthenticated, children}) {
                 </div>
             ) : null}
             <Container>
+                <Alerts />
                 <div style={bodyStyle}>
                     {children}
                 </div>

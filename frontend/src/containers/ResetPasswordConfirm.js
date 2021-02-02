@@ -80,7 +80,6 @@ function ResetPasswordConfirm({ match, reset_password_confirm }) {
                         id="password2"
                         label="Confirm New Password"
                         autoComplete="password2"
-                        autoFocus
                     />
                     <Button
                         type="submit"

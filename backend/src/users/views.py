@@ -88,7 +88,7 @@ class RegisterView(APIView):
                         mail_subject, message, to=[to_email]
                     )
                     email.send()
-                    return Response({'success': 'Account created successfully! Please check your email to activate you account!'}, status=status.HTTP_200_OK)
+                    return Response({'success': 'Account created successfully! Please check your email to activate your account!'}, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -171,7 +171,7 @@ class PasswordResetConfirm(APIView):
                 else:
                     user.set_password(password)
                     user.save()
-                    return Response({'success': 'Your password has been reset!'}, status=status.HTTP_200_OK)
+                    return Response({'success': 'Your password has been reset! Take your password out for a spin!'}, status=status.HTTP_200_OK)
             else:
                 return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
         else:
