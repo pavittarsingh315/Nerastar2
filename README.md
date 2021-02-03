@@ -61,3 +61,9 @@
 ## Eleventh Commit:
 
 1. Implemented the homepage with posts and menus. Posts are still hard coded
+
+## Twelvth Commit:
+
+1. Set up profile and friendship models and their signals
+2. Created a new api app and moved the user views into there
+3. Ran npm run build and made a templates folder in there where i put the email templates. also changed the templates setting. the emails work
