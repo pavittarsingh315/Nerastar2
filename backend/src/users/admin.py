@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import SiteUser
+from .models import SiteUser, Profile, Friendship
 
 admin.site.site_header = "Nerastar Admin"
 admin.site.site_title = "Nerastar Administration"
@@ -22,3 +22,17 @@ class UserAdmin(UserAdmin):
 
 
 admin.site.register(SiteUser, UserAdmin)
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'full_name', 'slug', 'created')
+    search_fields = ('user', 'full_name', 'slug')
+    readonly_fields = ('created',)
+
+    filter_horizontal = ()
+    fieldsets = (
+        ('Account Information', {'fields': ('user', 'full_name', 'slug', 'created', 'following', 'followers')}),
+        ('Customization', {'fields': ('bio', 'avatar')}),
+    )
+
+admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Friendship)

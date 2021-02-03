@@ -12,7 +12,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/jwtoken/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('api/users/', include('users.urls')),
+    path('api/', include('api.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

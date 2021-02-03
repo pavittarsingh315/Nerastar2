@@ -62,3 +62,43 @@ class SiteUser(AbstractBaseUser):
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+
+    def save(self, *args, **kwargs):
+        Profile.objects.filter(user=self).update(slug=self.username)
+        return super().save(*args, **kwargs)
+
+
+class Profile(models.Model):
+    full_name = models.CharField(max_length=200, blank=True)
+    user = models.OneToOneField(SiteUser, on_delete=models.CASCADE)
+    bio = models.TextField(default="Just Vibin'", max_length=300)
+    avatar = models.ImageField(default='avatar.png', upload_to='avatars')
+    following = models.ManyToManyField(SiteUser, blank=True, related_name='following')
+    followers = models.ManyToManyField(SiteUser, blank=True, related_name='followers')
+    slug = models.SlugField(unique=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def number_following(self):
+        return self.following.all().count()
+
+    def number_followers(self):
+        return self.followers.all().count()
+
+    def __str__(self):
+        return f"{self.user}"
+
+
+
+STATUS_CHOICES = (
+    ('send', 'send'),
+    ('accepted', 'accepted'),
+    ('ignore', 'ignore')
+)
+class Friendship(models.Model):
+    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='sender')
+    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='receiver')
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.sender} sent to {self.receiver}'

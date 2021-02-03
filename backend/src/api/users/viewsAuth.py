@@ -13,7 +13,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from .tokens import account_activation_token
+from users.tokens import account_activation_token
 from django.core.mail import EmailMessage
 
 # Password Reset
@@ -62,6 +62,13 @@ class RegisterView(APIView):
         password = data['password']
         password2 = data['password2']
 
+        if name == '':
+            return Response({'error': 'Name is required'}, status=status.HTTP_400_BAD_REQUEST)
+        elif username == '':
+            return Response({'error': 'Username is required'}, status=status.HTTP_400_BAD_REQUEST)
+        elif email == '':
+            return Response({'error': 'Email is required'}, status=status.HTTP_400_BAD_REQUEST)
+
         if password == password2:
             if User.objects.filter(email=email).exists():
                 return Response({'error': 'User with this email already exists'}, status=status.HTTP_400_BAD_REQUEST)
@@ -77,7 +84,7 @@ class RegisterView(APIView):
                     
                     current_site = get_current_site(request)
                     mail_subject = 'Complete your registration for Nerastar!'
-                    message = render_to_string('users/acc_activate_email.html', {
+                    message = render_to_string('templates/acc_activate_email.html', {
                         'user': user,
                         'domain': current_site.domain,
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
@@ -130,7 +137,7 @@ class RequestPasswordReset(APIView):
 
             current_site = get_current_site(request)
             mail_subject = 'Nerastar Password Reset'
-            message = render_to_string('users/request_password_reset.html', {
+            message = render_to_string('templates/request_password_reset.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
