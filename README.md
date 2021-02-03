@@ -67,3 +67,8 @@
 1. Set up profile and friendship models and their signals
 2. Created a new api app and moved the user views into there
 3. Ran npm run build and made a templates folder in there where i put the email templates. also changed the templates setting. the emails work
+
+## Thirteenth Commit:
+
+1. The DEFAULT_AUTHENTICATION_CLASSES setting is given that AnonymousUser has no object profile error even though ur logged in. For testing remove and put back at end
+2. Added custom permission. Added a posts app and serializers for it and view
