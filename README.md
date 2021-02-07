@@ -72,3 +72,9 @@
 
 1. The DEFAULT_AUTHENTICATION_CLASSES setting is given that AnonymousUser has no object profile error even though ur logged in. For testing remove and put back at end
 2. Added custom permission. Added a posts app and serializers for it and view
+
+## Fourteenth Commit:
+
+1. Get a Users Profile. Get Any Users Profile. Can Delete a User. Can List a users followers or following list.
+2. Added Profile Serializer and Followers/Following Serializer
+3. Can List and Create Post from same view

@@ -3,8 +3,7 @@ User = get_user_model()
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions, generics
-from rest_framework import status
+from rest_framework import permissions, generics, status
 
 from .serializers import UserSerializer, LoginSerializer
 

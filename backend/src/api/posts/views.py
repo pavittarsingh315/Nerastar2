@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from posts.models import Post, Like, Comment
 from users.models import Profile
 from .serializers import PostSerializer
-from ..permissions import OnlyPostOwnerCanEdit
+from ..permissions import OnlyPostOwnerCanEdit, OnlyProfileOwnerCanCreatePost
 
 # Get posts for user's feed
 class Posts(generics.ListAPIView):
@@ -25,6 +25,23 @@ class Posts(generics.ListAPIView):
         # look up pk__in to see what creator__in does. stackoverflow can explain it better
         posts = Post.objects.filter(creator__in=user_feed_post_id)
         return posts
+
+
+class CreateListProfilePosts(generics.ListCreateAPIView, OnlyProfileOwnerCanCreatePost):
+    serializer_class = PostSerializer
+    permission_classes = [
+        # When using custom permissions, have to specify isAuthenticated
+        permissions.IsAuthenticated,
+        OnlyProfileOwnerCanCreatePost
+    ]
+
+    def get_queryset(self):
+        profileSlug = self.kwargs['slug']
+        profile = Profile.objects.get(slug=profileSlug)
+        return Post.objects.filter(creator=profile)
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user.profile)
 
 
 @api_view(['POST'])
@@ -52,7 +69,8 @@ def Like_Unlike_Post(request, pk):
 class GetAnyPostAndEditPost(generics.RetrieveUpdateDestroyAPIView, OnlyPostOwnerCanEdit):
     serializer_class = PostSerializer
     permission_classes = [
-        permissions.AllowAny,
+        # When using custom permissions, have to specify isAuthenticated
+        permissions.IsAuthenticated,
         OnlyPostOwnerCanEdit
     ]
     queryset = Post.objects.all()
