@@ -15,19 +15,19 @@ function Home(props) {
     return (
         <div style={styles}>
             <LeftWidgets 
-                avatar={props.user.avatar}
-                username={props.user.username}
-                userSlug={props.user.slug}
+                avatar={props.userAvatar}
+                username={props.username}
+                userSlug={props.userSlug}
                 numPlays={props.numPlays}
                 numLikes={props.numLikes}
                 numComments={props.numComments}
-                postSlug={props.slug}
+                postSlug={props.postSlug}
             />
             <Post 
                 caption={props.caption}
                 media={props.media}
                 video={props.video}
-                slug={props.slug}
+                slug={props.postSlug}
             />
         </div>
     )

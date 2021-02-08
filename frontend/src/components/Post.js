@@ -18,15 +18,7 @@ function Post({ caption, media, video, slug }) {
                     {!video ? (
                         <img alt='' src={media} />
                     ) : (
-                        <iframe
-                            title={caption}
-                            width='600'
-                            height='315'
-                            src={media}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen
-                        />
+                        <video height='315' width='600' autoPlay loop muted controls src={media} />
                     )}
                 </div>
             </div>

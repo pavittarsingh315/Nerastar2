@@ -34,3 +34,8 @@ export const PASSWORD_RESET_CONFIRM_FAIL = 'PASSWORD_RESET_CONFIRM_FAIL';
 
 export const GET_ALERTS = 'GET_ALERTS';
 export const CLEAR_ALERTS = 'CLEAR_ALERTS';
+
+
+export const GET_POSTS = 'GET_POSTS';
+export const ADD_POST = 'ADD_POST';
+export const DELETE_POST = 'DELETE_POST';

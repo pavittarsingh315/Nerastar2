@@ -78,3 +78,9 @@
 1. Get a Users Profile. Get Any Users Profile. Can Delete a User. Can List a users followers or following list.
 2. Added Profile Serializer and Followers/Following Serializer
 3. Can List and Create Post from same view
+
+## Fifteenth Commit
+
+1. Added slug field and file extension method to post model and added them to serializer
+2. Got rid of static posts and set up new actions and auth to get posts.
+3. In HomePage.js HOC added mapped the posts to the homepage.

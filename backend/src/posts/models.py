@@ -1,5 +1,7 @@
+import os
 from django.db import models
 from users.models import Profile
+from django.template.defaultfilters import slugify
 
 
 class Post(models.Model):
@@ -7,6 +9,7 @@ class Post(models.Model):
     content = models.CharField(max_length=150)
     media = models.FileField(upload_to='posts', blank=True)
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
+    slug = models.SlugField(unique=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -17,6 +20,19 @@ class Post(models.Model):
 
     def number_of_comments(self):
         return self.comment_set.all().count()
+
+    def extension(self):
+        name, extension = os.path.splitext(self.media.name)
+        if extension in ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG', '.gif', '.GIF']:
+            return 'image'
+        if extension in ['.mp4', '.MP4', '.MOV', '.mov']:
+            return 'video'
+        return 'none'
+
+    def save(self, *args, **kwargs):
+        post_slug = slugify(str(self.creator.user.username) + " " + str(self.content[:10]))
+        self.slug = post_slug
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ('-created',)
