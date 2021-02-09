@@ -84,3 +84,8 @@
 1. Added slug field and file extension method to post model and added them to serializer
 2. Got rid of static posts and set up new actions and auth to get posts.
 3. In HomePage.js HOC added mapped the posts to the homepage.
+
+## Sixteenth Commit:
+
+1. Added a liked boolean to post serializer to tell if request.user has liked a post. Use this in frontend to show a filled in heart if its true
+2. Added Like and Unlike functionality using a posts slug

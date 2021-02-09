@@ -22,6 +22,7 @@ function Home(props) {
                 numLikes={props.numLikes}
                 numComments={props.numComments}
                 postSlug={props.postSlug}
+                liked = {props.liked}
             />
             <Post 
                 caption={props.caption}

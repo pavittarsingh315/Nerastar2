@@ -7,6 +7,7 @@ class PostSerializer(serializers.ModelSerializer):
     creator = serializers.SerializerMethodField()
     creatorAvatar = serializers.SerializerMethodField()
     creatorSlug = serializers.SerializerMethodField()
+    liked = serializers.SerializerMethodField()
 
     def get_creator(self, obj):
         return obj.creator.user.username
@@ -16,6 +17,14 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_creatorSlug(self, obj):
         return obj.creator.slug
+
+    def get_liked(self, obj):
+        request = self.context.get("request")
+        profile = request.user.profile
+        if profile in obj.liked.all():
+            return 'true'
+        else:
+            return 'false'
 
     # got rid of created cause its unneccesary cause the objs are already order by date created.
     # got rid of liked cause its can get to be very long, instead lets create a system were only the post creator can know who liked it
@@ -31,5 +40,6 @@ class PostSerializer(serializers.ModelSerializer):
             'slug',
             'number_of_likes',
             'number_of_comments',
-            'extension'
+            'extension',
+            'liked'
         ]

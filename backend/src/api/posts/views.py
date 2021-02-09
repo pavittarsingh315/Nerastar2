@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, generics
+from rest_framework import permissions, generics
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
@@ -45,24 +45,25 @@ class CreateListProfilePosts(generics.ListCreateAPIView, OnlyProfileOwnerCanCrea
 
 
 @api_view(['POST'])
-def Like_Unlike_Post(request, pk):
+def Like_Unlike_Post(request, slug):
     user = request.user
     try:
-        post = Post.objects.get(pk=pk)
+        post = Post.objects.get(slug=slug)
     except Post.DoesNotExist:
         return Response({"error": "Post Does Not Exist!"}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'POST':
         profile = Profile.objects.get(user=user)
+        likeOrUnlike = request.data['like']
 
-        if profile in post.liked.all():
-            post.liked.remove(profile)
-            msg = {"msg": "Unliked"}
-        else:
-            post.liked.add(profile)
-            msg = {"msg": "Liked"}
+        if likeOrUnlike == 'like':
+            if profile not in post.liked.all():
+                post.liked.add(profile)
+        elif likeOrUnlike == 'unlike':
+            if profile in post.liked.all():
+                post.liked.remove(profile)
 
-        return Response(msg, status=status.HTTP_200_OK)
+        return Response({'msg': 'asd'}, status=status.HTTP_200_OK)
 
 
 # retrieve any post but you can only update/delete your own. the custom permission checks if the post creator is the profile of request.user
