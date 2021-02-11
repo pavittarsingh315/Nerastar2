@@ -89,3 +89,9 @@
 
 1. Added a liked boolean to post serializer to tell if request.user has liked a post. Use this in frontend to show a filled in heart if its true
 2. Added Like and Unlike functionality using a posts slug
+
+## Seventeenth Commit:
+
+1. Added if postisMine field in serializer to show edit button if its a users post. Changed editpost view to use slug. Post model slug used uuid now
+2. Added close button to alerts rather than timeout. Added Comments but havent done anything just placeholder for now. Added the mapping of postIsMine.
+3. Changed RightMenu a lot. Added modal to create a post. Created add post action and reducer. Styles for the post modal are in comments.css

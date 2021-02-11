@@ -32,6 +32,7 @@ function HomePage({ getPosts, posts }) {
                             caption={post.content}
                             media={post.media}
                             liked = {post.liked === 'true' ? true : false}
+                            postIsMine = {post.postIsMine === 'false' ? true : false}
                             video={post.extension === 'video' ? true : false}
                         />
                         <Divider className='homepage__divider' />

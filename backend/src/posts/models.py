@@ -1,4 +1,5 @@
 import os
+import uuid
 from django.db import models
 from users.models import Profile
 from django.template.defaultfilters import slugify
@@ -30,7 +31,7 @@ class Post(models.Model):
         return 'none'
 
     def save(self, *args, **kwargs):
-        post_slug = slugify(str(self.creator.user.username) + " " + str(self.content[:10]))
+        post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
         self.slug = post_slug
         super().save(*args, **kwargs)
 

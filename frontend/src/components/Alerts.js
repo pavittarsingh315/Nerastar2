@@ -5,9 +5,11 @@ import { clearErrors } from '../redux/reducers/alerts';
 // Material Ui
 import Alert from '@material-ui/core/Alert';
 import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
-function Alerts({ error, clearErrors }) {
+function Alerts({ error, clearErrors, isAuthenticated }) {
     const [alert, setAlert] = useState({ show: false, msg: '', type: '' });
     const [open, setOpen] = useState(true);
     const prevProps = useRef({ error }).current;
@@ -19,24 +21,19 @@ function Alerts({ error, clearErrors }) {
             if (error.msg.email && error.msg.password) {
                 const msg = 'Enter your email and password'
                 setAlert({ msg, show: true, type: 'error' });
-                alertTimeout();
             } else if (error.msg.email) {
                 const msg = 'Enter your email'
                 setAlert({ msg, show: true, type: 'error' });
-                alertTimeout();
             } else if (error.msg.password) {
                 const msg = 'Enter your password'
                 setAlert({ msg, show: true, type: 'error' });
-                alertTimeout();
             }
 
             // General Success & Error Alerts
             if (error.msg.error) {
-                setAlert({ msg: `${error.msg.error} (╯°□°）╯︵ ┻━┻`, show: true, type: 'error' });
-                alertTimeout();
+                setAlert({ msg: `${error.msg.error}`, show: true, type: 'error' });
             } else if (error.msg.success) {
-                setAlert({ msg: `${error.msg.success} ┬─┬ ノ( ゜-゜ノ)`, show: true, type: 'success' });
-                alertTimeout();
+                setAlert({ msg: `${error.msg.success}`, show: true, type: 'success' });
             }
             
             
@@ -49,20 +46,27 @@ function Alerts({ error, clearErrors }) {
         }
     }, [error])
 
-    const alertTimeout = () => {
-        setTimeout(() => {
-            setOpen(false);
-            clearErrors();
-            setAlert({ show: false, msg: '', type: '' });
-        }, 10000);
+    const clearAlert = () => {
+        setOpen(false);
+        clearErrors();
+        setAlert({ show: false, msg: '', type: '' });
     }
 
     return (
-        <div className='alerts'>
+        <div className='alerts' style={isAuthenticated ? { marginTop: '56.5px'} : null}>
             {alert.show ? (
                 <div style={{ width:'100%', marginTop: '16px' }}>
                     <Collapse in={open}>
-                        <Alert variant="outlined" severity={alert.type}>
+                        <Alert variant="filled" severity={alert.type} action={
+                            <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={clearAlert}
+                            >
+                                <CloseIcon fontSize="inherit" />
+                          </IconButton>
+                        }>
                             {alert.msg}
                         </Alert>
                     </Collapse>
@@ -73,7 +77,8 @@ function Alerts({ error, clearErrors }) {
 }
 
 const mapStateToProps = state => ({
-    error: state.alerts
+    error: state.alerts,
+    isAuthenticated: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, { clearErrors })(Alerts);

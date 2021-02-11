@@ -23,6 +23,7 @@ function Home(props) {
                 numComments={props.numComments}
                 postSlug={props.postSlug}
                 liked = {props.liked}
+                postIsMine = {props.postIsMine}
             />
             <Post 
                 caption={props.caption}

@@ -8,6 +8,7 @@ class PostSerializer(serializers.ModelSerializer):
     creatorAvatar = serializers.SerializerMethodField()
     creatorSlug = serializers.SerializerMethodField()
     liked = serializers.SerializerMethodField()
+    postIsMine = serializers.SerializerMethodField()
 
     def get_creator(self, obj):
         return obj.creator.user.username
@@ -22,6 +23,14 @@ class PostSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         profile = request.user.profile
         if profile in obj.liked.all():
+            return 'true'
+        else:
+            return 'false'
+
+    def get_postIsMine(self, obj):
+        request = self.context.get("request")
+        profile = request.user.profile
+        if obj.creator == profile:
             return 'true'
         else:
             return 'false'
@@ -41,5 +50,6 @@ class PostSerializer(serializers.ModelSerializer):
             'number_of_likes',
             'number_of_comments',
             'extension',
-            'liked'
+            'liked',
+            'postIsMine'
         ]

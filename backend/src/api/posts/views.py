@@ -56,19 +56,23 @@ def Like_Unlike_Post(request, slug):
         profile = Profile.objects.get(user=user)
         likeOrUnlike = request.data['like']
 
+        msg = ''
         if likeOrUnlike == 'like':
             if profile not in post.liked.all():
                 post.liked.add(profile)
+                msg = 'Like'
         elif likeOrUnlike == 'unlike':
             if profile in post.liked.all():
                 post.liked.remove(profile)
+                msg = 'Unlike'
 
-        return Response({'msg': 'asd'}, status=status.HTTP_200_OK)
+        return Response({'success': msg}, status=status.HTTP_200_OK)
 
 
 # retrieve any post but you can only update/delete your own. the custom permission checks if the post creator is the profile of request.user
 class GetAnyPostAndEditPost(generics.RetrieveUpdateDestroyAPIView, OnlyPostOwnerCanEdit):
     serializer_class = PostSerializer
+    lookup_field = 'slug'
     permission_classes = [
         # When using custom permissions, have to specify isAuthenticated
         permissions.IsAuthenticated,
