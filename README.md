@@ -95,3 +95,9 @@
 1. Added if postisMine field in serializer to show edit button if its a users post. Changed editpost view to use slug. Post model slug used uuid now
 2. Added close button to alerts rather than timeout. Added Comments but havent done anything just placeholder for now. Added the mapping of postIsMine.
 3. Changed RightMenu a lot. Added modal to create a post. Created add post action and reducer. Styles for the post modal are in comments.css
+
+## Eighteenth Commit:
+
+1. Created a Notification Model. An obj gets created when a post is liked. Notification serializer and view to view all notifications
+2. Got rid of user serializer and now we get the users profile when we login and run loaduser. Add unreadNotifications field to profile serializer
+3. Added notifications modal to navbar and added the unreadNotifications number as the badge number. Clear posts and alerts when we log out

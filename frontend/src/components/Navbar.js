@@ -15,10 +15,25 @@ import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 
+// Material Ui
+import Divider from '@material-ui/core/Divider';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import MuiDialogActions from '@material-ui/core/DialogActions';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import Typography from '@material-ui/core/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import CloseIcon from '@material-ui/icons/Close';
 
-function Navbar({ logout }) {
+
+function Navbar({ logout, numNotifications }) {
     const [search, setSearch] = useState('');
     const history = useHistory();
+    const [openNotifications, setOpenNotifications] = useState(false);
+
+    const handleOpenCloseNotifications = () => {
+        setOpenNotifications(!openNotifications);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -51,11 +66,10 @@ function Navbar({ logout }) {
                         </Tooltip>
                     </div>
                 </Link>
-                {/* Modal */}
-                <div className='navbar__icon'>
+                <div className='navbar__icon' onClick={handleOpenCloseNotifications}>
                     <Tooltip title='Notifications' arrow enterDelay={0} leaveDelay={25}>
                         <IconButton>
-                            <Badge badgeContent={4} max={10}>
+                            <Badge badgeContent={numNotifications} max={10}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
@@ -69,8 +83,39 @@ function Navbar({ logout }) {
                     </Tooltip>
                 </div>
             </div>
+            <Dialog maxWidth='xs' fullWidth open={openNotifications} onClose={handleOpenCloseNotifications} aria-labelledby="create-post-title">
+                <MuiDialogTitle disableTypography className='modalTitle'>
+                    <Typography align='center' variant="h6">Notifications</Typography>
+                </MuiDialogTitle>
+                <MuiDialogContent className='comments__modal'>
+                    <div className='notifications'>
+                        <div className='notification__body'>
+                            <div className='notification__bodyLeft'>
+                                <Avatar src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png' />
+                            </div>
+                            <div className='notification__bodyRight'>
+                                <h3>Darkstar</h3>
+                                <h5>
+                                    has requested to follow you.
+                                </h5>
+                            </div>
+                        </div>
+                        <div>
+                            <IconButton>
+                                <CloseIcon />
+                            </IconButton>
+                        </div>
+                    </div>
+                    <Divider style={{ margin: '20px 0px 10px' }} />
+                </MuiDialogContent>
+                <MuiDialogActions className='modalAction' />
+            </Dialog>
         </div>
     )
 }
 
-export default connect(null, { logout })(Navbar);
+const mapStateToProps = state => ({
+    numNotifications: state.auth.profile.unreadNotifications
+})
+
+export default connect(mapStateToProps, { logout })(Navbar);

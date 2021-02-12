@@ -145,3 +145,28 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Notifications */
+
+.notifications {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification__body {
+  display: flex;
+  align-items: center;
+}
+
+.notification__bodyLeft {
+  padding-right: 15px;
+}
+
+.notification__bodyRight > h3 {
+  font-size: 20px;
+}
+
+.notification__bodyRight > h5 {
+  font-size: 14px;
+}

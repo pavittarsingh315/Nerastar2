@@ -102,3 +102,28 @@ class Friendship(models.Model):
 
     def __str__(self):
         return f'{self.sender} sent to {self.receiver}'
+
+
+class Notifications(models.Model):
+    NOTIFICATION_TYPES = (
+        ('Like', 'Like'),
+        ('Comment', 'Comment'),
+        ('Follow', 'Follow')
+    )
+
+    # To avoid that import loop error, import a model like this. <appName.modelName>
+    post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='notification_post', blank=True, null=True)
+    sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='notification_sender')
+    receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='notification_receiver')
+    notificationType = models.CharField(max_length=7, choices=NOTIFICATION_TYPES)
+    message = models.TextField(max_length=200, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Notification'
+        verbose_name_plural = 'Notifications'
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.receiver}: {self.message}'

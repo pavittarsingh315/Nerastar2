@@ -15,7 +15,9 @@ import {
     PASSWORD_RESET_FAIL,
     PASSWORD_RESET_CONFIRM_SUCCESS,
     PASSWORD_RESET_CONFIRM_FAIL,
-    GET_ALERTS
+    GET_ALERTS,
+    CLEAR_ALERTS,
+    CLEAR_POSTS
 } from './types';
 import axios from 'axios';
 
@@ -23,7 +25,7 @@ import axios from 'axios';
 export const loadUser = () => async (dispatch, getState) => {
     dispatch({ type: USER_LOADING });
 
-    await axios.get('http://localhost:8000/api/users/currentuser/', tokenConfig(getState))
+    await axios.get('http://localhost:8000/api/users/currentuserprofile/', tokenConfig(getState))
         .then(res => {
             dispatch({
                 type: USER_LOAD_SUCCESS,
@@ -255,6 +257,12 @@ export const reset_password_confirm = (uid, token, password, password2) => async
 export const logout = () => dispatch => {
     dispatch({
         type: LOGOUT_SUCCESS
+    })
+    dispatch({
+        type: CLEAR_ALERTS
+    })
+    dispatch({
+        type: CLEAR_POSTS
     })
 }
 

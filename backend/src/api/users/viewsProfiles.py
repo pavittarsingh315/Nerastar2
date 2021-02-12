@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 # Project imports
-from users.models import Friendship, SiteUser, Profile
-from .serializers import ProfileSerializer, ProfileFollowingFollowerSerializer
+from users.models import Friendship, SiteUser, Profile, Notifications
+from .serializers import ProfileSerializer, ProfileFollowingFollowerSerializer, NotificationSerializer
 
 
 # gets logged in user's profile. only place where profile can be editted and only the owner can edit it here
@@ -43,6 +43,13 @@ class ListFollowersOrFollowing(generics.ListAPIView):
             followList = profile.followers.all()
         return followList
 
+
+class GetUserNotifications(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+
+    def get_queryset(self):
+        receiver = self.request.user.profile
+        return Notifications.objects.filter(receiver=receiver)
 
 
 # Deletes a user from the user model which deletes everything about that user

@@ -41,7 +41,7 @@ const initialState = {
     access: access,
     refresh: refresh,
     isAuthenticated: null,
-    user: null,
+    profile: null,
     isLoading: false
 };
 
@@ -71,7 +71,7 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 isLoading: false,
-                user: payload,
+                profile: payload,
                 isAuthenticated: true
             }
         case REGISTER_SUCCESS:
@@ -82,7 +82,7 @@ export default function(state = initialState, action) {
         case LOGIN_SUCCESS:
             localStorage.setItem('access', payload.access);
             localStorage.setItem('refresh', payload.refresh);
-            // the ...payload puts the user object thats also in the response into the state
+            // the ...payload puts the profile object thats also in the response into the state
             return {
                 ...state,
                 ...payload,
@@ -113,7 +113,7 @@ export default function(state = initialState, action) {
                 access: null,
                 refresh: null,
                 isAuthenticated: false,
-                user: null,
+                profile: null,
                 isLoading: false
             }
         case ACTIVATION_SUCCESS:

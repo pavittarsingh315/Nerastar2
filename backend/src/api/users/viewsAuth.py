@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import permissions, generics, status
 
-from .serializers import UserSerializer, LoginSerializer
+from .serializers import ProfileSerializer, LoginSerializer
 
 # these are all the imports for user email verification
 from django.contrib.sites.shortcuts import get_current_site
@@ -22,11 +22,11 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework_simplejwt.tokens import RefreshToken
 
 
-class GetUserView(generics.RetrieveAPIView):
-    serializer_class = UserSerializer
+class GetProfileView(generics.RetrieveAPIView):
+    serializer_class = ProfileSerializer
 
     def get_object(self):
-        return self.request.user
+        return self.request.user.profile
 
 
 class LoginView(generics.GenericAPIView):
@@ -39,9 +39,10 @@ class LoginView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
+        profile = user.profile
         refresh = RefreshToken.for_user(user)
         return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "profile": ProfileSerializer(profile, context=self.get_serializer_context()).data,
             "refresh": str(refresh),
             "access": str(refresh.access_token)
         })

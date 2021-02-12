@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import SiteUser, Profile, Friendship
+from .models import SiteUser, Profile, Friendship, Notifications
 
 admin.site.site_header = "Nerastar Admin"
 admin.site.site_title = "Nerastar Administration"
@@ -36,3 +36,4 @@ class ProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Friendship)
+admin.site.register(Notifications)

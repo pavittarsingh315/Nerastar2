@@ -242,7 +242,7 @@ function RightMenu({ username, addPost }) {
 }
 
 const mapStateToProps = state => ({
-    username: state.auth.user.username
+    username: state.auth.profile.user
 })
 
 export default connect(mapStateToProps, { addPost })(RightMenu);

@@ -1,6 +1,6 @@
 from django.urls import path
 from .viewsAuth import (
-        GetUserView, 
+        GetProfileView, 
         LoginView,
         RegisterView, 
         ActivateAccount, 
@@ -9,7 +9,7 @@ from .viewsAuth import (
     )
 
 urlpatterns = [
-    path('currentuser/', GetUserView.as_view(), name='current-user'),
+    path('currentuserprofile/', GetProfileView.as_view(), name='current-user-profile'),
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
     path('activate/', ActivateAccount.as_view(), name='activate'),

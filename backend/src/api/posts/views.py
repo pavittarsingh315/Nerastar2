@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 # Project imports
 from posts.models import Post, Like, Comment
-from users.models import Profile
+from users.models import Profile, Notifications
 from .serializers import PostSerializer
 from ..permissions import OnlyPostOwnerCanEdit, OnlyProfileOwnerCanCreatePost
 
@@ -61,6 +61,13 @@ def Like_Unlike_Post(request, slug):
             if profile not in post.liked.all():
                 post.liked.add(profile)
                 msg = 'Like'
+                sender = user.profile
+                receiver = post.creator
+                if sender != receiver:
+                    message = f"{sender.user.username} liked your post"
+                    notification = Notifications(post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
+                    notification.save()
+
         elif likeOrUnlike == 'unlike':
             if profile in post.liked.all():
                 post.liked.remove(profile)
