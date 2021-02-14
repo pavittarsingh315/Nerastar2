@@ -64,9 +64,10 @@ def Like_Unlike_Post(request, slug):
                 sender = user.profile
                 receiver = post.creator
                 if sender != receiver:
-                    message = f"{sender.user.username} liked your post"
-                    notification = Notifications(post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
-                    notification.save()
+                    if not Notifications.objects.filter(post=post, sender=sender, receiver=receiver, notificationType='Like').exists():
+                        message = f"{sender.user.username} liked your post"
+                        notification = Notifications(post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
+                        notification.save()
 
         elif likeOrUnlike == 'unlike':
             if profile in post.liked.all():

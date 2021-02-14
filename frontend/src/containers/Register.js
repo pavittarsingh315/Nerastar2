@@ -64,7 +64,7 @@ function Register({ register, isAuthenticated }) {
     return (
         <Container component="main" style={{ maxWidth: '500px' }}>
             <div className='auth'>
-                <Avatar className='auth__avatar'>
+                <Avatar alt='' className='auth__avatar'>
                     <AccountCircleIcon />
                 </Avatar>
                 <h1 className='auth__label'>Register</h1>

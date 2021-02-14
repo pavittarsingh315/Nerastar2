@@ -63,7 +63,7 @@ function Login({ login, isAuthenticated }) {
     return (
         <Container component="div" style={{ maxWidth: '500px' }} >
             <div className='auth'>
-                <Avatar className='auth__avatar'>
+                <Avatar alt='' className='auth__avatar'>
                     <AccountCircleIcon />
                 </Avatar>
                 <h1 className='auth__label'>Login</h1>

@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 // Redux
 import { connect } from 'react-redux';
 import { logout } from '../redux/actions/auth';
+import { getNotifications, deleteNotification } from '../redux/actions/alerts';
 
 // Material Ui
 import SearchIcon from '@material-ui/icons/Search';
@@ -24,15 +25,24 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import CloseIcon from '@material-ui/icons/Close';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-function Navbar({ logout, numNotifications }) {
+function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification }) {
     const [search, setSearch] = useState('');
+    const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
     const history = useHistory();
     const [openNotifications, setOpenNotifications] = useState(false);
 
     const handleOpenCloseNotifications = () => {
         setOpenNotifications(!openNotifications);
+        if(!openNotifications) {
+            // this stops requests being sent everytime notifications are openned
+            if(notifications === undefined || notifications.length === 0) {
+                getNotifications();
+                setNumberofNotifications(0)
+            }
+        }
     }
 
     const handleSubmit = (e) => {
@@ -69,7 +79,7 @@ function Navbar({ logout, numNotifications }) {
                 <div className='navbar__icon' onClick={handleOpenCloseNotifications}>
                     <Tooltip title='Notifications' arrow enterDelay={0} leaveDelay={25}>
                         <IconButton>
-                            <Badge badgeContent={numNotifications} max={10}>
+                            <Badge badgeContent={numberofNotifications} max={10}>
                                 <NotificationsIcon />
                             </Badge>
                         </IconButton>
@@ -88,25 +98,39 @@ function Navbar({ logout, numNotifications }) {
                     <Typography align='center' variant="h6">Notifications</Typography>
                 </MuiDialogTitle>
                 <MuiDialogContent className='comments__modal'>
-                    <div className='notifications'>
-                        <div className='notification__body'>
-                            <div className='notification__bodyLeft'>
-                                <Avatar src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png' />
-                            </div>
-                            <div className='notification__bodyRight'>
-                                <h3>Darkstar</h3>
-                                <h5>
-                                    has requested to follow you.
-                                </h5>
-                            </div>
+                    {isLoading ? (
+                        <div className='modalLoading'>
+                            <CircularProgress style={{ color: 'var(--primary-color)' }} />
                         </div>
-                        <div>
-                            <IconButton>
-                                <CloseIcon />
-                            </IconButton>
-                        </div>
-                    </div>
-                    <Divider style={{ margin: '20px 0px 10px' }} />
+                    ) : (
+                        notifications.map(notification => (
+                            <div key={notification.id}>
+                                <div className='notifications'>
+                                    <div className='notification__body'>
+                                        <Link to={notification.sender} onClick={handleOpenCloseNotifications}>
+                                            <div className='notification__bodyLeft'>
+                                                <Avatar alt='' src={notification.senderAvatar} />
+                                            </div>
+                                        </Link>
+                                        <Link style={{ textDecoration: 'none' }} to={notification.post} onClick={handleOpenCloseNotifications}>
+                                            <div className='notification__bodyRight'>
+                                                <h3>{notification.sender}</h3>
+                                                <h5>
+                                                    {notification.message}
+                                                </h5>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                    <div>
+                                        <IconButton onClick={() => deleteNotification(notification.id)}>
+                                            <CloseIcon />
+                                        </IconButton>
+                                    </div>
+                                </div>
+                                <Divider style={{ margin: '20px 0px 10px' }} />
+                            </div>
+                        ))
+                    )}
                 </MuiDialogContent>
                 <MuiDialogActions className='modalAction' />
             </Dialog>
@@ -115,7 +139,9 @@ function Navbar({ logout, numNotifications }) {
 }
 
 const mapStateToProps = state => ({
-    numNotifications: state.auth.profile.unreadNotifications
+    numNotifications: state.auth.profile.unreadNotifications,
+    notifications: state.alerts.notifications,
+    isLoading: state.alerts.isLoading
 })
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification })(Navbar);

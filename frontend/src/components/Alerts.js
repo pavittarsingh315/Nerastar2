@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import { clearErrors } from '../redux/reducers/alerts';
+import { clearErrors } from '../redux/actions/alerts';
 
 // Material Ui
 import Alert from '@material-ui/core/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
+import DoneAllOutlinedIcon from '@material-ui/icons/DoneAllOutlined';
+import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 
 
 function Alerts({ error, clearErrors, isAuthenticated }) {
@@ -33,7 +35,7 @@ function Alerts({ error, clearErrors, isAuthenticated }) {
             if (error.msg.error) {
                 setAlert({ msg: `${error.msg.error}`, show: true, type: 'error' });
             } else if (error.msg.success) {
-                setAlert({ msg: `${error.msg.success}`, show: true, type: 'success' });
+                setAlert({ msg: `${error.msg.success}`, show: true, type: 'info' });
             }
             
             
@@ -53,11 +55,11 @@ function Alerts({ error, clearErrors, isAuthenticated }) {
     }
 
     return (
-        <div className='alerts' style={isAuthenticated ? { marginTop: '56.5px'} : null}>
+        <div className={isAuthenticated ? 'alertsAuth' : 'alertsUnAuth'}>
             {alert.show ? (
                 <div style={{ width:'100%', marginTop: '16px' }}>
                     <Collapse in={open}>
-                        <Alert variant="filled" severity={alert.type} action={
+                        <Alert variant="outlined" severity={alert.type} action={
                             <IconButton
                                 aria-label="close"
                                 color="inherit"
@@ -66,7 +68,12 @@ function Alerts({ error, clearErrors, isAuthenticated }) {
                             >
                                 <CloseIcon fontSize="inherit" />
                           </IconButton>
-                        }>
+                        }
+                        iconMapping={{
+                            info: <DoneAllOutlinedIcon fontSize="inherit" />,
+                            error: <ErrorOutlineOutlinedIcon fontSize="inherit" />
+                        }}
+                        >
                             {alert.msg}
                         </Alert>
                     </Collapse>

@@ -142,7 +142,7 @@ function Comment({ img, username, comment, numLike, replies }) {
         <>
             <div className='comment'>
                 <div>
-                    <Avatar src={img} />
+                    <Avatar alt='' src={img} />
                 </div>
                 <div className='comment__body'>
                     <h3>{username}</h3>
@@ -202,7 +202,7 @@ function Repliesfunc({ img, username, reply, numLike }) {
     return (
         <div className="comment">
             <div>
-                <Avatar src={img} />
+                <Avatar alt='' src={img} />
             </div>
             <div className='comment__body'>
                 <h3>{username}</h3>

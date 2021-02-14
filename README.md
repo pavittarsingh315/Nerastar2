@@ -101,3 +101,10 @@
 1. Created a Notification Model. An obj gets created when a post is liked. Notification serializer and view to view all notifications
 2. Got rid of user serializer and now we get the users profile when we login and run loaduser. Add unreadNotifications field to profile serializer
 3. Added notifications modal to navbar and added the unreadNotifications number as the badge number. Clear posts and alerts when we log out
+
+## Nineteenth Commit:
+
+1. Changed Notifications Serializer to return fields we actually use. Added View to delete notfication. Changed View to get notification and change them to read after getting. When creating like noti, added check to not add noti if it already exists.
+2. Changed primary theme color to blue. Changed style of alerts. Create an action to create a success alert. Created a separate alerts.js actions file.
+3. Added alt tags to Avatar components for seo.
+4. Created get notifications action and delete notifcation action. Notifcations mapped in modal.

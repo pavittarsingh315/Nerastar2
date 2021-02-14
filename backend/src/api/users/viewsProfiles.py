@@ -44,12 +44,31 @@ class ListFollowersOrFollowing(generics.ListAPIView):
         return followList
 
 
-class GetUserNotifications(generics.ListAPIView):
-    serializer_class = NotificationSerializer
+@api_view(['GET'])
+def GetUserNotifications(request):
+    user = request.user
 
-    def get_queryset(self):
-        receiver = self.request.user.profile
-        return Notifications.objects.filter(receiver=receiver)
+    if request.method == 'GET':
+        profile = user.profile
+        allNotifications = Notifications.objects.filter(receiver=profile)
+        serializer = NotificationSerializer(allNotifications, many=True)
+        unreadNotifications = Notifications.objects.filter(receiver=profile, is_read=False)
+        if unreadNotifications:
+            for unread in unreadNotifications:
+                unread.is_read = True
+                unread.save()
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['DELETE'])
+def DeleteNotification(request, pk):
+    user = request.user
+    if Notifications.objects.filter(pk=pk, receiver=user.profile).exists():
+        notification = Notifications.objects.get(pk=pk).delete()
+        return Response({'success': 'Deleted!'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Notification does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
 # Deletes a user from the user model which deletes everything about that user

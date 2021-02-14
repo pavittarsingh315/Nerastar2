@@ -11,16 +11,28 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   /* color combo variables */
-  --primary-color: #4d67ea;
+  --primary-color: #0070f3;
   --secondary-color: #ebcd8d;
   --third-color: #e8e8e8;
 }
 
-.alerts {
+.alertsUnAuth {
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  background-color: white;
+  z-index: 1001;
+}
+
+.alertsAuth {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  width: 350px;
+  transform: translateX(-50%);
+  margin-bottom: 100px;
   background-color: white;
   z-index: 1001;
 }

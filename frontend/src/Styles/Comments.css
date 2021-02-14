@@ -17,6 +17,13 @@
   padding: 8px;
 }
 
+.modalLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+}
+
 /* Comments Styles */
 
 .comments__option {
@@ -99,13 +106,6 @@
   margin-top: 17px;
 }
 
-.comments__loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 100px;
-}
-
 .comments__modal {
   padding: 16px;
 }
@@ -165,8 +165,10 @@
 
 .notification__bodyRight > h3 {
   font-size: 20px;
+  color: rgba(0, 0, 0, 0.87);
 }
 
 .notification__bodyRight > h5 {
   font-size: 14px;
+  color: rgba(0, 0, 0, 0.87);
 }

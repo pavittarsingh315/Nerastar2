@@ -21,7 +21,7 @@ function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComment
 
             <Link to={`/${userSlug}`} className='leftwidgets__profile'>
                 <div className="leftwidgetoption">
-                    <Avatar src={avatar} />
+                    <Avatar alt='' src={avatar} />
                     <h2>{username}</h2>
                 </div>
             </Link>

@@ -4,6 +4,7 @@ import '../Styles/Home.css';
 // Redux
 import { connect } from 'react-redux';
 import { likeUnlikePost } from '../redux/actions/posts';
+import { createSuccessAlert } from '../redux/actions/alerts';
 
 // Material UI
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -11,7 +12,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 
-function LeftWidgetOption({ objValue, uiIcon, postSlug, liked, likeUnlikePost }) {
+function LeftWidgetOption({ objValue, uiIcon, postSlug, liked, likeUnlikePost, createSuccessAlert }) {
     const [instance, setInstance] = useState({ Value: objValue.toLocaleString(), Icon: uiIcon, Clicked: false, liked: liked })
 
     const handleClick = () => {
@@ -69,6 +70,7 @@ function LeftWidgetOption({ objValue, uiIcon, postSlug, liked, likeUnlikePost })
                 if(!instance.Clicked) {
                     // this copys the current path to the users clipboard
                     navigator.clipboard.writeText('http://localhost:3000/posts/' + postSlug)
+                    createSuccessAlert("Link Copied!")
                 }
                 break;
             default: 
@@ -84,4 +86,4 @@ function LeftWidgetOption({ objValue, uiIcon, postSlug, liked, likeUnlikePost })
     )
 }
 
-export default connect(null, { likeUnlikePost })(LeftWidgetOption);
+export default connect(null, { likeUnlikePost, createSuccessAlert })(LeftWidgetOption);

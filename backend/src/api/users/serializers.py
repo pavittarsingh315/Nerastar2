@@ -66,10 +66,38 @@ class ProfileSerializer(serializers.ModelSerializer):
         ]
 
 
+# class NotificationSerializer(serializers.ModelSerializer):
+#     post = serializers.SerializerMethodField()
+#     sender = serializers.SerializerMethodField()
+#     receiver = serializers.SerializerMethodField()
+
+#     def get_post(self, obj):
+#         return obj.post.slug
+
+#     def get_sender(self, obj):
+#         return obj.sender.user.username
+
+#     def get_receiver(self, obj):
+#         return obj.post.creator.user.username
+
+#     class Meta:
+#         model = Notifications
+#         fields = [
+#             'id',
+#             'notificationType',
+#             'message',
+#             'created',
+#             'is_read',
+#             'post',
+#             'sender',
+#             'receiver'
+#         ]
+
+
 class NotificationSerializer(serializers.ModelSerializer):
     post = serializers.SerializerMethodField()
     sender = serializers.SerializerMethodField()
-    receiver = serializers.SerializerMethodField()
+    senderAvatar = serializers.SerializerMethodField()
 
     def get_post(self, obj):
         return obj.post.slug
@@ -77,18 +105,16 @@ class NotificationSerializer(serializers.ModelSerializer):
     def get_sender(self, obj):
         return obj.sender.user.username
 
-    def get_receiver(self, obj):
-        return obj.post.creator.user.username
+    def get_senderAvatar(self, obj):
+        return ("http://localhost:8000" + str(obj.sender.avatar.url))
 
     class Meta:
         model = Notifications
         fields = [
             'id',
-            'notificationType',
             'message',
-            'created',
             'is_read',
             'post',
             'sender',
-            'receiver'
+            'senderAvatar'
         ]
