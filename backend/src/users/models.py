@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from PIL import Image
 
 
 class SiteUserManager(BaseUserManager):
@@ -86,6 +87,16 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user}"
+
+    def save(self, *args, **kwargs):
+        super(Profile, self).save(*args, **kwargs)
+
+        img = Image.open(self.avatar.path)
+
+        if img.height > 603 or img.width > 643:
+            output_size = (643, 603)
+            img.thumbnail(output_size)
+            img.save(self.avatar.path)
 
 
 

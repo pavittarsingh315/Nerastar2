@@ -157,3 +157,8 @@
   cursor: pointer;
   border-radius: 15px;
 }
+
+.rightmenu__avatar {
+  max-height: 350px !important;
+  max-width: 350px !important;
+}

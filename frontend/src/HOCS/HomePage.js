@@ -13,7 +13,9 @@ import Divider from '@material-ui/core/Divider';
 
 function HomePage({ getPosts, posts }) {
     useEffect(() => {
-        getPosts();
+        if(posts === undefined || posts.length === 0) {
+            getPosts();
+        }
     }, [getPosts])
 
     return (

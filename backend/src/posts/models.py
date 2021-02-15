@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from users.models import Profile
 from django.template.defaultfilters import slugify
+from PIL import Image
 
 
 class Post(models.Model):
@@ -34,6 +35,13 @@ class Post(models.Model):
         post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
         self.slug = post_slug
         super().save(*args, **kwargs)
+
+        img = Image.open(self.media.path)
+
+        if img.height > 480 or img.width > 852:
+            output_size = (852, 480)
+            img.thumbnail(output_size)
+            img.save(self.media.path)
 
     class Meta:
         ordering = ('-created',)

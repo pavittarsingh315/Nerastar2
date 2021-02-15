@@ -59,7 +59,7 @@ function Alerts({ error, clearErrors, isAuthenticated }) {
             {alert.show ? (
                 <div style={{ width:'100%', marginTop: '16px' }}>
                     <Collapse in={open}>
-                        <Alert variant="outlined" severity={alert.type} action={
+                        <Alert variant="filled" severity={alert.type} action={
                             <IconButton
                                 aria-label="close"
                                 color="inherit"

@@ -108,3 +108,8 @@
 2. Changed primary theme color to blue. Changed style of alerts. Create an action to create a success alert. Created a separate alerts.js actions file.
 3. Added alt tags to Avatar components for seo.
 4. Created get notifications action and delete notifcation action. Notifcations mapped in modal.
+
+## Twentieth Commit
+
+1. Integrated Add Post into navbar instead. Changed the right menu to include followers and following instead.
+2. Changed Post and Profile save method to resize images on upload
