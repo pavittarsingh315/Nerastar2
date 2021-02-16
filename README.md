@@ -113,3 +113,8 @@
 
 1. Integrated Add Post into navbar instead. Changed the right menu to include followers and following instead.
 2. Changed Post and Profile save method to resize images on upload
+
+## Twenty First Commit
+
+1. Changed follower/following serializer to include if request user is following the person or not.
+2. Created ability to fetch followers and following list. Styled it as well

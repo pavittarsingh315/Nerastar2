@@ -24,6 +24,23 @@
   padding: 100px;
 }
 
+/* hide the scroll bar for Chrome, Safari, & Opera */
+.generalModal::-webkit-scrollbar {
+  display: none;
+}
+
+/* hide the scroll bar for IE, Edge, & Firefox. You can add this into the other .feed but for clarity its here */
+.generalModal {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.generalModal {
+  padding: 16px;
+}
+
 /* Comments Styles */
 
 .comments__option {
@@ -46,19 +63,6 @@
   background-color: var(--third-color);
   border-radius: 30px;
   transition: color 100ms ease-out;
-}
-
-/* hide the scroll bar for Chrome, Safari, & Opera */
-.comments__modal::-webkit-scrollbar {
-  display: none;
-}
-
-/* hide the scroll bar for IE, Edge, & Firefox. You can add this into the other .feed but for clarity its here */
-.comments__modal {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
 }
 
 .comment {
@@ -104,10 +108,6 @@
   font-size: 13px;
   cursor: pointer;
   margin-top: 17px;
-}
-
-.comments__modal {
-  padding: 16px;
 }
 
 /* Post Modal */
@@ -171,4 +171,50 @@
 .notification__bodyRight > h5 {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.87);
+}
+
+/* Followers */
+
+.followers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.followBtn {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  background-color: var(--third-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.followBtn:hover {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.followingBtn {
+  margin-top: 24px !important;
+  margin-bottom: 16px !important;
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+.followingBtn:hover {
+  background-color: var(--third-color) !important;
+  color: var(--primary-color) !important;
+}
+
+.followers__left {
+  display: flex;
+  align-items: center;
+}
+
+.followers__leftText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.87);
+  padding: 0 15px;
 }

@@ -185,7 +185,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                 <MuiDialogTitle disableTypography className='modalTitle'>
                     <Typography align='center' variant="h6">Notifications</Typography>
                 </MuiDialogTitle>
-                <MuiDialogContent className='comments__modal'>
+                <MuiDialogContent className='generalModal'>
                     {isLoading ? (
                         <div className='modalLoading'>
                             <CircularProgress style={{ color: 'var(--primary-color)' }} />
@@ -231,7 +231,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                     </IconButton>
                     ) : null}
                 </MuiDialogTitle>
-                <MuiDialogContent className='comments__modal'>
+                <MuiDialogContent className='generalModal'>
                     <form noValidate onSubmit={handlePostSubmit}>
                         <InputField
                             autoFocus

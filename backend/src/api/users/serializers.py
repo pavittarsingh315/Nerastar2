@@ -20,6 +20,7 @@ class ProfileFollowingFollowerSerializer(serializers.ModelSerializer):
     avatar = serializers.SerializerMethodField()
     name = serializers.SerializerMethodField()
     slug = serializers.SerializerMethodField()
+    following = serializers.SerializerMethodField()
 
     def get_avatar(self, obj):
         return ("http://localhost:8000" + str(obj.profile.avatar.url))
@@ -30,13 +31,23 @@ class ProfileFollowingFollowerSerializer(serializers.ModelSerializer):
     def get_slug(self, obj):
         return obj.profile.slug
 
+    def get_following(self, obj):
+        request = self.context.get("request")
+        user = request.user
+        if user in obj.profile.followers.all():
+            return 'true'
+        else:
+            return 'false'
+        
+
     class Meta:
         model = User
         fields = [
             'username',
             'avatar',
             'name',
-            'slug'
+            'slug',
+            'following'
         ]
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../Styles/Comments.css';
+import '../Styles/Modal.css';
 
 // Material Ui
 import Dialog from '@material-ui/core/Dialog';
@@ -99,7 +99,7 @@ function Comments({ Icon, objValue }) {
                     </IconButton>
                     ) : null}
                 </MuiDialogTitle>
-                <MuiDialogContent dividers className='comments__modal'>
+                <MuiDialogContent dividers className='generalModal'>
                     {isLoading ? (
                         <div className='comments__loading'>
                             <CircularProgress style={{ color: 'var(--primary-color)' }} />

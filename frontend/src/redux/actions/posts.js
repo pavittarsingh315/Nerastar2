@@ -1,5 +1,6 @@
 import { GET_POSTS, ADD_POST, DELETE_POST, GET_ALERTS } from './types';
 import axios from 'axios';
+import { tokenConfig } from './auth';
 
 
 export const getPosts = () => async (dispatch, getState) => {
@@ -56,20 +57,4 @@ export const addPost = (post, username) => async (dispatch, getState) => {
                 payload: alerts
             })
         })
-}
-
-export const tokenConfig = getState => {
-    const access = getState().auth.access
-
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    if(access){
-        config.headers['Authorization'] = `JWT ${access}`;
-    }
-
-    return config
 }
