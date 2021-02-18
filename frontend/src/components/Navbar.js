@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../Styles/Navbar.css';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Searchbar from './Searchbar';
 
 // Redux
 import { connect } from 'react-redux';
@@ -9,7 +10,7 @@ import { getNotifications, deleteNotification } from '../redux/actions/alerts';
 import { addPost } from '../redux/actions/posts';
 
 // Material Ui
-import SearchIcon from '@material-ui/icons/Search';
+
 import AddIcon from '@material-ui/icons/Add';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -57,9 +58,7 @@ const InputField = withStyles({
 
 
 function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, profile, addPost }) {
-    const [search, setSearch] = useState('');
     const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
-    const history = useHistory();
     const [openNotifications, setOpenNotifications] = useState(false);
     const [createPostOpen, setCreatePostOpen] = useState(false);
     const [postForm, setPostForm] = useState({
@@ -77,12 +76,6 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                 setNumberofNotifications(0)
             }
         }
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        history.push(`/users/${search}`)
-        setSearch('');
     }
 
     const handlePostFormChange = e => {
@@ -144,26 +137,19 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                 </div>
             </Link>
             <div className='navbar__center'>
-                <div className='navbar__search'>
-                    <SearchIcon />
-                    <form onSubmit={handleSubmit}>
-                        <input id="search-bar" value={search} onChange={e=>setSearch(e.target.value)} type='text' placeholder='Search Users' />
-                        <label htmlFor="search-bar" style={{ display: 'none' }}>Search</label>
-                        <button type='submit'>Submit</button>
-                    </form>
+                <div>
+                    <Searchbar />
                 </div>
             </div>
 
             <div className='navbar__right'>
-                <Link to='/'>
-                    <div className='navbar__icon'  onClick={handleCreatePostOpen}>
-                        <Tooltip title='Add Post' arrow enterDelay={0} leaveDelay={25}>
-                            <IconButton>
-                                <AddIcon />
-                            </IconButton>
-                        </Tooltip>
-                    </div>
-                </Link>
+                <div className='navbar__icon'  onClick={handleCreatePostOpen}>
+                    <Tooltip title='Add Post' arrow enterDelay={0} leaveDelay={25}>
+                        <IconButton>
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
+                </div>
                 <div className='navbar__icon' onClick={handleOpenCloseNotifications}>
                     <Tooltip title='Notifications' arrow enterDelay={0} leaveDelay={25}>
                         <IconButton>

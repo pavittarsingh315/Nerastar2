@@ -5,7 +5,8 @@ from .viewsProfiles import (
         DeleteUser, 
         ListFollowersOrFollowing, 
         GetUserNotifications,
-        DeleteNotification
+        DeleteNotification,
+        SearchUser
     )
 
 
@@ -17,5 +18,6 @@ urlpatterns = [
     path('anyprofile/<str:slug>/', AnyUserProfile.as_view()),
     path('delete-account/<str:slug>/', DeleteUser),
     # remember for this one you need the ?type=... look at the view for more info
-    path('followers-following/<str:slug>/', ListFollowersOrFollowing.as_view())
+    path('followers-following/<str:slug>/', ListFollowersOrFollowing.as_view()),
+    path('searchuser/', SearchUser.as_view())
 ]

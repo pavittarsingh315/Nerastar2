@@ -65,7 +65,7 @@ function ResetPasswordConfirm({ match, reset_password_confirm }) {
                         type="password"
                         id="password"
                         label="New Password"
-                        autoComplete="password"
+                        autoComplete="off"
                         autoFocus
                     />
                     <InputField
@@ -79,7 +79,7 @@ function ResetPasswordConfirm({ match, reset_password_confirm }) {
                         type="password"
                         id="password2"
                         label="Confirm New Password"
-                        autoComplete="password2"
+                        autoComplete="off"
                     />
                     <Button
                         type="submit"

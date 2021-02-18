@@ -118,3 +118,9 @@
 
 1. Changed follower/following serializer to include if request user is following the person or not.
 2. Created ability to fetch followers and following list. Styled it as well
+
+## Twenty Second Commit
+
+1. Updated requirements txt. Created view and url to filter users by slug. Created url patterns for robots.txt and manifest.json and favicons
+2. Added 404 page. Created a separate search bar component with new styles and everything.
+3. Turned off annoying autocomplete to every form

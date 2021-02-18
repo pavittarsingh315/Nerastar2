@@ -103,7 +103,7 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
                                     </div>
                                 </Link>
                                 {follower.following === "true" ? (
-                                    <Button className="followingBtn">Following</Button>
+                                    <Button className="followingBtn">Unfollow</Button>
                                 ) : (
                                     <Button className="followBtn">Follow</Button>
                                 )}
@@ -133,7 +133,7 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
                                     </div>
                                 </Link>
                                 {following.following === "true" ? (
-                                    <Button className="followingBtn">Following</Button>
+                                    <Button className="followingBtn">Unfollow</Button>
                                 ) : (
                                     <Button className="followBtn">Follow</Button>
                                 )}

@@ -60,7 +60,7 @@ function ResetPassword({ reset_password }) {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        autoComplete="email"
+                        autoComplete="off"
                         autoFocus
                     />
                     <Button

@@ -17,6 +17,7 @@ import Register from './containers/Register';
 import VerifyAccount from './containers/VerifyAccount';
 import ResetPassword from './containers/ResetPassword';
 import ResetPasswordConfirm from './containers/ResetPasswordConfirm';
+import PageNotFound from './containers/PageNotFound';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route exact path='/reset-password' component={ResetPassword} />
             <Route exact path='/activate/:uid/:token' component={VerifyAccount} />
             <Route exact path='/password/reset/confirm/:uid/:token' component={ResetPasswordConfirm} />
+            <Route component={PageNotFound} />
           </Switch>
         </Layout>
       </Router>

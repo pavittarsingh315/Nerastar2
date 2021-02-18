@@ -78,7 +78,7 @@ function Login({ login, isAuthenticated }) {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        autoComplete="email"
+                        autoComplete="off"
                         autoFocus
                     />
                     <InputField
@@ -92,7 +92,7 @@ function Login({ login, isAuthenticated }) {
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
+                        autoComplete="off"
                     />
                     <FormControlLabel
                         control={<Checkbox onClick={() => {setRememberMe(!rememberMe)}} value="remember" style={{ color: 'var(--primary-color)' }} />}

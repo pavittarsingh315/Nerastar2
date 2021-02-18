@@ -34,7 +34,6 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
         self.slug = post_slug
-        super().save(*args, **kwargs)
 
         img = Image.open(self.media.path)
 
@@ -42,6 +41,9 @@ class Post(models.Model):
             output_size = (852, 480)
             img.thumbnail(output_size)
             img.save(self.media.path)
+
+        super().save(*args, **kwargs)
+        
 
     class Meta:
         ordering = ('-created',)

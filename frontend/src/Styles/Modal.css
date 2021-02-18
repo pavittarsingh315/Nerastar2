@@ -184,11 +184,6 @@
 .followBtn {
   margin-top: 24px !important;
   margin-bottom: 16px !important;
-  background-color: var(--third-color) !important;
-  color: var(--primary-color) !important;
-}
-
-.followBtn:hover {
   background-color: var(--primary-color) !important;
   color: white !important;
 }
@@ -198,11 +193,6 @@
   margin-bottom: 16px !important;
   background-color: var(--primary-color) !important;
   color: white !important;
-}
-
-.followingBtn:hover {
-  background-color: var(--third-color) !important;
-  color: var(--primary-color) !important;
 }
 
 .followers__left {

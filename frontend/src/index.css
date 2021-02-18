@@ -36,3 +36,29 @@ body {
   background-color: white;
   z-index: 1001;
 }
+
+.error {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  top: 0;
+  left: 50%;
+  right: 50%;
+}
+
+.error__link {
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+}
+
+.error__homeBtn {
+  background-color: var(--primary-color) !important;
+}
+
+.error_h1 {
+  font-size: 50px;
+}

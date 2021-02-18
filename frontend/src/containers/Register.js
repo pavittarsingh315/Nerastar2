@@ -73,7 +73,7 @@ function Register({ register, isAuthenticated }) {
                         name="name"
                         value={name}
                         onChange={e => onChange(e)}
-                        autoComplete="fname"
+                        autoComplete="off"
                         variant="outlined"
                         required
                         fullWidth
@@ -86,7 +86,7 @@ function Register({ register, isAuthenticated }) {
                         name="username"
                         value={username}
                         onChange={e => onChange(e)}
-                        autoComplete="uname"
+                        autoComplete="off"
                         variant="outlined"
                         required
                         fullWidth
@@ -103,7 +103,7 @@ function Register({ register, isAuthenticated }) {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        autoComplete="email"
+                        autoComplete="off"
                         margin="normal"
                     />
                     <InputField
@@ -116,7 +116,7 @@ function Register({ register, isAuthenticated }) {
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
+                        autoComplete="off"
                         margin="normal"
                     />
                     <InputField
@@ -129,7 +129,7 @@ function Register({ register, isAuthenticated }) {
                         label="Confirm Password"
                         type="password"
                         id="password2"
-                        autoComplete="current-password"
+                        autoComplete="off"
                         margin="normal"
                     />
                     <FormControlLabel

@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import viewsets, permissions, generics, status, filters
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -42,6 +42,18 @@ class ListFollowersOrFollowing(generics.ListAPIView):
         elif listType == 'followers':
             followList = profile.followers.all()
         return followList
+
+
+class SearchUser(generics.ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['^slug']
+
+    # '^' starts with search
+    # '=' exact match
+    # '@' full text search
+    # '$' regex search
 
 
 @api_view(['GET'])
