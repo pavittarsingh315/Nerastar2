@@ -16,9 +16,11 @@ function Post({ caption, media, video, slug }) {
                 </div>
                 <div className='post__media'>
                     {!video ? (
-                        <img alt='' src={media} />
+                        <div className="img__container">
+                            <img alt="" src={media} />
+                        </div>
                     ) : (
-                        <video height='315' width='600' autoPlay loop muted controls src={media} />
+                        <video height='315' width='600' controls src={media} />
                     )}
                 </div>
             </div>

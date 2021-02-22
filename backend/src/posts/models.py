@@ -33,16 +33,22 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
+        slugExists = Profile.objects.filter(slug=post_slug).exists()
+        while slugExists:
+            post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
+            slugExists = Profile.objects.filter(slug=to_slug).exists()
         self.slug = post_slug
+        # this has to be after slug save but before image resize
+        super(Post, self).save(*args, **kwargs)
 
         img = Image.open(self.media.path)
 
-        if img.height > 480 or img.width > 852:
-            output_size = (852, 480)
+        if img.height > 600 or img.width > 600:
+            output_size = (600, 600)
             img.thumbnail(output_size)
             img.save(self.media.path)
+        
 
-        super().save(*args, **kwargs)
         
 
     class Meta:

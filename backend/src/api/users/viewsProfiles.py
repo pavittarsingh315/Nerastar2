@@ -1,10 +1,10 @@
-from rest_framework import viewsets, permissions, generics, status, filters
+from rest_framework import viewsets, permissions, generics, status, filters, pagination
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 # Project imports
 from users.models import Friendship, SiteUser, Profile, Notifications
-from .serializers import ProfileSerializer, ProfileFollowingFollowerSerializer, NotificationSerializer
+from .serializers import ProfileSerializer, ProfileFollowingFollowerSerializer, NotificationSerializer, SearchUser
 
 
 # gets logged in user's profile. only place where profile can be editted and only the owner can edit it here
@@ -44,11 +44,16 @@ class ListFollowersOrFollowing(generics.ListAPIView):
         return followList
 
 
+class SearchUserPagination(pagination.PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10
 class SearchUser(generics.ListAPIView):
     queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = SearchUser
     filter_backends = [filters.SearchFilter]
-    search_fields = ['^slug']
+    search_fields = ['^slug', '^full_name']
+    pagination_class = SearchUserPagination
 
     # '^' starts with search
     # '=' exact match

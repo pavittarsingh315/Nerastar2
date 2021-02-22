@@ -1,17 +1,26 @@
-import { GET_POSTS, ADD_POST, DELETE_POST, GET_ALERTS } from './types';
+import { GET_POSTS, ADD_POST, POSTS_LOADING, GET_ALERTS, POST_LOADING_ERROR } from './types';
 import axios from 'axios';
 import { tokenConfig } from './auth';
 
 
-export const getPosts = () => async (dispatch, getState) => {
+export const getPosts = (page) => async (dispatch, getState) => {
+    dispatch({
+        type: POSTS_LOADING
+    })
 
-    await axios.get('http://localhost:8000/api/posts/feed-posts/', tokenConfig(getState))
-        .then(res => {
-            dispatch({
-                type: GET_POSTS,
-                payload: res.data
-            })
-        }).catch(err => console.log(err.response.data, err.response.status))
+    await axios.get(`http://localhost:8000/api/posts/feed-posts/?page=${page}`, tokenConfig(getState))
+    .then(res => {
+        dispatch({
+            type: GET_POSTS,
+            payload: res.data
+        })
+    }).catch(err => {
+        dispatch({
+            type: POST_LOADING_ERROR
+        })
+        console.log(err.response.data, err.response.status)
+    })
+
 }
 
 export const likeUnlikePost = (postSlug, like) => async (dispatch, getState) => {

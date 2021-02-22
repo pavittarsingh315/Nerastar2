@@ -1,4 +1,4 @@
-from rest_framework import permissions, generics
+from rest_framework import permissions, generics, pagination
 from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,10 +9,15 @@ from users.models import Profile, Notifications
 from .serializers import PostSerializer
 from ..permissions import OnlyPostOwnerCanEdit, OnlyProfileOwnerCanCreatePost
 
-# Get posts for user's feed
+class PostPagination(pagination.PageNumberPagination):
+    page_size = 15
+    page_size_query_param = 'page_size'
+    max_page_size = 15
+
 class Posts(generics.ListAPIView):
     serializer_class = PostSerializer
-
+    pagination_class = PostPagination
+    
     def get_queryset(self):
         user_feed_post_id = []
         user = self.request.user

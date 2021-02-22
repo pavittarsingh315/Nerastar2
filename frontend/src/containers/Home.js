@@ -8,7 +8,7 @@ function Home(props) {
 
     const styles = {
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'space-between'
     }
 

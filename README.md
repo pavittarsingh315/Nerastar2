@@ -124,3 +124,9 @@
 1. Updated requirements txt. Created view and url to filter users by slug. Created url patterns for robots.txt and manifest.json and favicons
 2. Added 404 page. Created a separate search bar component with new styles and everything.
 3. Turned off annoying autocomplete to every form
+
+## Twenty Third Commit
+
+1. Added custom pagination to posts view. Added Search User serializer, Search User view, and the custom pagination for the view. Changed dimension of saved posts
+2. Made post images responsive. Created Search User functionality view new types, actions, and piece of state in general reducer.
+3. Also changed post action to use pagination url to implement Infinite scroll

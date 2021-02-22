@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import Comments from './Comments';
 
 // Material Ui
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
@@ -26,7 +25,7 @@ function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComment
                 </div>
             </Link>
 
-            <LeftWidgetOption objValue={numPlays} uiIcon={PlayCircleOutlineIcon} />
+            {/* <LeftWidgetOption objValue={numPlays} uiIcon={PlayCircleOutlineIcon} /> */}
             
             <LeftWidgetOption postSlug={postSlug} liked={liked} objValue={numLikes} uiIcon={liked ? FavoriteIcon : FavoriteBorderIcon} />
 

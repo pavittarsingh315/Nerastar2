@@ -3,7 +3,8 @@ import {
     GET_USERS_FOLLOWERS,
     GET_USERS_FOLLOWING,
     FOLLOWERS_LOADING,
-    FOLLOWING_LOADING
+    FOLLOWING_LOADING,
+    SEARCH_USER
 } from '../actions/types';
 
 
@@ -12,7 +13,10 @@ const initialState = {
     followers: [],
     following:[],
     followersOfUser: null,
-    followingOfUser: null
+    followingOfUser: null,
+    searchedUsers: {
+        results: []
+    }
 }
 
 
@@ -39,6 +43,11 @@ export default function(state = initialState, action) {
                 followers: payload.response,
                 followersOfUser: payload.user,
                 isLoading: false
+            }
+        case SEARCH_USER:
+            return {
+                ...state,
+                searchedUsers: payload
             }
         default:
             return state
