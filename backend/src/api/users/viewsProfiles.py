@@ -48,6 +48,8 @@ class SearchUserPagination(pagination.PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
     max_page_size = 10
+
+
 class SearchUser(generics.ListAPIView):
     queryset = Profile.objects.all()
     serializer_class = SearchUser
@@ -69,12 +71,13 @@ def GetUserNotifications(request):
         profile = user.profile
         allNotifications = Notifications.objects.filter(receiver=profile)
         serializer = NotificationSerializer(allNotifications, many=True)
-        unreadNotifications = Notifications.objects.filter(receiver=profile, is_read=False)
+        unreadNotifications = Notifications.objects.filter(
+            receiver=profile, is_read=False)
         if unreadNotifications:
             for unread in unreadNotifications:
                 unread.is_read = True
                 unread.save()
-        
+
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

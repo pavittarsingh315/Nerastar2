@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { getFollowers, getFollowing } from '../redux/actions/general';
+import { getFollowers, getFollowing, viewProfile } from '../redux/actions/general';
 
 // Material Ui
 import Divider from '@material-ui/core/Divider';
@@ -17,13 +17,13 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 
 
-function RightMenu({ profile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser }) {
+function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, viewProfile }) {
     const [openFollowers, setOpenFollowers] = useState(false);
 
     const handleOpenFollowers = (username) => {
         setOpenFollowers(!openFollowers);
         if(!openFollowers) {
-            // this stops requests being sent everytime notifications are openned
+            // this stops requests being sent everytime modal is openned for current user
             if(username !== followersOfUser) {
                 getFollowers(username);
             }
@@ -35,7 +35,7 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
     const handleOpenFollowing = (username) => {
         setOpenFollowing(!openFollowing);
         if(!openFollowing) {
-            // this stops requests being sent everytime notifications are openned
+            // this stops requests being sent everytime modal is openned for current user
             if(username !== followingOfUser) {
                 getFollowing(username);
             }
@@ -46,39 +46,55 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
         <div className='rightmenu'>
             <div className='rightmenu__header'>
                 <div className='rightmenu__headerTop'>
-                    <img alt='' className='rightmenu__avatar' src={profile.avatar} />
+                    <img alt='' className='rightmenu__avatar' src={displayProfile.avatar} />
                     <div className="rightmenu__headerText">
-                        <h3>
-                            {profile.full_name}
-                        </h3>
-                        <Link to={`/${profile.user}`} style={{ textDecoration: 'none' }}>
-                            <span>
-                                @{profile.user}
-                            </span>
-                        </Link>
+                        {userProfile.user === displayProfile.user ? (
+                            <>
+                                <h3>
+                                    {displayProfile.full_name}
+                                </h3>
+                                <span style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '15px' }}>
+                                    @{displayProfile.user}
+                                </span>
+                            </>
+                        ) : (
+                            <>
+                                <div>
+                                    <h3>
+                                        {displayProfile.full_name}
+                                    </h3>
+                                    <span>
+                                        @{displayProfile.user}
+                                    </span>
+                                </div>
+                                <Button className="rightmenu__followBtn" size="small">
+                                    {displayProfile.areFollowing === "true" ? 'Unfollow' : 'Follow'}
+                                </Button>
+                            </>
+                        )}
                     </div>
                 </div>
                 <div className='rightmenu__headerBottom'>
                     <span>
-                        {profile.bio}
+                        {displayProfile.bio}
                     </span>
                 </div>
             </div>
             <Divider style={{ margin: '10px 0' }} />
             <div className='rightmenu__nav'>
-                <div className='rightmenu__navOption' onClick={() => handleOpenFollowers(profile.user)}>
+                <div className='rightmenu__navOption' onClick={() => handleOpenFollowers(displayProfile.user)}>
                     <span>
-                        {profile.number_followers}
+                        {displayProfile.number_followers}
                     </span>
                     Followers
                 </div>
-                <div className='rightmenu__navOption' onClick={() => handleOpenFollowing(profile.user)}>
+                <div className='rightmenu__navOption' onClick={() => handleOpenFollowing(displayProfile.user)}>
                     <span>
-                        {profile.number_following}
+                        {displayProfile.number_following}
                     </span>
                     Following
                 </div>
-                <Link to={`/posts/${profile.user}`} style={{ textDecoration: 'none' }}>
+                <Link to={`/posts/${displayProfile.user}`} style={{ textDecoration: 'none' }}>
                     <div className='rightmenu__navOption'>
                         <PermMediaOutlinedIcon />
                         Posts
@@ -93,7 +109,7 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
                     {followers.map(follower => (
                         <div key={follower.slug}>
                             <div key={follower.slug} className='followers'>
-                                <Link className="followers__left" to={follower.username} onClick={handleOpenFollowers} style={{ textDecoration: 'none' }}>
+                                <div className="followers__left" onClick={() => viewProfile(follower.username)}>
                                     <Avatar alt='' src={follower.avatar} />
                                     <div className="followers__leftText">
                                         <h3>{follower.name}</h3>
@@ -101,12 +117,12 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
                                             {follower.username}
                                         </h5>
                                     </div>
-                                </Link>
-                                {follower.following === "true" ? (
-                                    <Button className="followingBtn">Unfollow</Button>
-                                ) : (
-                                    <Button className="followBtn">Follow</Button>
-                                )}
+                                </div>
+                                {follower.username !== userProfile.user ? (
+                                    <Button size='small' className="followBtn">
+                                        {following.following === "true" ? 'Unfollow' : 'Follow'}
+                                    </Button>
+                                ) : null}
                             </div>
                             <Divider style={{ margin: '20px 0px 10px' }} />
                         </div>
@@ -123,7 +139,7 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
                     {following.map(following => (
                         <div key={following.slug}>
                             <div className='followers'>
-                                <Link className="followers__left" to={following.username} onClick={handleOpenFollowers} style={{ textDecoration: 'none' }}>
+                                <div className="followers__left" onClick={() => viewProfile(following.username)}>
                                     <Avatar alt='' src={following.avatar} />
                                     <div className="followers__leftText">
                                         <h3>{following.name}</h3>
@@ -131,12 +147,12 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
                                             {following.username}
                                         </h5>
                                     </div>
-                                </Link>
-                                {following.following === "true" ? (
-                                    <Button className="followingBtn">Unfollow</Button>
-                                ) : (
-                                    <Button className="followBtn">Follow</Button>
-                                )}
+                                </div>
+                                {following.username !== userProfile.user ? (
+                                    <Button size='small' className="followBtn">
+                                        {following.following === "true" ? 'Unfollow' : 'Follow'}
+                                    </Button>
+                                ) : null}
                             </div>
                             <Divider style={{ margin: '20px 0px 10px' }} />
                         </div>
@@ -149,7 +165,8 @@ function RightMenu({ profile, followers, following, getFollowers, getFollowing, 
 }
 
 const mapStateToProps = state => ({
-    profile: state.auth.profile,
+    userProfile: state.auth.profile,
+    displayProfile: state.general.displayProfile,
     followers: state.general.followers,
     following: state.general.following,
     followersOfUser: state.general.followersOfUser,
@@ -157,4 +174,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { getFollowers, getFollowing })(RightMenu);
+export default connect(mapStateToProps, { getFollowers, getFollowing, viewProfile })(RightMenu);

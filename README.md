@@ -130,3 +130,10 @@
 1. Added custom pagination to posts view. Added Search User serializer, Search User view, and the custom pagination for the view. Changed dimension of saved posts
 2. Made post images responsive. Created Search User functionality view new types, actions, and piece of state in general reducer.
 3. Also changed post action to use pagination url to implement Infinite scroll
+
+## Twenty Fourth Commit
+
+1. Added areFollowing field to profile serializer to check if user is following the profile.
+2. Added viewProfile action to get profile to display in the rightMenu.
+3. Changed rightMenu to show anyprofile. Changed some logic on the follow unfollow btns
+4. Put the avatar of user in navbar so on click it shows their profile in the rightmenu

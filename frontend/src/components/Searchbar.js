@@ -3,18 +3,17 @@ import '../Styles/searchbar.css';
 
 // Redux
 import { connect } from 'react-redux';
-import { searchUser } from '../redux/actions/general';
+import { searchUser, viewProfile } from '../redux/actions/general';
 
 // Material Ui
 import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
 
 
-function Searchbar({ searchUser, users }) {
+function Searchbar({ searchUser, users, viewProfile }) {
     const [search, setSearch] = useState("");
     const [pageNumber, setPageNumber] = useState(1);
 
-    const [clicked, setClicked] = useState(false);
     const [active, setActive] = useState(false);
     const searchRef = useRef();
 
@@ -25,22 +24,19 @@ function Searchbar({ searchUser, users }) {
 
     const handleAutoCompleteClick = user => {
         const username = document.getElementById(user).childNodes[1].childNodes[0].innerText.substring(1)
-        setClicked(true);
-        setSearch(username)
+        setSearch(username);
+        setActive(false);
+        viewProfile(username);
     }
 
     useEffect (() => {
         if (search) {
-            if (clicked) {
-                setActive(false)
-            } else {
-                setActive(true)
-            }
+            setActive(true);
         } else {
-            setActive(false)
+            setActive(false);
         }
         searchUser(search, pageNumber);
-    }, [search, clicked, pageNumber])
+    }, [search, pageNumber])
 
     useEffect(() => {
         const handleClickOutside = e => {
@@ -91,4 +87,4 @@ const mapStateToProps = state => ({
     users: state.general.searchedUsers.results
 })
 
-export default connect(mapStateToProps, { searchUser })(Searchbar);
+export default connect(mapStateToProps, { searchUser, viewProfile })(Searchbar);

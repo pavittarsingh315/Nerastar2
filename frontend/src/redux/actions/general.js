@@ -3,7 +3,8 @@ import {
     GET_USERS_FOLLOWING,
     FOLLOWERS_LOADING,
     FOLLOWING_LOADING,
-    SEARCH_USER
+    SEARCH_USER,
+    DISPLAY_PROFILE
 } from '../actions/types';
 import axios from 'axios';
 import { tokenConfig } from './auth';
@@ -57,4 +58,16 @@ export const searchUser = (query, page) => async (dispatch, getState) => {
                 })
             }).catch(err => console.log(err.response.data, err.response.status))
     }
+}
+
+
+export const viewProfile = (slug) => async (dispatch, getState) => {
+    await axios.get(`http://localhost:8000/api/profiles/anyprofile/${slug}/`, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: DISPLAY_PROFILE,
+                payload: res.data
+            })
+        }).catch(err => console.log(err.response.data, err.response.status))
+
 }

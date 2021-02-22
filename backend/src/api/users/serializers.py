@@ -1,8 +1,8 @@
+from users.models import Profile, Friendship, Notifications
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 User = get_user_model()
-from django.contrib.auth import authenticate
-from users.models import Profile, Friendship, Notifications
 
 
 class LoginSerializer(serializers.Serializer):
@@ -13,7 +13,8 @@ class LoginSerializer(serializers.Serializer):
         user = authenticate(**data)
         if user and user.is_active:
             return user
-        raise serializers.ValidationError("Login Failed. Please check your credentials.")
+        raise serializers.ValidationError(
+            "Login Failed. Please check your credentials.")
 
 
 class ProfileFollowingFollowerSerializer(serializers.ModelSerializer):
@@ -38,7 +39,6 @@ class ProfileFollowingFollowerSerializer(serializers.ModelSerializer):
             return 'true'
         else:
             return 'false'
-        
 
     class Meta:
         model = User
@@ -55,12 +55,21 @@ class ProfileSerializer(serializers.ModelSerializer):
     # this and get_user return the profile user's username rather than just the id
     user = serializers.SerializerMethodField()
     unreadNotifications = serializers.SerializerMethodField()
+    areFollowing = serializers.SerializerMethodField()
 
     def get_user(self, obj):
         return obj.user.username
 
     def get_unreadNotifications(self, obj):
         return Notifications.objects.filter(is_read=False, receiver=obj).count()
+
+    def get_areFollowing(self, obj):
+        request = self.context.get("request")
+        user = request.user
+        if user in obj.followers.all():
+            return 'true'
+        else:
+            return 'false'
 
     class Meta:
         model = Profile
@@ -73,7 +82,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'slug',
             'number_following',
             'number_followers',
-            'unreadNotifications'
+            'unreadNotifications',
+            'areFollowing'
         ]
 
 

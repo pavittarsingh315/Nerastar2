@@ -1,25 +1,24 @@
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import EmailMessage
+from users.tokens import account_activation_token
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_text
+from django.contrib.sites.shortcuts import get_current_site
+from .serializers import ProfileSerializer, LoginSerializer
+from rest_framework import permissions, generics, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import permissions, generics, status
-
-from .serializers import ProfileSerializer, LoginSerializer
 
 # these are all the imports for user email verification
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.template.loader import render_to_string
-from users.tokens import account_activation_token
-from django.core.mail import EmailMessage
 
 # Password Reset
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 # Tokens
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class GetProfileView(generics.RetrieveAPIView):
@@ -57,7 +56,7 @@ class RegisterView(APIView):
         data = self.request.data
 
         name = data['name']
-        username = data['username']
+        username = data['username'].replace(" ", "")
         email = data['email']
         password = data['password']
         password2 = data['password2']
@@ -78,10 +77,11 @@ class RegisterView(APIView):
                 if len(password) < 8:
                     return Response({'error': 'Password must be at least 8 characters'}, status=status.HTTP_400_BAD_REQUEST)
                 else:
-                    user = User.objects.create_user(full_name=name, username=username, email=email, password=password)
+                    user = User.objects.create_user(
+                        full_name=name, username=username, email=email, password=password)
                     user.is_active = False
                     user.save()
-                    
+
                     current_site = get_current_site(request)
                     mail_subject = 'Complete your registration for Nerastar!'
                     message = render_to_string('templates/acc_activate_email.html', {
@@ -158,7 +158,7 @@ class PasswordResetConfirm(APIView):
     permission_classes = [
         permissions.AllowAny
     ]
-    
+
     def post(self, request):
         data = self.request.data
         uidb64 = data['uid']

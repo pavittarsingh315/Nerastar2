@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/actions/auth';
 import { getNotifications, deleteNotification } from '../redux/actions/alerts';
 import { addPost } from '../redux/actions/posts';
+import { viewProfile } from '../redux/actions/general';
 
 // Material Ui
 
@@ -57,7 +58,7 @@ const InputField = withStyles({
 })(TextField);
 
 
-function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, profile, addPost }) {
+function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, profile, addPost, viewProfile }) {
     const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
     const [openNotifications, setOpenNotifications] = useState(false);
     const [createPostOpen, setCreatePostOpen] = useState(false);
@@ -143,6 +144,11 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
             </div>
 
             <div className='navbar__right'>
+                <div className='navbar__icon' onClick={() => viewProfile(profile.user)}>
+                    <Tooltip title='Profile' arrow enterDelay={0} leaveDelay={25}>
+                        <Avatar src={profile.avatar} />
+                    </Tooltip>
+                </div>
                 <div className='navbar__icon'  onClick={handleCreatePostOpen}>
                     <Tooltip title='Add Post' arrow enterDelay={0} leaveDelay={25}>
                         <IconButton>
@@ -315,4 +321,4 @@ const mapStateToProps = state => ({
     profile: state.auth.profile
 })
 
-export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, addPost })(Navbar);
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, addPost, viewProfile })(Navbar);

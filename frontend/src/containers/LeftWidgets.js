@@ -1,8 +1,11 @@
 import React from 'react';
 import '../Styles/Home.css';
 import LeftWidgetOption from '../components/LeftWidetOptions';
-import { Link } from "react-router-dom";
 import Comments from './Comments';
+
+// Redux
+import { useDispatch } from "react-redux";
+import { viewProfile } from "../redux/actions/general";
 
 // Material Ui
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -15,15 +18,15 @@ import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 
 
 function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComments, postSlug, liked, postIsMine}) {
+    const dispatch = useDispatch();
+    
     return (
         <div className='leftwidgets'>
 
-            <Link to={`/${userSlug}`} className='leftwidgets__profile'>
-                <div className="leftwidgetoption">
-                    <Avatar alt='' src={avatar} />
-                    <h2>{username}</h2>
-                </div>
-            </Link>
+            <div className="leftwidgetoption" onClick={() => dispatch(viewProfile(userSlug))}>
+                <Avatar alt='' src={avatar} />
+                <h2>{username}</h2>
+            </div>
 
             {/* <LeftWidgetOption objValue={numPlays} uiIcon={PlayCircleOutlineIcon} /> */}
             

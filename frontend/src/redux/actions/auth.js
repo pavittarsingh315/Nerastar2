@@ -17,7 +17,8 @@ import {
     PASSWORD_RESET_CONFIRM_FAIL,
     GET_ALERTS,
     CLEAR_ALERTS,
-    CLEAR_POSTS
+    CLEAR_POSTS,
+    DISPLAY_PROFILE
 } from './types';
 import axios from 'axios';
 
@@ -27,6 +28,10 @@ export const loadUser = () => async (dispatch, getState) => {
 
     await axios.get('http://localhost:8000/api/users/currentuserprofile/', tokenConfig(getState))
         .then(res => {
+            dispatch({
+                type: DISPLAY_PROFILE,
+                payload: res.data
+            })
             dispatch({
                 type: USER_LOAD_SUCCESS,
                 payload: res.data
@@ -78,10 +83,18 @@ export const login = (email, password, rememberMe) => async dispatch => {
         .then(res => {
             if (rememberMe) {
                 dispatch({
+                    type: DISPLAY_PROFILE,
+                    payload: res.data.profile
+                })
+                dispatch({
                     type: LOGIN_SUCCESS,
                     payload: res.data
                 })
             } else {
+                dispatch({
+                    type: DISPLAY_PROFILE,
+                    payload: res.data.profile
+                })
                 dispatch({
                     type: LOGIN_SUCCESS_SESSION,
                     payload: res.data
