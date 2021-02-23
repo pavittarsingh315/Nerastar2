@@ -78,7 +78,6 @@ function Login({ login, isAuthenticated }) {
                         fullWidth
                         id="email"
                         label="Email Address"
-                        autoComplete="off"
                         autoFocus
                     />
                     <InputField

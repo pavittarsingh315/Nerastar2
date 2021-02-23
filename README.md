@@ -137,3 +137,10 @@
 2. Added viewProfile action to get profile to display in the rightMenu.
 3. Changed rightMenu to show anyprofile. Changed some logic on the follow unfollow btns
 4. Put the avatar of user in navbar so on click it shows their profile in the rightmenu
+
+## Twenty Five Commit
+
+1. added areFollowing field to profileserializer to show if user has requested, follows, or isnt following a user. Getting type of notification to show accept or decline button if its a follow notification.
+2. Added view to follow, accept, or decline follow request.
+3. Added ternary to show settings btn on users profile but following status on other users profiles.
+4. Added action to send follow request. Added action to accept or decline follow request

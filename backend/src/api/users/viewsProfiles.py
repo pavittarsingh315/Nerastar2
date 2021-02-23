@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 # Project imports
 from users.models import Friendship, SiteUser, Profile, Notifications
-from .serializers import ProfileSerializer, ProfileFollowingFollowerSerializer, NotificationSerializer, SearchUser
+from .serializers import ProfileSerializer, ProfileFollowingFollowerSerializer, NotificationSerializer, SearchUserSerializer, FriendshipSerializer
 
 
 # gets logged in user's profile. only place where profile can be editted and only the owner can edit it here
@@ -52,7 +52,7 @@ class SearchUserPagination(pagination.PageNumberPagination):
 
 class SearchUser(generics.ListAPIView):
     queryset = Profile.objects.all()
-    serializer_class = SearchUser
+    serializer_class = SearchUserSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['^slug', '^full_name']
     pagination_class = SearchUserPagination
@@ -111,3 +111,50 @@ def DeleteUser(request, slug):
             return Response(msg, status=status.HTTP_403_FORBIDDEN)
     else:
         return Response({'error': 'This user does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET', 'POST', 'PUT'])
+def FollowUnFollowUsers(request):
+    user = request.user
+    receiver = request.data['receiver']
+    sender = request.data['sender']
+    objStatus = request.data['status']
+
+    if request.method == 'GET':
+        objs = Friendship.objects.filter(receiver=user.profile)
+        serializer = FriendshipSerializer(objs, many=True)
+        return Response(serializer.data)
+
+    if request.method == 'POST':
+        
+        if receiver and sender and objStatus:
+            sender = Profile.objects.get(slug=sender)
+            receiver = Profile.objects.get(slug=receiver)
+            if user.profile != sender:
+                return Response({'error': 'You are not the owner of this profile'}, status=status.HTTP_403_FORBIDDEN)
+            else:
+                friendship = Friendship.objects.create(sender=sender, receiver=receiver, status=objStatus)
+                friendship.save()
+                if not Notifications.objects.filter(sender=sender, receiver=receiver, notificationType='Follow').exists():
+                    message = f"requested to follow you"
+                    notification = Notifications(sender=sender, receiver=receiver, notificationType='Follow', message=message)
+                    notification.save()
+        else:
+            return Response({'error': 'Bad request'})
+
+        return Response({'success': 'Request sent'}, status=status.HTTP_200_OK)
+
+    if request.method == 'PUT':
+        sender = Profile.objects.get(slug=sender)
+        receiver = Profile.objects.get(slug=receiver)
+        try:
+            friendshipObj = Friendship.objects.get(receiver=receiver, sender=sender)
+        except friendshipObj.DoesNotExist:
+            return Response({"error": "No Such Instance!"}, status=status.HTTP_404_NOT_FOUND)
+            
+        if user.profile != friendshipObj.receiver:
+            return Response({'error': 'You are not the owner of this profile'}, status=status.HTTP_403_FORBIDDEN)
+        else:
+            friendshipObj.status = objStatus
+            friendshipObj.save()
+        return Response({'success': 'Success'}, status=status.HTTP_200_OK)

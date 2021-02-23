@@ -49,12 +49,12 @@
   cursor: pointer;
 }
 
-.comments__option>.MuiSvgIcon-root {
+.comments__option > .MuiSvgIcon-root {
   padding: 20px;
   color: var(--primary-color);
 }
 
-.comments__option>h2 {
+.comments__option > h2 {
   font-size: 20px;
   margin-right: 20px;
 }
@@ -80,11 +80,11 @@
   padding: 0 10px;
 }
 
-.comment__body>h3 {
+.comment__body > h3 {
   font-size: 20px;
 }
 
-.comment__body>h5 {
+.comment__body > h5 {
   font-size: 14px;
 }
 
@@ -163,14 +163,28 @@
   padding-right: 15px;
 }
 
-.notification__bodyRight>h3 {
+.notification__bodyRight > h3 {
   font-size: 20px;
   color: rgba(0, 0, 0, 0.87);
 }
 
-.notification__bodyRight>h5 {
+.notification__bodyRight > h5 {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.87);
+}
+
+.notification__followBtns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.notification__followOption {
+  margin-top: 5px !important;
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  font-weight: 500 !important;
+  text-transform: capitalize !important;
 }
 
 /* Followers */
@@ -186,7 +200,8 @@
   margin-bottom: 16px !important;
   background-color: var(--primary-color) !important;
   color: white !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  text-transform: capitalize !important;
 }
 
 .followers__left {

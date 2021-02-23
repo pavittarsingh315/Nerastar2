@@ -70,7 +70,7 @@ def Like_Unlike_Post(request, slug):
                 receiver = post.creator
                 if sender != receiver:
                     if not Notifications.objects.filter(post=post, sender=sender, receiver=receiver, notificationType='Like').exists():
-                        message = f"{sender.user.username} liked your post"
+                        message = "liked your post"
                         notification = Notifications(post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
                         notification.save()
 

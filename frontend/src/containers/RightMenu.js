@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { getFollowers, getFollowing, viewProfile } from '../redux/actions/general';
+import { getFollowers, getFollowing, viewProfile, followRequest } from '../redux/actions/general';
 
 // Material Ui
 import Divider from '@material-ui/core/Divider';
@@ -15,9 +15,12 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import SettingsIcon from '@material-ui/icons/Settings';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
-function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, viewProfile }) {
+function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, viewProfile, followRequest }) {
     const [openFollowers, setOpenFollowers] = useState(false);
 
     const handleOpenFollowers = (username) => {
@@ -42,36 +45,41 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
         }
     };
 
+    const handleFollowRequest = e => {
+        const type = e.target.innerText
+        if (type === 'Follow') {
+            followRequest(userProfile.user, displayProfile.user, "send")
+        }
+    }
+
     return (
         <div className='rightmenu'>
             <div className='rightmenu__header'>
                 <div className='rightmenu__headerTop'>
                     <img alt='' className='rightmenu__avatar' src={displayProfile.avatar} />
                     <div className="rightmenu__headerText">
+                        <div>
+                            <h3>
+                                {displayProfile.full_name}
+                            </h3>
+                            <span>
+                                @{displayProfile.user}
+                            </span>
+                        </div>
                         {userProfile.user === displayProfile.user ? (
-                            <>
-                                <h3>
-                                    {displayProfile.full_name}
-                                </h3>
-                                <span style={{ color: 'var(--primary-color)', fontWeight: '600', fontSize: '15px' }}>
-                                    @{displayProfile.user}
-                                </span>
-                            </>
+                            <div className="rightmenu__settingsBtn">
+                                <Tooltip title='Settings' arrow enterDelay={0} leaveDelay={25}>
+                                    <IconButton>
+                                        <SettingsIcon />
+                                    </IconButton>
+                                </Tooltip>
+                            </div>
                         ) : (
-                            <>
-                                <div>
-                                    <h3>
-                                        {displayProfile.full_name}
-                                    </h3>
-                                    <span>
-                                        @{displayProfile.user}
-                                    </span>
-                                </div>
-                                <Button className="rightmenu__followBtn" size="small">
-                                    {displayProfile.areFollowing === "true" ? 'Unfollow' : 'Follow'}
-                                </Button>
-                            </>
+                            <Button className="rightmenu__followBtn" size="small" onClick={e => handleFollowRequest(e)}>
+                                {displayProfile.areFollowing === "true" ? 'Unfollow' : displayProfile.areFollowing === "requested" ? "Requested" : "Follow"}
+                            </Button>
                         )}
+                        
                     </div>
                 </div>
                 <div className='rightmenu__headerBottom'>
@@ -174,4 +182,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { getFollowers, getFollowing, viewProfile })(RightMenu);
+export default connect(mapStateToProps, { getFollowers, getFollowing, viewProfile, followRequest })(RightMenu);

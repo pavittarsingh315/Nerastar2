@@ -44,6 +44,11 @@
   margin: 0 5px;
 }
 
+.navbar__icon > div {
+  cursor: pointer;
+  margin: 0 5px;
+}
+
 /* Color of badge on notification icon */
 .navbar__icon > button > span > span > span {
   color: white;

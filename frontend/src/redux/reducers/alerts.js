@@ -29,7 +29,8 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 msg: {},
-                status: null
+                status: null,
+                notification: []
             }
         case GET_NOTIFICATIONS:
             return {

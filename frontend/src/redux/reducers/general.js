@@ -5,7 +5,8 @@ import {
     FOLLOWERS_LOADING,
     FOLLOWING_LOADING,
     SEARCH_USER,
-    DISPLAY_PROFILE
+    DISPLAY_PROFILE,
+    CLEAR_GENERAL
 } from '../actions/types';
 
 
@@ -55,6 +56,19 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 searchedUsers: payload
+            }
+        case CLEAR_GENERAL:
+            return {
+                ...state,
+                isLoading: false,
+                followers: [],
+                following:[],
+                followersOfUser: null,
+                followingOfUser: null,
+                searchedUsers: {
+                    results: []
+                },
+                displayProfile: null
             }
         default:
             return state

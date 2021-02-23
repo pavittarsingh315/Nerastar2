@@ -18,7 +18,8 @@ import {
     GET_ALERTS,
     CLEAR_ALERTS,
     CLEAR_POSTS,
-    DISPLAY_PROFILE
+    DISPLAY_PROFILE,
+    CLEAR_GENERAL
 } from './types';
 import axios from 'axios';
 
@@ -276,6 +277,9 @@ export const logout = () => dispatch => {
     })
     dispatch({
         type: CLEAR_POSTS
+    })
+    dispatch({
+        type: CLEAR_GENERAL
     })
 }
 

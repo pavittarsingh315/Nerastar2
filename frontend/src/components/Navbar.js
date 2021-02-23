@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/actions/auth';
 import { getNotifications, deleteNotification } from '../redux/actions/alerts';
 import { addPost } from '../redux/actions/posts';
-import { viewProfile } from '../redux/actions/general';
+import { viewProfile, acceptOrDeclineFollowRequest } from '../redux/actions/general';
 
 // Material Ui
 
@@ -58,7 +58,7 @@ const InputField = withStyles({
 })(TextField);
 
 
-function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, profile, addPost, viewProfile }) {
+function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, profile, addPost, viewProfile, acceptOrDeclineFollowRequest }) {
     const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
     const [openNotifications, setOpenNotifications] = useState(false);
     const [createPostOpen, setCreatePostOpen] = useState(false);
@@ -129,6 +129,18 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
             fileName: null
         });
     }
+
+    const handleAcceptOrDecline = (e, notificationSender, notificationId) => {
+        const type = e.target.innerText
+        if (type === 'Accept') {
+            acceptOrDeclineFollowRequest(notificationSender, profile.user, 'accepted');
+            deleteNotification(notificationId)
+        } else if (type === 'Decline') {
+            acceptOrDeclineFollowRequest(notificationSender, profile.user, 'ignore');
+            deleteNotification(notificationId)
+        }
+    }
+
     return (
         <div className='navbar'>
             <Link to ='/' style={{ textDecoration: 'none', color: 'rgba(0, 0, 0, 0.87)' }}>
@@ -202,9 +214,16 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                                         </Link>
                                     </div>
                                     <div>
-                                        <IconButton onClick={() => deleteNotification(notification.id)}>
-                                            <CloseIcon />
-                                        </IconButton>
+                                        {notification.notificationType === 'Like' ? (
+                                            <IconButton onClick={() => deleteNotification(notification.id)}>
+                                                <CloseIcon />
+                                            </IconButton>
+                                        ) : notification.notificationType === 'Follow' ? (
+                                            <div className='notification__followBtns'>
+                                                <Button className='notification__followOption' onClick={e => handleAcceptOrDecline(e, notification.sender, notification.id)} size='small'>Accept</Button>
+                                                <Button className='notification__followOption' onClick={e => handleAcceptOrDecline(e, notification.sender, notification.id)} size='small'>Decline</Button>
+                                            </div>
+                                        ) : null}
                                     </div>
                                 </div>
                                 <Divider style={{ margin: '20px 0px 10px' }} />
@@ -321,4 +340,4 @@ const mapStateToProps = state => ({
     profile: state.auth.profile
 })
 
-export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, addPost, viewProfile })(Navbar);
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, addPost, viewProfile, acceptOrDeclineFollowRequest })(Navbar);

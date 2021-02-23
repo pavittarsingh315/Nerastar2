@@ -39,7 +39,10 @@ export default function(state = initialState, action) {
         case CLEAR_POSTS:
             return{
                 ...state,
-                posts: []
+                posts: [],
+                isLoading: false,
+                hasMore: true,
+                error: false
             }
         default:
             return state

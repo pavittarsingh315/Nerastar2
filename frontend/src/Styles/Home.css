@@ -31,20 +31,20 @@
   cursor: pointer;
 }
 
-.leftwidgetoption>.MuiSvgIcon-root {
+.leftwidgetoption > .MuiSvgIcon-root {
   padding: 20px;
   color: var(--primary-color);
 }
 
-.leftwidgetoption>.MuiAvatar-root {
+.leftwidgetoption > .MuiAvatar-root {
   padding: 12px;
 }
 
-.leftwidgetoption>.MuiAvatar-root>img {
+.leftwidgetoption > .MuiAvatar-root > img {
   border-radius: 20px;
 }
 
-.leftwidgetoption>h2 {
+.leftwidgetoption > h2 {
   font-size: 20px;
   margin-right: 20px;
 }
@@ -95,7 +95,7 @@
   padding: 15px 10px;
 }
 
-.post__header>p {
+.post__header > p {
   font-weight: 900;
   font-size: 15px;
 }
@@ -105,7 +105,7 @@
   margin: 0 auto;
 }
 
-.img__container>img {
+.img__container > img {
   width: 100%;
   border-radius: 15px;
 }
@@ -117,7 +117,7 @@
   max-width: 600px;
 } */
 
-.post__media>video {
+.post__media > video {
   border-radius: 30px;
 }
 
@@ -138,14 +138,14 @@
   justify-content: flex-start;
 }
 
-.rightmenu__headerTop>img {
+.rightmenu__headerTop > img {
   width: 90%;
   height: 90%;
   margin: auto;
   border-radius: 30px;
 }
 
-.rightmenu__headerBottom>span {
+.rightmenu__headerBottom > span {
   font-weight: 600;
   font-size: 15px;
 }
@@ -157,11 +157,11 @@
   padding: 10px 0px;
 }
 
-.rightmenu__headerText>div>h3 {
+.rightmenu__headerText > div > h3 {
   font-size: 20px;
 }
 
-.rightmenu__headerText>div>span {
+.rightmenu__headerText > div > span {
   font-weight: 600;
   font-size: 15px;
   color: var(--primary-color);
@@ -198,5 +198,10 @@
 .rightmenu__followBtn {
   background-color: var(--primary-color) !important;
   color: white !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  text-transform: capitalize !important;
+}
+
+.rightmenu__settingsBtn > button {
+  color: var(--primary-color);
 }

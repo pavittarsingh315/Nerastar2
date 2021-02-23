@@ -6,9 +6,10 @@ from .viewsProfiles import (
         ListFollowersOrFollowing, 
         GetUserNotifications,
         DeleteNotification,
-        SearchUser
+        SearchUser,
+        FollowUnFollowUsers,
     )
-
+from rest_framework import routers
 
 
 urlpatterns = [
@@ -19,5 +20,6 @@ urlpatterns = [
     path('delete-account/<str:slug>/', DeleteUser),
     # remember for this one you need the ?type=... look at the view for more info
     path('followers-following/<str:slug>/', ListFollowersOrFollowing.as_view()),
-    path('searchuser/', SearchUser.as_view())
+    path('searchuser/', SearchUser.as_view()),
+    path('followunfollow/', FollowUnFollowUsers),
 ]

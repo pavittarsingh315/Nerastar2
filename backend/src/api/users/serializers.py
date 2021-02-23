@@ -68,6 +68,11 @@ class ProfileSerializer(serializers.ModelSerializer):
         user = request.user
         if user in obj.followers.all():
             return 'true'
+        elif not user.is_anonymous:
+            if Friendship.objects.filter(sender=user.profile, receiver=obj).exists():
+                return 'requested'
+            else:
+                return 'false'
         else:
             return 'false'
 
@@ -93,7 +98,10 @@ class NotificationSerializer(serializers.ModelSerializer):
     senderAvatar = serializers.SerializerMethodField()
 
     def get_post(self, obj):
-        return obj.post.slug
+        if obj.post:
+            return obj.post.slug
+        else:
+            return 'null'
 
     def get_sender(self, obj):
         return obj.sender.user.username
@@ -109,11 +117,12 @@ class NotificationSerializer(serializers.ModelSerializer):
             'is_read',
             'post',
             'sender',
-            'senderAvatar'
+            'senderAvatar',
+            'notificationType'
         ]
 
 
-class SearchUser(serializers.ModelSerializer):
+class SearchUserSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
 
     def get_user(self, obj):
@@ -126,3 +135,9 @@ class SearchUser(serializers.ModelSerializer):
             'user',
             'full_name'
         ]
+
+
+class FriendshipSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Friendship
+        fields = '__all__'
