@@ -1,4 +1,4 @@
-import { CLEAR_ALERTS, GET_ALERTS, GET_NOTIFICATIONS, DELETE_NOTIFICATION, NOTIFICATIONS_LOADING } from './types';
+import { CLEAR_ALERTS, GET_ALERTS, GET_NOTIFICATIONS, DELETE_NOTIFICATION, NOTIFICATIONS_LOADING, REMOVE_NOTIFICATION } from './types';
 import axios from 'axios';
 import { tokenConfig } from './auth';
 
@@ -34,7 +34,7 @@ export const deleteNotification = (id) => async (dispatch, getState) => {
         .catch(err => console.log(err.response.data, err.response.status))
 }
 
-export const createSuccessAlert = (msg) => dispatch => {
+export const createSuccessAlert = msg => dispatch => {
     const message = {
         "success": msg
     }
@@ -45,5 +45,12 @@ export const createSuccessAlert = (msg) => dispatch => {
     dispatch({
         type: GET_ALERTS,
         payload: alerts
+    })
+}
+
+export const removeNotification = id => dispatch => {
+    dispatch({
+        type: REMOVE_NOTIFICATION,
+        payload: id
     })
 }

@@ -41,12 +41,16 @@ class Post(models.Model):
         # this has to be after slug save but before image resize
         super(Post, self).save(*args, **kwargs)
 
-        img = Image.open(self.media.path)
-
-        if img.height > 600 or img.width > 600:
-            output_size = (600, 600)
-            img.thumbnail(output_size)
-            img.save(self.media.path)
+        try:
+            img = Image.open(self.media.path)
+        except:
+            pass
+        
+        if img:
+            if img.height > 600 or img.width > 600:
+                output_size = (600, 600)
+                img.thumbnail(output_size)
+                img.save(self.media.path)
         
 
         

@@ -37,6 +37,8 @@ class ProfileFollowingFollowerSerializer(serializers.ModelSerializer):
         user = request.user
         if user in obj.profile.followers.all():
             return 'true'
+        elif Friendship.objects.filter(sender=user.profile, receiver=obj.profile).exists():
+            return 'requested'
         else:
             return 'false'
 

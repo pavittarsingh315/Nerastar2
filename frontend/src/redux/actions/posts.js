@@ -1,4 +1,4 @@
-import { GET_POSTS, ADD_POST, POSTS_LOADING, GET_ALERTS, POST_LOADING_ERROR } from './types';
+import { GET_POSTS, ADD_POST, POSTS_LOADING, GET_ALERTS, POST_LOADING_ERROR, CLEAR_POSTS, CLEAR_POSTS_FIELD } from './types';
 import axios from 'axios';
 import { tokenConfig } from './auth';
 
@@ -66,4 +66,10 @@ export const addPost = (post, username) => async (dispatch, getState) => {
                 payload: alerts
             })
         })
+}
+
+export const clearPosts = () => dispatch => {
+    dispatch({
+        type: CLEAR_POSTS_FIELD
+    })
 }

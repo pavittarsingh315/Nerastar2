@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_POSTS, ADD_POST, POSTS_LOADING, CLEAR_POSTS, POST_LOADING_ERROR } from '../actions/types';
+import { GET_POSTS, ADD_POST, POSTS_LOADING, CLEAR_POSTS, POST_LOADING_ERROR, CLEAR_POSTS_FIELD } from '../actions/types';
 
 
 const initialState = {
@@ -43,6 +43,11 @@ export default function(state = initialState, action) {
                 isLoading: false,
                 hasMore: true,
                 error: false
+            }
+        case CLEAR_POSTS_FIELD:
+            return {
+                ...state,
+                posts: []
             }
         default:
             return state

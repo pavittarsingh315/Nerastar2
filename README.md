@@ -144,3 +144,9 @@
 2. Added view to follow, accept, or decline follow request.
 3. Added ternary to show settings btn on users profile but following status on other users profiles.
 4. Added action to send follow request. Added action to accept or decline follow request
+
+## Twenty Six Commit
+
+1. Returning if requested in follower/following modal. Recreated Follow/UnFollow View. Made friendship a foreign key to notification and if deleted notification is also deleted
+2. Added new action and reducer to remove notifications from state. it doesn't send any requests. Added logic to follow, unfollow users from rightmenu and follower/following modals.
+3. Created action to clear posts.

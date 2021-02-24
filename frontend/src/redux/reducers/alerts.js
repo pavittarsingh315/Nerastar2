@@ -1,5 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_ALERTS, CLEAR_ALERTS, GET_NOTIFICATIONS, DELETE_NOTIFICATION, NOTIFICATIONS_LOADING } from '../actions/types';
+import { GET_ALERTS, CLEAR_ALERTS, GET_NOTIFICATIONS, DELETE_NOTIFICATION, NOTIFICATIONS_LOADING, REMOVE_NOTIFICATION } from '../actions/types';
 
 
 const initialState = {
@@ -38,6 +38,7 @@ export default function(state = initialState, action) {
                 notifications: payload,
                 isLoading: false
             }
+        case REMOVE_NOTIFICATION:
         case DELETE_NOTIFICATION:
             return {
                 ...state,

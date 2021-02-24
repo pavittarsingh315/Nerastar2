@@ -113,48 +113,52 @@ def DeleteUser(request, slug):
         return Response({'error': 'This user does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['GET', 'POST', 'PUT'])
+@api_view(['POST', 'PUT'])
 def FollowUnFollowUsers(request):
     user = request.user
     receiver = request.data['receiver']
     sender = request.data['sender']
     objStatus = request.data['status']
 
-    if request.method == 'GET':
-        objs = Friendship.objects.filter(receiver=user.profile)
-        serializer = FriendshipSerializer(objs, many=True)
-        return Response(serializer.data)
+    if receiver and sender and objStatus:
+        receiver = Profile.objects.get(slug=receiver)
+        sender = Profile.objects.get(slug=sender)
 
-    if request.method == 'POST':
-        
-        if receiver and sender and objStatus:
-            sender = Profile.objects.get(slug=sender)
-            receiver = Profile.objects.get(slug=receiver)
-            if user.profile != sender:
+        if request.method == 'POST':
+            if sender == user.profile:
+                if objStatus == 'Follow':
+                    friendship = Friendship.objects.create(sender=sender, receiver=receiver, status='send')
+                    friendship.save()
+                    if not Notifications.objects.filter(friendship=friendship, sender=sender, receiver=receiver, notificationType='Follow').exists():
+                        message = f"requested to follow you"
+                        notification = Notifications(friendship=friendship, sender=sender, receiver=receiver, notificationType='Follow', message=message)
+                        notification.save()
+                elif objStatus == 'Cancel':
+                    if Friendship.objects.filter(sender=sender, receiver=receiver, status='send').exists():
+                        Friendship.objects.filter(sender=sender, receiver=receiver, status='send').delete()
+                    else:
+                        return Response({'error': 'Instance does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+                elif objStatus == 'Unfollow':
+                    senderUser = sender.user
+                    receiverUser = receiver.user
+                    sender.following.remove(receiverUser)
+                    receiver.followers.remove(senderUser)
+            else:
+                return Response({'error': 'N.O.O.T.P'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'success': 'Alls went well'})
+
+        if request.method == 'PUT':
+            try:
+                friendshipObj = Friendship.objects.get(receiver=receiver, sender=sender)
+            except friendshipObj.DoesNotExist:
+                return Response({"error": "No Such Instance!"}, status=status.HTTP_404_NOT_FOUND)
+                
+            if user.profile != friendshipObj.receiver:
                 return Response({'error': 'You are not the owner of this profile'}, status=status.HTTP_403_FORBIDDEN)
             else:
-                friendship = Friendship.objects.create(sender=sender, receiver=receiver, status=objStatus)
-                friendship.save()
-                if not Notifications.objects.filter(sender=sender, receiver=receiver, notificationType='Follow').exists():
-                    message = f"requested to follow you"
-                    notification = Notifications(sender=sender, receiver=receiver, notificationType='Follow', message=message)
-                    notification.save()
-        else:
-            return Response({'error': 'Bad request'})
+                friendshipObj.status = objStatus
+                friendshipObj.save()
+            return Response({'success': 'Success'}, status=status.HTTP_200_OK)
 
-        return Response({'success': 'Request sent'}, status=status.HTTP_200_OK)
-
-    if request.method == 'PUT':
-        sender = Profile.objects.get(slug=sender)
-        receiver = Profile.objects.get(slug=receiver)
-        try:
-            friendshipObj = Friendship.objects.get(receiver=receiver, sender=sender)
-        except friendshipObj.DoesNotExist:
-            return Response({"error": "No Such Instance!"}, status=status.HTTP_404_NOT_FOUND)
-            
-        if user.profile != friendshipObj.receiver:
-            return Response({'error': 'You are not the owner of this profile'}, status=status.HTTP_403_FORBIDDEN)
-        else:
-            friendshipObj.status = objStatus
-            friendshipObj.save()
-        return Response({'success': 'Success'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'Field missing'}, status=status.HTTP_400_BAD_REQUEST)

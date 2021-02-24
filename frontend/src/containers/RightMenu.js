@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { getFollowers, getFollowing, viewProfile, followRequest } from '../redux/actions/general';
+import { getFollowers, getFollowing, viewProfile, handleFollowers } from '../redux/actions/general';
 
 // Material Ui
 import Divider from '@material-ui/core/Divider';
@@ -20,7 +20,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, viewProfile, followRequest }) {
+function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, viewProfile, handleFollowers }) {
     const [openFollowers, setOpenFollowers] = useState(false);
 
     const handleOpenFollowers = (username) => {
@@ -45,10 +45,29 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
         }
     };
 
-    const handleFollowRequest = e => {
-        const type = e.target.innerText
-        if (type === 'Follow') {
-            followRequest(userProfile.user, displayProfile.user, "send")
+    const handleFollowRequest = (e, username) => {
+        const element = e.target
+        if (element.innerText === 'Follow') {
+            if (username) {
+                handleFollowers(userProfile.user, username, "Follow")
+            } else {
+                handleFollowers(userProfile.user, displayProfile.user, "Follow")
+            }
+            element.innerText = 'Cancel Request'
+        } else if (element.innerText === 'Unfollow') {
+            if (username) {
+                handleFollowers(userProfile.user, username, "Unfollow")
+            } else {
+                handleFollowers(userProfile.user, displayProfile.user, "Unfollow")
+            }
+            element.innerText = 'Follow'
+        } else if (element.innerText === 'Cancel Request') {
+            if (username) {
+                handleFollowers(userProfile.user, username, "Cancel")
+            } else {
+                handleFollowers(userProfile.user, displayProfile.user, "Cancel")
+            }
+            element.innerText = 'Follow'
         }
     }
 
@@ -76,7 +95,7 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                             </div>
                         ) : (
                             <Button className="rightmenu__followBtn" size="small" onClick={e => handleFollowRequest(e)}>
-                                {displayProfile.areFollowing === "true" ? 'Unfollow' : displayProfile.areFollowing === "requested" ? "Requested" : "Follow"}
+                                {displayProfile.areFollowing === "true" ? 'Unfollow' : displayProfile.areFollowing === "requested" ? "Cancel Request" : "Follow"}
                             </Button>
                         )}
                         
@@ -127,8 +146,8 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                                     </div>
                                 </div>
                                 {follower.username !== userProfile.user ? (
-                                    <Button size='small' className="followBtn">
-                                        {following.following === "true" ? 'Unfollow' : 'Follow'}
+                                    <Button size='small' className="followBtn" onClick={e => handleFollowRequest(e, follower.username)}>
+                                        {follower.following === "true" ? 'Unfollow' : follower.following === "requested" ? "Cancel Request" : "Follow"}
                                     </Button>
                                 ) : null}
                             </div>
@@ -157,8 +176,8 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                                     </div>
                                 </div>
                                 {following.username !== userProfile.user ? (
-                                    <Button size='small' className="followBtn">
-                                        {following.following === "true" ? 'Unfollow' : 'Follow'}
+                                    <Button size='small' className="followBtn" onClick={e => handleFollowRequest(e, following.username)}>
+                                        {following.following === "true" ? 'Unfollow' : following.following === "requested" ? "Cancel Request" : "Follow"}
                                     </Button>
                                 ) : null}
                             </div>
@@ -182,4 +201,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { getFollowers, getFollowing, viewProfile, followRequest })(RightMenu);
+export default connect(mapStateToProps, { getFollowers, getFollowing, viewProfile, handleFollowers })(RightMenu);

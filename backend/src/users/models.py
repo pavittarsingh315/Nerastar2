@@ -124,6 +124,7 @@ class Notifications(models.Model):
 
     # To avoid that import loop error, import a model like this. <appName.modelName>
     post = models.ForeignKey('posts.Post', on_delete=models.CASCADE, related_name='notification_post', blank=True, null=True)
+    friendship = models.ForeignKey(Friendship, on_delete=models.CASCADE, related_name='notification_friendship', blank=True, null=True)
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='notification_sender')
     receiver = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='notification_receiver')
     notificationType = models.CharField(max_length=7, choices=NOTIFICATION_TYPES)

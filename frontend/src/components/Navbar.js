@@ -6,7 +6,7 @@ import Searchbar from './Searchbar';
 // Redux
 import { connect } from 'react-redux';
 import { logout } from '../redux/actions/auth';
-import { getNotifications, deleteNotification } from '../redux/actions/alerts';
+import { getNotifications, deleteNotification, removeNotification } from '../redux/actions/alerts';
 import { addPost } from '../redux/actions/posts';
 import { viewProfile, acceptOrDeclineFollowRequest } from '../redux/actions/general';
 
@@ -58,7 +58,7 @@ const InputField = withStyles({
 })(TextField);
 
 
-function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, profile, addPost, viewProfile, acceptOrDeclineFollowRequest }) {
+function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, removeNotification, profile, addPost, viewProfile, acceptOrDeclineFollowRequest }) {
     const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
     const [openNotifications, setOpenNotifications] = useState(false);
     const [createPostOpen, setCreatePostOpen] = useState(false);
@@ -134,10 +134,10 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
         const type = e.target.innerText
         if (type === 'Accept') {
             acceptOrDeclineFollowRequest(notificationSender, profile.user, 'accepted');
-            deleteNotification(notificationId)
+            removeNotification(notificationId)
         } else if (type === 'Decline') {
             acceptOrDeclineFollowRequest(notificationSender, profile.user, 'ignore');
-            deleteNotification(notificationId)
+            removeNotification(notificationId)
         }
     }
 
@@ -150,15 +150,13 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                 </div>
             </Link>
             <div className='navbar__center'>
-                <div>
-                    <Searchbar />
-                </div>
+                <Searchbar />
             </div>
 
             <div className='navbar__right'>
                 <div className='navbar__icon' onClick={() => viewProfile(profile.user)}>
                     <Tooltip title='Profile' arrow enterDelay={0} leaveDelay={25}>
-                        <Avatar src={profile.avatar} />
+                        <Avatar src={profile.avatar} alt='' />
                     </Tooltip>
                 </div>
                 <div className='navbar__icon'  onClick={handleCreatePostOpen}>
@@ -340,4 +338,4 @@ const mapStateToProps = state => ({
     profile: state.auth.profile
 })
 
-export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, addPost, viewProfile, acceptOrDeclineFollowRequest })(Navbar);
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, removeNotification, addPost, viewProfile, acceptOrDeclineFollowRequest })(Navbar);
