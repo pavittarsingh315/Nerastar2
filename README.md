@@ -150,3 +150,8 @@
 1. Returning if requested in follower/following modal. Recreated Follow/UnFollow View. Made friendship a foreign key to notification and if deleted notification is also deleted
 2. Added new action and reducer to remove notifications from state. it doesn't send any requests. Added logic to follow, unfollow users from rightmenu and follower/following modals.
 3. Created action to clear posts.
+
+## Twenty Seventh Commit
+
+1. Created Profile HOC to show profiles and their posts. Got rid of the just the right menu change cause its inefficient
+2. Everything isnt done mac is trash so saving changes then going on pc.
