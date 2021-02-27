@@ -5,6 +5,7 @@ import PrivateRoute from './PrivateRoute';
 // HOCS
 import Layout from './HOCS/Layout';
 import HomePage from './HOCS/HomePage';
+import Profile from './HOCS/Profile';
 
 
 // Redux
@@ -27,6 +28,7 @@ function App() {
         <Layout>
           <Switch>
             <PrivateRoute exact path='/' component={HomePage} />
+            <PrivateRoute exact path='/users/:username' component={Profile} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
             <Route exact path='/reset-password' component={ResetPassword} />

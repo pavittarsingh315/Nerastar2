@@ -7,7 +7,8 @@ from PIL import Image
 
 
 class Post(models.Model):
-    creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
+    creator = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='posts')
     content = models.CharField(max_length=150)
     media = models.FileField(upload_to='posts', blank=True)
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
@@ -32,10 +33,12 @@ class Post(models.Model):
         return 'none'
 
     def save(self, *args, **kwargs):
-        post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
+        post_slug = slugify(str(self.creator.user.username) +
+                            " " + str(uuid.uuid4())[:15].replace('-', '').lower())
         slugExists = Profile.objects.filter(slug=post_slug).exists()
         while slugExists:
-            post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
+            post_slug = slugify(str(self.creator.user.username) +
+                                " " + str(uuid.uuid4())[:15].replace('-', '').lower())
             slugExists = Profile.objects.filter(slug=to_slug).exists()
         self.slug = post_slug
         # this has to be after slug save but before image resize
@@ -45,15 +48,12 @@ class Post(models.Model):
             img = Image.open(self.media.path)
         except:
             pass
-        
+
         if img:
             if img.height > 600 or img.width > 600:
                 output_size = (600, 600)
                 img.thumbnail(output_size)
                 img.save(self.media.path)
-        
-
-        
 
     class Meta:
         ordering = ('-created',)
@@ -75,6 +75,8 @@ LIKE_CHOICES = (
     ('Like', 'Like'),
     ('Unlike', 'Unlike')
 )
+
+
 class Like(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

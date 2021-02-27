@@ -5,33 +5,39 @@ import RightMenu from '../containers/RightMenu';
 
 // Redux
 import { connect, useDispatch } from 'react-redux';
-import { getPosts } from '../redux/actions/posts';
+import { getProfilePosts } from '../redux/actions/posts';
+import { viewProfile } from '../redux/actions/general';
 
 // Material Ui
 import Divider from '@material-ui/core/Divider';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 
-function HomePage({ getPosts, posts, isLoading, hasMore, error }) {
-    const dispatch = useDispatch()
+function Profile({ getProfilePosts, posts, isLoading, hasMore, error, match, viewProfile }) {
+    const dispatch = useDispatch();
     const [pageNumber, setPageNumber] = useState(1)
     window.onscroll = () => {
         if (error || isLoading || !hasMore) return;
         if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {
-            getPosts(pageNumber);
+            getProfilePosts(pageNumber);
             setPageNumber(pageNumber + 1);
         }
     }
 
     useEffect(() => {
+        viewProfile(match.params.username);
+    }, [match, viewProfile, getProfilePosts])
+
+    useEffect(() => {
         dispatch({ type: 'CLEAR_POSTS' })
-        getPosts(pageNumber);
+        getProfilePosts(pageNumber, match.params.username);
         setPageNumber(pageNumber + 1);
     }, [])
 
     return (
         <>
             <div className='homepage__left'>
+                {match.params.username}
                 {posts.map(post => (
                     <div key={post.id}>
                         <Home
@@ -75,4 +81,4 @@ const mapStateToProps = state => ({
     error: state.posts.error
 })
 
-export default connect(mapStateToProps, { getPosts })(HomePage);
+export default connect(mapStateToProps, { getProfilePosts, viewProfile })(Profile);

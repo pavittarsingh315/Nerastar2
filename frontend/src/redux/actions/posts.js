@@ -1,4 +1,4 @@
-import { GET_POSTS, ADD_POST, POSTS_LOADING, GET_ALERTS, POST_LOADING_ERROR, CLEAR_POSTS, CLEAR_POSTS_FIELD } from './types';
+import { GET_POSTS, ADD_POST, POSTS_LOADING, GET_ALERTS, POST_LOADING_ERROR } from './types';
 import axios from 'axios';
 import { tokenConfig } from './auth';
 
@@ -21,6 +21,22 @@ export const getPosts = (page) => async (dispatch, getState) => {
         console.log(err.response.data, err.response.status)
     })
 
+}
+
+export const getProfilePosts = (page, username) => async (dispatch, getState) => {
+
+    await axios.get(`http://localhost:8000/api/posts/listprofileposts/${username}/?page=${page}`, tokenConfig(getState))
+        .then (res => {
+            dispatch({
+                type: GET_POSTS,
+                payload: res.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: POST_LOADING_ERROR
+            })
+            console.log(err.response.data, err.response.status)
+        })
 }
 
 export const likeUnlikePost = (postSlug, like) => async (dispatch, getState) => {
@@ -66,10 +82,4 @@ export const addPost = (post, username) => async (dispatch, getState) => {
                 payload: alerts
             })
         })
-}
-
-export const clearPosts = () => dispatch => {
-    dispatch({
-        type: CLEAR_POSTS_FIELD
-    })
 }

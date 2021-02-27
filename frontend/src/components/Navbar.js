@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { logout } from '../redux/actions/auth';
 import { getNotifications, deleteNotification, removeNotification } from '../redux/actions/alerts';
 import { addPost } from '../redux/actions/posts';
-import { viewProfile, acceptOrDeclineFollowRequest } from '../redux/actions/general';
+import { acceptOrDeclineFollowRequest, viewProfile } from '../redux/actions/general';
 
 // Material Ui
 
@@ -58,7 +58,7 @@ const InputField = withStyles({
 })(TextField);
 
 
-function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, removeNotification, profile, addPost, viewProfile, acceptOrDeclineFollowRequest }) {
+function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, removeNotification, profile, addPost, acceptOrDeclineFollowRequest, viewProfile }) {
     const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
     const [openNotifications, setOpenNotifications] = useState(false);
     const [createPostOpen, setCreatePostOpen] = useState(false);
@@ -143,22 +143,22 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
 
     return (
         <div className='navbar'>
-            <Link to ='/' style={{ textDecoration: 'none', color: 'rgba(0, 0, 0, 0.87)' }}>
-                <div className='navbar__left'>
-                    <img alt='' src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png' />
-                    <h3>Nerastar</h3>
-                </div>
-            </Link>
+            <div className='navbar__left'>
+                <img alt='' src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/768px-Instagram_logo_2016.svg.png' />
+                <h3>Nerastar</h3>
+            </div>
             <div className='navbar__center'>
                 <Searchbar />
             </div>
 
             <div className='navbar__right'>
-                <div className='navbar__icon' onClick={() => viewProfile(profile.user)}>
-                    <Tooltip title='Profile' arrow enterDelay={0} leaveDelay={25}>
-                        <Avatar src={profile.avatar} alt='' />
-                    </Tooltip>
-                </div>
+                <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
+                    <div className='navbar__icon' onClick={() => viewProfile(profile.user)}>
+                        <Tooltip title='Your Feed' arrow enterDelay={0} leaveDelay={25}>
+                            <Avatar src={profile.avatar} alt='' />
+                        </Tooltip>
+                    </div>
+                </Link>
                 <div className='navbar__icon'  onClick={handleCreatePostOpen}>
                     <Tooltip title='Add Post' arrow enterDelay={0} leaveDelay={25}>
                         <IconButton>
@@ -267,7 +267,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                                 onChange={handlePostFormFiles}
                             />
                             <label htmlFor="image-upload">
-                                <IconButton component="span">
+                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
                                     <div className='postModalIcons'>
                                         <PhotoCamera />
                                         Upload Image
@@ -283,7 +283,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                                 onChange={handlePostFormFiles}
                             />
                             <label htmlFor="audio-upload">
-                                <IconButton component="span">
+                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
                                     <div className='postModalIcons'>
                                         <MicIcon />
                                         Upload Audio
@@ -299,7 +299,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                                 onChange={handlePostFormFiles}
                             />
                             <label htmlFor="video-upload">
-                                <IconButton component="span">
+                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
                                     <div className='postModalIcons'>
                                         <Videocam />
                                         Upload Video
@@ -338,4 +338,4 @@ const mapStateToProps = state => ({
     profile: state.auth.profile
 })
 
-export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, removeNotification, addPost, viewProfile, acceptOrDeclineFollowRequest })(Navbar);
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, removeNotification, addPost, acceptOrDeclineFollowRequest, viewProfile })(Navbar);

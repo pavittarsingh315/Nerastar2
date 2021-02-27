@@ -9,15 +9,17 @@ from users.models import Profile, Notifications
 from .serializers import PostSerializer
 from ..permissions import OnlyPostOwnerCanEdit, OnlyProfileOwnerCanCreatePost
 
+
 class PostPagination(pagination.PageNumberPagination):
     page_size = 15
     page_size_query_param = 'page_size'
     max_page_size = 15
 
+
 class Posts(generics.ListAPIView):
     serializer_class = PostSerializer
     pagination_class = PostPagination
-    
+
     def get_queryset(self):
         user_feed_post_id = []
         user = self.request.user
@@ -34,6 +36,7 @@ class Posts(generics.ListAPIView):
 
 class CreateListProfilePosts(generics.ListCreateAPIView, OnlyProfileOwnerCanCreatePost):
     serializer_class = PostSerializer
+    pagination_class = PostPagination
     permission_classes = [
         # When using custom permissions, have to specify isAuthenticated
         permissions.IsAuthenticated,
@@ -71,7 +74,8 @@ def Like_Unlike_Post(request, slug):
                 if sender != receiver:
                     if not Notifications.objects.filter(post=post, sender=sender, receiver=receiver, notificationType='Like').exists():
                         message = "liked your post"
-                        notification = Notifications(post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
+                        notification = Notifications(
+                            post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
                         notification.save()
 
         elif likeOrUnlike == 'unlike':

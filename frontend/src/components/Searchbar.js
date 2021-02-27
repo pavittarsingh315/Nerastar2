@@ -1,32 +1,39 @@
 import React, { useState, useEffect, useRef } from 'react';
 import '../Styles/searchbar.css';
+import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { searchUser, viewProfile } from '../redux/actions/general';
+import { searchUser } from '../redux/actions/general';
 
 // Material Ui
 import SearchIcon from '@material-ui/icons/Search';
 import Avatar from '@material-ui/core/Avatar';
 
 
-function Searchbar({ searchUser, users, viewProfile }) {
+function Searchbar({ searchUser, users }) {
     const [search, setSearch] = useState("");
+    const[isTyping, setIsTyping] = useState(true);
     const [pageNumber, setPageNumber] = useState(1);
 
     const [active, setActive] = useState(false);
     const searchRef = useRef();
 
+
     const handleType = e => {
         setSearch(e.target.value);
         setPageNumber(1);
+        setTimeout(() => {
+            setIsTyping(false)
+        }, 1500)
+        setIsTyping(true);
     }
 
+
     const handleAutoCompleteClick = user => {
-        const username = document.getElementById(user).childNodes[1].childNodes[0].innerText.substring(1)
-        setSearch(username);
+        // const username = document.getElementById(user).childNodes[1].childNodes[0].innerText.substring(1)
+        // setSearch(username);
         setActive(false);
-        viewProfile(username);
     }
 
     useEffect (() => {
@@ -35,8 +42,10 @@ function Searchbar({ searchUser, users, viewProfile }) {
         } else {
             setActive(false);
         }
-        searchUser(search, pageNumber);
-    }, [search, pageNumber])
+        if (!isTyping) {
+            searchUser(search, pageNumber);
+        }
+    }, [search, pageNumber, isTyping])
 
     useEffect(() => {
         const handleClickOutside = e => {
@@ -66,13 +75,15 @@ function Searchbar({ searchUser, users, viewProfile }) {
                         {active ? (
                             <div>
                                 {users.map(user => (
-                                    <li id={user.user} key={user.user} onClick={() => handleAutoCompleteClick(user.user)}>
-                                        <Avatar src={user.avatar} />
-                                        <div className="search__text">
-                                            <span>@{user.user}</span>
-                                            <span>{user.full_name}</span>
-                                        </div>
-                                    </li>
+                                    <Link key={user.user} to={`/users/${user.user}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                        <li id={user.user} onClick={() => handleAutoCompleteClick(user.user)}>
+                                            <Avatar src={user.avatar} />
+                                            <div className="search__text">
+                                                <span>@{user.user}</span>
+                                                <span>{user.full_name}</span>
+                                            </div>
+                                        </li>
+                                    </Link>
                                 ))}
                             </div>
                         ) : null}
@@ -87,4 +98,4 @@ const mapStateToProps = state => ({
     users: state.general.searchedUsers.results
 })
 
-export default connect(mapStateToProps, { searchUser, viewProfile })(Searchbar);
+export default connect(mapStateToProps, { searchUser })(Searchbar);

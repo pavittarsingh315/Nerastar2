@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { connect } from 'react-redux';
-import { getFollowers, getFollowing, viewProfile, handleFollowers } from '../redux/actions/general';
+import { getFollowers, getFollowing, handleFollowers } from '../redux/actions/general';
 
 // Material Ui
 import Divider from '@material-ui/core/Divider';
@@ -20,7 +20,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Tooltip from '@material-ui/core/Tooltip';
 
 
-function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, viewProfile, handleFollowers }) {
+function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, handleFollowers }) {
     const [openFollowers, setOpenFollowers] = useState(false);
 
     const handleOpenFollowers = (username) => {
@@ -136,15 +136,17 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                     {followers.map(follower => (
                         <div key={follower.slug}>
                             <div key={follower.slug} className='followers'>
-                                <div className="followers__left" onClick={() => viewProfile(follower.username)}>
-                                    <Avatar alt='' src={follower.avatar} />
-                                    <div className="followers__leftText">
-                                        <h3>{follower.name}</h3>
-                                        <h5>
-                                            {follower.username}
-                                        </h5>
+                                <Link to={`/users/${follower.slug}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                    <div className="followers__left">
+                                        <Avatar alt='' src={follower.avatar} />
+                                        <div className="followers__leftText">
+                                            <h3>{follower.name}</h3>
+                                            <h5>
+                                                {follower.username}
+                                            </h5>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                                 {follower.username !== userProfile.user ? (
                                     <Button size='small' className="followBtn" onClick={e => handleFollowRequest(e, follower.username)}>
                                         {follower.following === "true" ? 'Unfollow' : follower.following === "requested" ? "Cancel Request" : "Follow"}
@@ -166,15 +168,17 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                     {following.map(following => (
                         <div key={following.slug}>
                             <div className='followers'>
-                                <div className="followers__left" onClick={() => viewProfile(following.username)}>
-                                    <Avatar alt='' src={following.avatar} />
-                                    <div className="followers__leftText">
-                                        <h3>{following.name}</h3>
-                                        <h5>
-                                            {following.username}
-                                        </h5>
+                                <Link to={`/users/${following.slug}`} style={{ textDecoration: 'none', color: 'black' }}>
+                                    <div className="followers__left">
+                                        <Avatar alt='' src={following.avatar} />
+                                        <div className="followers__leftText">
+                                            <h3>{following.name}</h3>
+                                            <h5>
+                                                {following.username}
+                                            </h5>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                                 {following.username !== userProfile.user ? (
                                     <Button size='small' className="followBtn" onClick={e => handleFollowRequest(e, following.username)}>
                                         {following.following === "true" ? 'Unfollow' : following.following === "requested" ? "Cancel Request" : "Follow"}
@@ -201,4 +205,4 @@ const mapStateToProps = state => ({
 })
 
 
-export default connect(mapStateToProps, { getFollowers, getFollowing, viewProfile, handleFollowers })(RightMenu);
+export default connect(mapStateToProps, { getFollowers, getFollowing, handleFollowers })(RightMenu);
