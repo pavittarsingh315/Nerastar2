@@ -9,9 +9,11 @@ function Post({ caption, media, video, slug }) {
     return (
         <div className='feed'>
             <div className='post'>
-                <div className='post__header'>
-                    <p>{caption}</p>
-                </div>
+                <Link to={`posts/${slug}`} style={{ textDecoration: 'none', color: 'black' }}>
+                    <div className='post__header'>
+                        <p>{caption}</p>
+                    </div>
+                </Link>
                 <div className='post__media'>
                     {!video ? (
                         <div className="img__container">

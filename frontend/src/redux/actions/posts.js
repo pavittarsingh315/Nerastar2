@@ -24,7 +24,7 @@ export const getPosts = (page) => async (dispatch, getState) => {
 }
 
 export const getProfilePosts = (page, username) => async (dispatch, getState) => {
-
+    if (!username) return;
     await axios.get(`http://localhost:8000/api/posts/listprofileposts/${username}/?page=${page}`, tokenConfig(getState))
         .then (res => {
             dispatch({

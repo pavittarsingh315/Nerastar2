@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import CreatePost from '../components/addPost';
 
 // Redux
 import { connect } from 'react-redux';
 import { getFollowers, getFollowing, handleFollowers } from '../redux/actions/general';
 
+
 // Material Ui
 import Divider from '@material-ui/core/Divider';
-import PermMediaOutlinedIcon from '@material-ui/icons/PermMediaOutlined';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
@@ -18,6 +19,7 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import SettingsIcon from '@material-ui/icons/Settings';
 import Tooltip from '@material-ui/core/Tooltip';
+
 
 
 function RightMenu({ userProfile, displayProfile, followers, following, getFollowers, getFollowing, followersOfUser, followingOfUser, handleFollowers }) {
@@ -121,12 +123,9 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                     </span>
                     Following
                 </div>
-                <Link to={`/posts/${displayProfile.user}`} style={{ textDecoration: 'none' }}>
-                    <div className='rightmenu__navOption'>
-                        <PermMediaOutlinedIcon />
-                        Posts
-                    </div>
-                </Link>
+                {userProfile.user === displayProfile.user ? (
+                    <CreatePost />
+                ) : null}
             </div>
             <Dialog maxWidth='xs' fullWidth open={openFollowers} onClose={handleOpenFollowers} aria-labelledby="create-post-title">
                 <MuiDialogTitle disableTypography className='modalTitle'>
@@ -136,8 +135,8 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                     {followers.map(follower => (
                         <div key={follower.slug}>
                             <div key={follower.slug} className='followers'>
-                                <Link to={`/users/${follower.slug}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                    <div className="followers__left">
+                                <Link to={`/users/${follower.slug}`} style={{ textDecoration: 'none' }}>
+                                    <div onClick={() => setOpenFollowers(!openFollowers)} className="followers__left">
                                         <Avatar alt='' src={follower.avatar} />
                                         <div className="followers__leftText">
                                             <h3>{follower.name}</h3>
@@ -168,8 +167,8 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                     {following.map(following => (
                         <div key={following.slug}>
                             <div className='followers'>
-                                <Link to={`/users/${following.slug}`} style={{ textDecoration: 'none', color: 'black' }}>
-                                    <div className="followers__left">
+                                <Link to={`/users/${following.slug}`} style={{ textDecoration: 'none' }}>
+                                    <div onClick={() => setOpenFollowing(!openFollowing)} className="followers__left">
                                         <Avatar alt='' src={following.avatar} />
                                         <div className="followers__leftText">
                                             <h3>{following.name}</h3>

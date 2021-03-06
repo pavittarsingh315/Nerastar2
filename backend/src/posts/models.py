@@ -33,27 +33,21 @@ class Post(models.Model):
         return 'none'
 
     def save(self, *args, **kwargs):
-        post_slug = slugify(str(self.creator.user.username) +
-                            " " + str(uuid.uuid4())[:15].replace('-', '').lower())
+        post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
         slugExists = Profile.objects.filter(slug=post_slug).exists()
         while slugExists:
-            post_slug = slugify(str(self.creator.user.username) +
-                                " " + str(uuid.uuid4())[:15].replace('-', '').lower())
+            post_slug = slugify(str(self.creator.user.username) + " " + str(uuid.uuid4())[:15].replace('-', '').lower())
             slugExists = Profile.objects.filter(slug=to_slug).exists()
         self.slug = post_slug
         # this has to be after slug save but before image resize
         super(Post, self).save(*args, **kwargs)
 
-        try:
-            img = Image.open(self.media.path)
-        except:
-            pass
+        img = Image.open(self.media.path)
 
-        if img:
-            if img.height > 600 or img.width > 600:
-                output_size = (600, 600)
-                img.thumbnail(output_size)
-                img.save(self.media.path)
+        if img.height > 600 or img.width > 600:
+            output_size = (600, 600)
+            img.thumbnail(output_size)
+            img.save(self.media.path)
 
     class Meta:
         ordering = ('-created',)

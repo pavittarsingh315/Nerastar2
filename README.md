@@ -155,3 +155,8 @@
 
 1. Created Profile HOC to show profiles and their posts. Got rid of the just the right menu change cause its inefficient
 2. Everything isnt done mac is trash so saving changes then going on pc.
+
+## Twenty Eighth Commit
+
+1. Modified the profile HOC so it works completely now. Made a separate component for adding posts cause its a big comp. Removed the add post from the navbar to make it less large.
+2. Added links to the profile hoc everywhere.

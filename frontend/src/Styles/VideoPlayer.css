@@ -10,7 +10,7 @@
 
 .video {
   width: 100%;
-  max-height: 300px;
+  /* max-height: 300px; */
   display: block;
   border-radius: 5px;
 }
@@ -27,7 +27,7 @@
   align-items: center;
 }
 
-.controls__option>svg {
+.controls__option > svg {
   color: white !important;
   height: 50px;
   width: 50px;

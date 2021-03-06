@@ -25,7 +25,7 @@ function Searchbar({ searchUser, users }) {
         setPageNumber(1);
         setTimeout(() => {
             setIsTyping(false)
-        }, 1500)
+        }, 1000)
         setIsTyping(true);
     }
 

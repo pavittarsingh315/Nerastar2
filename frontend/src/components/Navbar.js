@@ -7,12 +7,10 @@ import Searchbar from './Searchbar';
 import { connect } from 'react-redux';
 import { logout } from '../redux/actions/auth';
 import { getNotifications, deleteNotification, removeNotification } from '../redux/actions/alerts';
-import { addPost } from '../redux/actions/posts';
 import { acceptOrDeclineFollowRequest, viewProfile } from '../redux/actions/general';
 
 // Material Ui
 
-import AddIcon from '@material-ui/icons/Add';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Badge from '@material-ui/core/Badge';
@@ -27,46 +25,13 @@ import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import MicIcon from '@material-ui/icons/Mic';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import Videocam from '@material-ui/icons/Videocam';
 import Button from '@material-ui/core/Button';
 
 
-const InputField = withStyles({
-    root: {
-      "& label.Mui-focused": {
-        color: "var(--primary-color)"
-      },
-      "& .MuiInput-underline:after": {
-        borderBottomColor: "red"
-      },
-      "& .MuiOutlinedInput-root": {
-        "& fieldset": {
-          borderColor: "var(--primary-color)"
-        },
-        "&:hover fieldset": {
-          borderColor: "var(--primary-color)"
-        },
-        "&.Mui-focused fieldset": {
-          borderColor: "var(--primary-color)"
-        }
-      }
-    }
-})(TextField);
 
-
-function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, removeNotification, profile, addPost, acceptOrDeclineFollowRequest, viewProfile }) {
+function Navbar({ logout, numNotifications, getNotifications, notifications, isLoading, deleteNotification, removeNotification, profile, acceptOrDeclineFollowRequest, viewProfile }) {
     const [numberofNotifications, setNumberofNotifications] = useState(numNotifications);
     const [openNotifications, setOpenNotifications] = useState(false);
-    const [createPostOpen, setCreatePostOpen] = useState(false);
-    const [postForm, setPostForm] = useState({
-        caption: '',
-        file: null,
-        fileName: 'Optional Uploads'
-    })
 
     const handleOpenCloseNotifications = () => {
         setOpenNotifications(!openNotifications);
@@ -79,56 +44,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
         }
     }
 
-    const handlePostFormChange = e => {
-        setPostForm({
-            ...postForm,
-            [e.target.name]: e.target.value
-        })
-    }
 
-    const handlePostFormFiles = e => {
-        setPostForm({
-            ...postForm,
-            file: e.target.files[0],
-            fileName: e.target.files[0].name
-        })
-    }
-
-    const handleClearFile = () => {
-        setPostForm({
-            ...postForm,
-            file: null,
-            fileName: null
-        })
-    }
-
-    const handleCreatePostOpen = () => {
-        setCreatePostOpen(!createPostOpen);
-        setPostForm({
-            caption: '',
-            file: null,
-            fileName: null
-        })
-    };
-
-    const handlePostSubmit = e => {
-        e.preventDefault();
-
-        const post = new FormData();
-        post.append('content', postForm.caption)
-        if (postForm.file) {
-            post.append('media', postForm.file, postForm.fileName)
-        }
-
-        addPost(post, profile.user);
-
-        setCreatePostOpen(false);
-        setPostForm({
-            caption: '',
-            file: null,
-            fileName: null
-        });
-    }
 
     const handleAcceptOrDecline = (e, notificationSender, notificationId) => {
         const type = e.target.innerText
@@ -159,13 +75,6 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                         </Tooltip>
                     </div>
                 </Link>
-                <div className='navbar__icon'  onClick={handleCreatePostOpen}>
-                    <Tooltip title='Add Post' arrow enterDelay={0} leaveDelay={25}>
-                        <IconButton>
-                            <AddIcon />
-                        </IconButton>
-                    </Tooltip>
-                </div>
                 <div className='navbar__icon' onClick={handleOpenCloseNotifications}>
                     <Tooltip title='Notifications' arrow enterDelay={0} leaveDelay={25}>
                         <IconButton>
@@ -231,102 +140,6 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                 </MuiDialogContent>
                 <MuiDialogActions className='modalAction' />
             </Dialog>
-            <Dialog maxWidth='xs' fullWidth open={createPostOpen} onClose={handleCreatePostOpen} aria-labelledby="create-post-title">
-                <MuiDialogTitle disableTypography className='modalTitle'>
-                    <Typography align='center' variant="h6">Create a Post</Typography>
-                    {handleCreatePostOpen ? (
-                    <IconButton aria-label="close" className='modalCloseBtn' onClick={handleCreatePostOpen} style={{ color: 'var(--primary-color)', backgroundColor: 'var(--third-color)' }}>
-                        <CloseIcon />
-                    </IconButton>
-                    ) : null}
-                </MuiDialogTitle>
-                <MuiDialogContent className='generalModal'>
-                    <form noValidate onSubmit={handlePostSubmit}>
-                        <InputField
-                            autoFocus
-                            value={postForm.caption}
-                            id="caption"
-                            label="Caption"
-                            name='caption'
-                            multiline
-                            rows={3}
-                            fullWidth
-                            type="text"
-                            variant="outlined"
-                            onChange={handlePostFormChange}
-                            margin="normal"
-                            required
-                        />
-
-                        <div className='postCreateMedia'>
-                            <input
-                                accept=".png, .jpg, .jpeg, .gif"
-                                id="image-upload"
-                                style = {{ display: 'none' }}
-                                type="file"
-                                onChange={handlePostFormFiles}
-                            />
-                            <label htmlFor="image-upload">
-                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
-                                    <div className='postModalIcons'>
-                                        <PhotoCamera />
-                                        Upload Image
-                                    </div>
-                                </IconButton>
-                            </label>
-
-                            <input
-                                accept="audio/*"
-                                id="audio-upload"
-                                style = {{ display: 'none' }}
-                                type="file"
-                                onChange={handlePostFormFiles}
-                            />
-                            <label htmlFor="audio-upload">
-                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
-                                    <div className='postModalIcons'>
-                                        <MicIcon />
-                                        Upload Audio
-                                    </div>
-                                </IconButton>
-                            </label>
-
-                            <input
-                                accept=".mp4, .mov"
-                                id="video-upload"
-                                style = {{ display: 'none' }}
-                                type="file"
-                                onChange={handlePostFormFiles}
-                            />
-                            <label htmlFor="video-upload">
-                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
-                                    <div className='postModalIcons'>
-                                        <Videocam />
-                                        Upload Video
-                                    </div>
-                                </IconButton>
-                            </label>
-                        </div>
-                        {postForm.fileName ? (
-                            <div className='postMediaName'>
-                                <Typography style={{ textAlign: 'center' }} variant='h6'>{postForm.fileName}</Typography>
-                                <IconButton onClick={handleClearFile}>
-                                    <CloseIcon />
-                                </IconButton>
-                            </div>
-                        ) : null }
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            className='postModalSubmitBtn'
-                        >
-                            Post
-                        </Button>
-                    </form>
-                </MuiDialogContent>
-                <MuiDialogActions className='modalAction' />
-            </Dialog>
         </div>
     )
 }
@@ -338,4 +151,4 @@ const mapStateToProps = state => ({
     profile: state.auth.profile
 })
 
-export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, removeNotification, addPost, acceptOrDeclineFollowRequest, viewProfile })(Navbar);
+export default connect(mapStateToProps, { logout, getNotifications, deleteNotification, removeNotification, acceptOrDeclineFollowRequest, viewProfile })(Navbar);

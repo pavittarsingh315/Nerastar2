@@ -15,29 +15,29 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 function Profile({ getProfilePosts, posts, isLoading, hasMore, error, match, viewProfile }) {
     const dispatch = useDispatch();
-    const [pageNumber, setPageNumber] = useState(1)
-    window.onscroll = () => {
-        if (error || isLoading || !hasMore) return;
-        if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {
-            getProfilePosts(pageNumber);
-            setPageNumber(pageNumber + 1);
+    const username = match.params.username;
+    const [pageNumber, setPageNumber] = useState(2);
+    // setTimeout to stop sending getProfilePosts here cause it kept sending them here as well.
+    setTimeout(() => {
+        window.onscroll = () => {
+            if (error || isLoading || !hasMore) return;
+            if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {
+                getProfilePosts(pageNumber, username)
+                setPageNumber(pageNumber + 1);
+            }
         }
-    }
+    }, 100)
 
     useEffect(() => {
-        viewProfile(match.params.username);
-    }, [match, viewProfile, getProfilePosts])
-
-    useEffect(() => {
-        dispatch({ type: 'CLEAR_POSTS' })
-        getProfilePosts(pageNumber, match.params.username);
-        setPageNumber(pageNumber + 1);
-    }, [])
+        dispatch({ type: 'CLEAR_POSTS' });
+        getProfilePosts(1, username);
+        viewProfile(username);
+        setPageNumber(2);
+    }, [username])
 
     return (
         <>
             <div className='homepage__left'>
-                {match.params.username}
                 {posts.map(post => (
                     <div key={post.id}>
                         <Home
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
     posts: state.posts.posts,
     isLoading: state.posts.isLoading,
     hasMore: state.posts.hasMore,
-    error: state.posts.error
+    error: state.posts.error,
 })
 
 export default connect(mapStateToProps, { getProfilePosts, viewProfile })(Profile);
