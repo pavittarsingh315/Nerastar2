@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
+// Redux
 import { connect } from 'react-redux';
 import { reset_password } from '../redux/actions/auth';
 

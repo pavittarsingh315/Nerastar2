@@ -48,7 +48,7 @@ function CreatePost({ addPost }) {
     const [postForm, setPostForm] = useState({
         caption: '',
         file: null,
-        fileName: 'Optional Uploads'
+        fileName: null
     })
 
     

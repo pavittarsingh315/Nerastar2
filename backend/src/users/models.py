@@ -89,6 +89,7 @@ class Profile(models.Model):
         return f"{self.user}"
 
     def save(self, *args, **kwargs):
+        SiteUser.objects.filter(email=self.user.email).update(username=self.slug)
         super(Profile, self).save(*args, **kwargs)
 
         img = Image.open(self.avatar.path)

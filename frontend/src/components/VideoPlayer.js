@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../Styles/VideoPlayer.css';
 import { useInView } from 'react-intersection-observer';
 
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+
 // Material Ui
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
 import PauseRoundedIcon from '@material-ui/icons/PauseRounded';
@@ -9,9 +12,10 @@ import VolumeUpRoundedIcon from '@material-ui/icons/VolumeUpRounded';
 import VolumeOffRoundedIcon from '@material-ui/icons/VolumeOffRounded';
 
 function VideoPlayer({ src }) {
+    const dispatch = useDispatch();
+    const isMuted = useSelector(state => state.general.isVideoMuted)
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isMuted, setIsMuted] = useState(true);
     const [isHovering, setIsHovering] = useState(false);
     const [ref, inView, entry] = useInView({
         threshold: 1.0
@@ -38,7 +42,7 @@ function VideoPlayer({ src }) {
     }
 
     const onMutePress = () => {
-        setIsMuted(!isMuted)
+        dispatch({ type: 'TOGGLE_VIDEO_VOLUME' })
     }
 
     return (

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+
+// Redux
 import { connect } from 'react-redux';
 import { activate } from '../redux/actions/auth';
 

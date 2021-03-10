@@ -18,11 +18,19 @@ import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComments, postSlug, liked, postIsMine}) {
     return (
         <div className='leftwidgets'>
-
             <Link to={`/users/${userSlug}`} className='leftwidgets__profile'>
                 <div className="leftwidgetoption">
-                    <Avatar alt='' src={avatar} />
-                    <h2>{username}</h2>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            padding: '5px'
+                        }}
+                    >
+                        <Avatar variant='circle' style={{ width: '56px', height: '56px' }} alt='' src={avatar} />
+                        <h2 style={{ fontSize: '20px', marginLeft: '5px' }}>{username}</h2>
+                    </div>
                 </div>
             </Link>
 

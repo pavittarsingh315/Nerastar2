@@ -6,7 +6,9 @@ import {
     FOLLOWING_LOADING,
     SEARCH_USER,
     DISPLAY_PROFILE,
-    CLEAR_GENERAL
+    CLEAR_GENERAL,
+    TOGGLE_VIDEO_VOLUME,
+    RELOAD_PAGE
 } from '../actions/types';
 
 
@@ -19,7 +21,9 @@ const initialState = {
     searchedUsers: {
         results: []
     },
-    displayProfile: null
+    displayProfile: null,
+    isVideoMuted: true,
+    reloadPage: false
 }
 
 
@@ -69,6 +73,16 @@ export default function(state = initialState, action) {
                     results: []
                 },
                 displayProfile: null
+            }
+        case TOGGLE_VIDEO_VOLUME:
+            return {
+                ...state,
+                isVideoMuted: !state.isVideoMuted
+            }
+        case RELOAD_PAGE:
+            return {
+                ...state,
+                reloadPage: true
             }
         default:
             return state

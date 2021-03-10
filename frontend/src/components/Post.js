@@ -5,20 +5,17 @@ import VideoPlayer from './VideoPlayer';
 
 function Post({ caption, media, video, slug }) {
 
-
     return (
         <div className='feed'>
             <div className='post'>
                 <Link to={`posts/${slug}`} style={{ textDecoration: 'none', color: 'black' }}>
-                    <div className='post__header'>
-                        <p>{caption}</p>
+                    <div style={{ display: 'flex', alignItems: 'center', padding: '15px 10px' }}>
+                        <p style={{ fontWeight: '900', fontSize: '15px' }}>{caption}</p>
                     </div>
                 </Link>
-                <div className='post__media'>
+                <div style={{ maxWidth: '600px', maxHeight: '670px', margin: '0 auto' }}>
                     {!video ? (
-                        <div className="img__container">
-                            <img alt="" src={media} />
-                        </div>
+                        <img style={{ maxHeight: '600px', maxWidth: '600px', borderRadius: '5px' }} alt="" src={media} />
                     ) : (
                         <VideoPlayer src={media} />
                     )}

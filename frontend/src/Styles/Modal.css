@@ -138,6 +138,7 @@
   margin-top: 24px !important;
   background-color: var(--primary-color) !important;
   color: white !important;
+  text-transform: capitalize !important;
 }
 
 .postMediaName {

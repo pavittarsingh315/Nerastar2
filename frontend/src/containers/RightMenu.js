@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CreatePost from '../components/addPost';
+import Settings from '../components/Settings';
 
 // Redux
 import { connect } from 'react-redux';
@@ -16,9 +17,6 @@ import MuiDialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import SettingsIcon from '@material-ui/icons/Settings';
-import Tooltip from '@material-ui/core/Tooltip';
 
 
 
@@ -89,11 +87,7 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                         </div>
                         {userProfile.user === displayProfile.user ? (
                             <div className="rightmenu__settingsBtn">
-                                <Tooltip title='Settings' arrow enterDelay={0} leaveDelay={25}>
-                                    <IconButton>
-                                        <SettingsIcon />
-                                    </IconButton>
-                                </Tooltip>
+                                <Settings />
                             </div>
                         ) : (
                             <Button className="rightmenu__followBtn" size="small" onClick={e => handleFollowRequest(e)}>
@@ -103,7 +97,7 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                         
                     </div>
                 </div>
-                <div className='rightmenu__headerBottom'>
+                <div className='rightmenu__headerBottom' style={{ maxWidth: '300px' }}>
                     <span>
                         {displayProfile.bio}
                     </span>

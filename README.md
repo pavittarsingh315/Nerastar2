@@ -160,3 +160,10 @@
 
 1. Modified the profile HOC so it works completely now. Made a separate component for adding posts cause its a big comp. Removed the add post from the navbar to make it less large.
 2. Added links to the profile hoc everywhere.
+
+## Twenty Ninth Commit
+
+1. Successfully added try except to resize images so no issue posting videos. Added functionality to change the username if we change the slug.
+2. Successfully resized images and videos to fit into a 600x670 div. The styles for images is in all in Post.js and its all inline. For videos its videoplayer.css and its in .video and .video_wrapper
+3. Added settings component so user can update profile. Changed muted state of video into redux so if user unmutes one, all are then unmuted. Added a new type for this. Changed the avatar in leftwidgets to be 56x56
+4. Created action to update profile. Also added a reloadPage object into general state to reload the page so that the posts that are already loaded can get rerendered with the correct username and avatar.

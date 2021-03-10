@@ -19,7 +19,8 @@ import {
     CLEAR_ALERTS,
     CLEAR_POSTS,
     DISPLAY_PROFILE,
-    CLEAR_GENERAL
+    CLEAR_GENERAL,
+    RELOAD_PAGE
 } from './types';
 import axios from 'axios';
 
@@ -187,6 +188,30 @@ export const activate = (uid, token) => async dispatch => {
             })
             dispatch({
                 type: ACTIVATION_FAIL
+            })
+        })
+}
+
+
+export const updateProfile = (newProfileData) => async (dispatch, getState) => {
+
+    await axios.put('http://localhost:8000/api/profiles/profile/', newProfileData, tokenConfig(getState))
+        .then(res => {
+            dispatch({
+                type: DISPLAY_PROFILE,
+                payload: res.data
+            })
+            dispatch({ type: RELOAD_PAGE })
+        }).catch(err => {
+            const alerts = {
+                msg: {
+                    error: 'Something Went Wrong! Profile not Updated!'
+                },
+                status: 400
+            }
+            dispatch({
+                type: GET_ALERTS,
+                payload: alerts
             })
         })
 }

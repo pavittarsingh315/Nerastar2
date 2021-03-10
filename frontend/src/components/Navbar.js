@@ -26,6 +26,7 @@ import Avatar from '@material-ui/core/Avatar';
 import CloseIcon from '@material-ui/icons/Close';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
+import PersonIcon from '@material-ui/icons/Person';
 
 
 
@@ -71,7 +72,9 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                 <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
                     <div className='navbar__icon' onClick={() => viewProfile(profile.user)}>
                         <Tooltip title='Your Feed' arrow enterDelay={0} leaveDelay={25}>
-                            <Avatar src={profile.avatar} alt='' />
+                            <IconButton>
+                                <PersonIcon />
+                            </IconButton>
                         </Tooltip>
                     </div>
                 </Link>
