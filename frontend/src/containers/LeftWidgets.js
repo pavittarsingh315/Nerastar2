@@ -34,11 +34,9 @@ function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComment
                 </div>
             </Link>
 
-            {/* <LeftWidgetOption objValue={numPlays} uiIcon={PlayCircleOutlineIcon} /> */}
-            
             <LeftWidgetOption postSlug={postSlug} liked={liked} objValue={numLikes} uiIcon={liked ? FavoriteIcon : FavoriteBorderIcon} />
 
-            <Comments objValue={numComments} Icon={ChatOutlinedIcon} />
+            <Comments postSlug={postSlug} objValue={numComments} Icon={ChatOutlinedIcon} />
 
             <LeftWidgetOption objValue="Bookmark" uiIcon={BookmarkBorderIcon} />
             <LeftWidgetOption postSlug={postSlug} objValue="Share" uiIcon={SendIcon} />

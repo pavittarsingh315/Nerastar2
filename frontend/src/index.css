@@ -4,6 +4,27 @@
   margin: 0;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 11px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e8e8e8;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-color);
+}
+
 body {
   margin: 0;
   font-family: "Quicksand", sans-serif;
@@ -12,7 +33,7 @@ body {
 
   /* color combo variables */
   --primary-color: #0070f3;
-  --secondary-color: #ebcd8d;
+  --secondary-color: #bfbfbf;
   --third-color: #e8e8e8;
 }
 
@@ -21,8 +42,8 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  background-color: white;
-  z-index: 1001;
+  background-color: transparent;
+  z-index: 100000;
 }
 
 .alertsAuth {
@@ -33,8 +54,8 @@ body {
   width: 350px;
   transform: translateX(-50%);
   margin-bottom: 100px;
-  background-color: white;
-  z-index: 1001;
+  background-color: transparent;
+  z-index: 100000;
 }
 
 .error {

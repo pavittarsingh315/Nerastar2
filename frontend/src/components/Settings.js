@@ -180,7 +180,7 @@ function Settings() {
                         
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <input
-                                accept=".png, .jpg, .jpeg, .gif"
+                                accept=".png, .jpg, .jpeg"
                                 id="image-upload"
                                 style = {{ display: 'none' }}
                                 type="file"

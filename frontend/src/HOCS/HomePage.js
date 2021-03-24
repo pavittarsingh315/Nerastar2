@@ -14,7 +14,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 
 function HomePage({ getPosts, posts, isLoading, hasMore, error }) {
     const dispatch = useDispatch()
-    const [pageNumber, setPageNumber] = useState(1)
+    const [pageNumber, setPageNumber] = useState(2);
     window.onscroll = () => {
         if (error || isLoading || !hasMore) return;
         if (document.documentElement.scrollHeight - document.documentElement.scrollTop === document.documentElement.clientHeight) {
@@ -25,8 +25,8 @@ function HomePage({ getPosts, posts, isLoading, hasMore, error }) {
 
     useEffect(() => {
         dispatch({ type: 'CLEAR_POSTS' })
-        getPosts(pageNumber);
-        setPageNumber(pageNumber + 1);
+        getPosts(1);
+        setPageNumber(2);
     }, [])
 
     return (

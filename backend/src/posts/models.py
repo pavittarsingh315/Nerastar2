@@ -59,11 +59,40 @@ class Post(models.Model):
 class Comment(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(Profile, blank=True, related_name='commentLikes')
     body = models.TextField(max_length=300)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.post} -- comment"
+        return f"Comment #{self.pk}"
+
+    def number_of_likes(self):
+        return self.likes.all().count()
+
+    def number_of_replies(self):
+        return self.replies_set.all().count()
+    
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+
+
+class Replies(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, default=None)
+    likes = models.ManyToManyField(Profile, blank=True, related_name='replyLikes')
+    body = models.TextField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Reply #{self.pk}"
+
+    def number_of_likes(self):
+        return self.likes.all().count()
+
+    class Meta:
+        verbose_name = 'Reply'
+        verbose_name_plural = 'Replies'
 
 
 # To get the like unlike functionality, create a view that checks if request.user is in post's likes and if not then like.

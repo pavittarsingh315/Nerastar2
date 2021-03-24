@@ -75,7 +75,6 @@ function Register({ register, isAuthenticated }) {
                         onChange={e => onChange(e)}
                         autoComplete="off"
                         variant="outlined"
-                        required
                         fullWidth
                         id="fullName"
                         label="Full Name"
@@ -88,7 +87,6 @@ function Register({ register, isAuthenticated }) {
                         onChange={e => onChange(e)}
                         autoComplete="off"
                         variant="outlined"
-                        required
                         fullWidth
                         id="username"
                         label="Username"
@@ -99,7 +97,6 @@ function Register({ register, isAuthenticated }) {
                         value={email}
                         onChange={e => onChange(e)}
                         variant="outlined"
-                        required
                         fullWidth
                         id="email"
                         label="Email Address"
@@ -111,7 +108,6 @@ function Register({ register, isAuthenticated }) {
                         value={password}
                         onChange={e => onChange(e)}
                         variant="outlined"
-                        required
                         fullWidth
                         label="Password"
                         type="password"
@@ -124,7 +120,6 @@ function Register({ register, isAuthenticated }) {
                         value={password2}
                         onChange={e => onChange(e)}
                         variant="outlined"
-                        required
                         fullWidth
                         label="Confirm Password"
                         type="password"

@@ -145,6 +145,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
     'NON_FIELD_ERRORS_KEY': 'error',
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'search': '15/min',
+    }
 }
 
 SIMPLE_JWT = {

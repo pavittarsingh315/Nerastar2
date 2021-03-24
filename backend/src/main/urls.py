@@ -30,3 +30,6 @@ urlpatterns += [
 ]
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]
+
+handler500 = 'rest_framework.exceptions.server_error'
+handler404 = 'rest_framework.exceptions.bad_request'

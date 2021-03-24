@@ -62,7 +62,6 @@ function ResetPasswordConfirm({ match, reset_password_confirm }) {
                         onChange={e => onChange(e)}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         type="password"
                         id="password"
@@ -76,7 +75,6 @@ function ResetPasswordConfirm({ match, reset_password_confirm }) {
                         onChange={e => onChange(e)}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         type="password"
                         id="password2"

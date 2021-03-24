@@ -70,9 +70,9 @@ class SiteUser(AbstractBaseUser):
 
 
 class Profile(models.Model):
-    full_name = models.CharField(max_length=200, blank=True)
+    full_name = models.CharField(max_length=30, blank=True)
     user = models.OneToOneField(SiteUser, on_delete=models.CASCADE)
-    bio = models.TextField(default="Just Vibin'", max_length=300)
+    bio = models.TextField(default="Just Vibin'", max_length=150)
     avatar = models.ImageField(default='avatar.png', upload_to='avatars')
     following = models.ManyToManyField(SiteUser, blank=True, related_name='following')
     followers = models.ManyToManyField(SiteUser, blank=True, related_name='followers')

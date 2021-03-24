@@ -8,9 +8,8 @@ import { addPost } from '../redux/actions/posts';
 import AddIcon from '@material-ui/icons/Add';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import MicIcon from '@material-ui/icons/Mic';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import Videocam from '@material-ui/icons/Videocam';
+import GifIcon from '@material-ui/icons/Gif';
+import TheatersIcon from '@material-ui/icons/Theaters';
 import CloseIcon from '@material-ui/icons/Close';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogContent from '@material-ui/core/DialogContent';
@@ -115,11 +114,6 @@ function CreatePost({ addPost }) {
             <Dialog maxWidth='xs' fullWidth open={createPostOpen} onClose={handleCreatePostOpen} aria-labelledby="create-post-title">
                 <MuiDialogTitle disableTypography className='modalTitle'>
                     <Typography align='center' variant="h6">Create a Post</Typography>
-                    {handleCreatePostOpen ? (
-                    <IconButton aria-label="close" className='modalCloseBtn' onClick={handleCreatePostOpen} style={{ color: 'var(--primary-color)', backgroundColor: 'var(--third-color)' }}>
-                        <CloseIcon />
-                    </IconButton>
-                    ) : null}
                 </MuiDialogTitle>
                 <MuiDialogContent className='generalModal'>
                     <form noValidate onSubmit={handlePostSubmit}>
@@ -136,57 +130,33 @@ function CreatePost({ addPost }) {
                             variant="outlined"
                             onChange={handlePostFormChange}
                             margin="normal"
-                            required
                         />
 
                         <div className='postCreateMedia'>
                             <input
-                                accept=".png, .jpg, .jpeg, .gif"
-                                id="image-upload"
+                                accept=".png, .jpg, .jpeg, .mp4"
+                                id="file-upload"
                                 style = {{ display: 'none' }}
                                 type="file"
                                 onChange={handlePostFormFiles}
                             />
-                            <label htmlFor="image-upload">
+                            <label htmlFor="file-upload">
                                 <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
                                     <div className='postModalIcons'>
-                                        <PhotoCamera />
-                                        Upload Image
+                                        <TheatersIcon fontSize='large' />
+                                        Media
                                     </div>
                                 </IconButton>
                             </label>
 
-                            <input
-                                accept="audio/*"
-                                id="audio-upload"
-                                style = {{ display: 'none' }}
-                                type="file"
-                                onChange={handlePostFormFiles}
-                            />
-                            <label htmlFor="audio-upload">
+                           <div>
                                 <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
                                     <div className='postModalIcons'>
-                                        <MicIcon />
-                                        Upload Audio
+                                        <GifIcon fontSize='large' />
+                                        Choose Gif
                                     </div>
                                 </IconButton>
-                            </label>
-
-                            <input
-                                accept=".mp4, .mov"
-                                id="video-upload"
-                                style = {{ display: 'none' }}
-                                type="file"
-                                onChange={handlePostFormFiles}
-                            />
-                            <label htmlFor="video-upload">
-                                <IconButton component="span" style={{ backgroundColor: 'transparent' }}>
-                                    <div className='postModalIcons'>
-                                        <Videocam />
-                                        Upload Video
-                                    </div>
-                                </IconButton>
-                            </label>
+                           </div>
                         </div>
                         {postForm.fileName ? (
                             <div className='postMediaName'>

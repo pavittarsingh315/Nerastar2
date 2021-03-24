@@ -58,7 +58,6 @@ function ResetPassword({ reset_password }) {
                         onChange={e => onChange(e)}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
                         label="Email Address"

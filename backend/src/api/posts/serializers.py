@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from posts.models import Post, Comment, Like
+from posts.models import Post, Comment, Like, Replies
 
 
 # App: Posts
@@ -52,4 +52,45 @@ class PostSerializer(serializers.ModelSerializer):
             'extension',
             'liked',
             'postIsMine'
+        ]
+
+class CommentsSerializer(serializers.ModelSerializer):
+    creator = serializers.SerializerMethodField()
+    creatorAvatar = serializers.SerializerMethodField()
+
+    def get_creator(self, obj):
+        return obj.user.user.username
+
+    def get_creatorAvatar(self, obj):
+        return ("http://localhost:8000" + str(obj.user.avatar.url))
+
+    class Meta:
+        model = Comment
+        fields = [
+            'id',
+            'body',
+            'creator',
+            'creatorAvatar',
+            'number_of_likes',
+            'number_of_replies'
+        ]
+
+class RepliesSerializer(serializers.ModelSerializer):
+    creator = serializers.SerializerMethodField()
+    creatorAvatar = serializers.SerializerMethodField()
+
+    def get_creator(self, obj):
+        return obj.user.user.username
+
+    def get_creatorAvatar(self, obj):
+        return ("http://localhost:8000" + str(obj.user.avatar.url))
+
+    class Meta:
+        model = Replies
+        fields = [
+            'id',
+            'body',
+            'creator',
+            'creatorAvatar',
+            'number_of_likes'
         ]

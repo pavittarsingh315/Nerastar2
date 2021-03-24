@@ -74,7 +74,6 @@ function Login({ login, isAuthenticated }) {
                         onChange={e => onChange(e)}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
                         label="Email Address"
@@ -86,7 +85,6 @@ function Login({ login, isAuthenticated }) {
                         onChange={e => onChange(e)}
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         label="Password"
                         type="password"

@@ -7,11 +7,6 @@
   max-height: 70px;
 }
 
-.navbar__left > img {
-  height: 40px;
-  width: 40px;
-}
-
 .navbar__left > h3 {
   font-size: 25px;
   padding-left: 10px;

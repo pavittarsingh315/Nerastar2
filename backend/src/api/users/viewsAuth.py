@@ -14,13 +14,6 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
-# these are all the imports for user email verification
-
-# Password Reset
-
-# Tokens
-
-
 class GetProfileView(generics.RetrieveAPIView):
     serializer_class = ProfileSerializer
 

@@ -4,16 +4,18 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Project imports
-from posts.models import Post, Like, Comment
+from posts.models import Post, Like, Comment, Replies
 from users.models import Profile, Notifications
-from .serializers import PostSerializer
+from .serializers import PostSerializer, CommentsSerializer, RepliesSerializer
 from ..permissions import OnlyPostOwnerCanEdit, OnlyProfileOwnerCanCreatePost
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 class PostPagination(pagination.PageNumberPagination):
-    page_size = 15
+    page_size = 10
     page_size_query_param = 'page_size'
-    max_page_size = 15
+    max_page_size = 10
 
 
 class Posts(generics.ListAPIView):
@@ -69,13 +71,12 @@ def Like_Unlike_Post(request, slug):
             if profile not in post.liked.all():
                 post.liked.add(profile)
                 msg = 'Like'
-                sender = user.profile
                 receiver = post.creator
-                if sender != receiver:
-                    if not Notifications.objects.filter(post=post, sender=sender, receiver=receiver, notificationType='Like').exists():
+                if profile != receiver:
+                    if not Notifications.objects.filter(post=post, sender=profile, receiver=receiver, notificationType='Like').exists():
                         message = "liked your post"
                         notification = Notifications(
-                            post=post, sender=sender, receiver=receiver, notificationType='Like', message=message)
+                            post=post, sender=profile, receiver=receiver, notificationType='Like', message=message)
                         notification.save()
 
         elif likeOrUnlike == 'unlike':
@@ -96,3 +97,76 @@ class GetAnyPostAndEditPost(generics.RetrieveUpdateDestroyAPIView, OnlyPostOwner
         OnlyPostOwnerCanEdit
     ]
     queryset = Post.objects.all()
+
+
+class CommentPagination(pagination.PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
+
+class ListComments(generics.ListAPIView):
+    serializer_class = CommentsSerializer
+    pagination_class = CommentPagination
+
+    def get_queryset(self):
+        postSlug = self.kwargs['slug']
+        post = Post.objects.get(slug=postSlug)
+        return Comment.objects.filter(post=post)
+
+
+class RepliesPagination(pagination.PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 3
+
+
+class ListReplies(generics.ListAPIView):
+    serializer_class = RepliesSerializer
+    pagination_class = RepliesPagination
+
+    def get_queryset(self):
+        commentId = self.kwargs['pk']
+        comment = Comment.objects.get(pk=commentId)
+        return Replies.objects.filter(comment=comment)
+
+
+@api_view(['POST', 'DELETE'])
+def CreateCommentOrReply(request, slug):
+    user = request.user
+    try:
+        post = Post.objects.get(slug=slug)
+    except Post.DoesNotExist:
+        return Response({"error": "Post Does Not Exist!"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'POST':
+        profile = Profile.objects.get(user=user)
+        commentBody = request.data['comment']
+        commentOrReply = request.data['type']
+        postOwner = post.creator
+
+        if commentOrReply == 'comment':
+            comment = Comment(user=profile, post=post, body=commentBody)
+            comment.save()
+            msg = CommentsSerializer(comment).data
+            if profile != postOwner:
+                message = f"commented \"{commentBody}\""
+                if not Notifications.objects.filter(post=post, sender=profile, receiver=postOwner, notificationType='Comment', message=message).exists():
+                    notification = Notifications(post=post, sender=profile, receiver=postOwner, notificationType='Comment', message=message)
+                    notification.save()
+
+        elif commentOrReply == 'reply':
+            commentId = request.data['commentId']
+            comment = Comment.objects.get(pk=commentId)
+            receiverUser = User.objects.get(username=request.data['receiver'])
+            receiver = Profile.objects.get(user=receiverUser)
+            reply = Replies(user=profile, body=commentBody, comment=comment)
+            reply.save()
+            msg = RepliesSerializer(reply).data
+            if profile != receiver:
+                message = f"replied \"{commentBody}\""
+                if not Notifications.objects.filter(post=post, sender=profile, receiver=receiver, notificationType='Comment', message=message).exists():
+                    notification = Notifications(post=post, sender=profile, receiver=receiver, notificationType='Comment', message=message)
+                    notification.save()
+
+        return Response(msg, status=status.HTTP_200_OK)

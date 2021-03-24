@@ -167,3 +167,10 @@
 2. Successfully resized images and videos to fit into a 600x670 div. The styles for images is in all in Post.js and its all inline. For videos its videoplayer.css and its in .video and .video_wrapper
 3. Added settings component so user can update profile. Changed muted state of video into redux so if user unmutes one, all are then unmuted. Added a new type for this. Changed the avatar in leftwidgets to be 56x56
 4. Created action to update profile. Also added a reloadPage object into general state to reload the page so that the posts that are already loaded can get rerendered with the correct username and avatar.
+
+## 30th Commit
+
+1. Created a Comments and Replies serializer, views with pagination, and their urls. Added throttling to search bar to 15 a minute. Created a replies model as well and custom 500 and 404 handlers
+2. Created a new secondary color. Customized scroll bar. Integrated video and img uploading into 1 and added a placeholder gif searcher. Got rid of audio. Got rid of gif profile pics. Removed required astrick on lots of inputs for better look.
+3. Created new types, reducers, and actions to get comments, get replies, and add comments or replies. Replies also load by load more button.
+4. So basically we can gets comments. Create comments. Get replies to comments and load more replies by clicking a button. We can also create replies and reply to other replies.

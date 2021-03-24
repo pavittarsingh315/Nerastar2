@@ -56,6 +56,7 @@ class SearchUser(generics.ListAPIView):
     filter_backends = [filters.SearchFilter]
     search_fields = ['^slug', '^full_name']
     pagination_class = SearchUserPagination
+    throttle_scope = 'search'
 
     # '^' starts with search
     # '=' exact match

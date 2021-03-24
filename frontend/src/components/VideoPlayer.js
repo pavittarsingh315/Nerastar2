@@ -23,8 +23,17 @@ function VideoPlayer({ src }) {
 
     useEffect(() => {
         if (inView) {
-            setIsPlaying(true);
-            videoRef.current.play()
+            var playPromise = videoRef.current.play();
+
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    setIsPlaying(true)
+                    videoRef.current.play()
+                })
+                .catch(error => {
+                    // don't print anything to get rid of error message
+                });
+            }
         } else {
             setIsPlaying(false);
             videoRef.current.pause()
@@ -49,7 +58,7 @@ function VideoPlayer({ src }) {
         <div className='video__container' onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
             <div className='video__wrapper' ref={ref}>
                 <video muted={isMuted} loop ref={videoRef} className='video' src={src} />
-                <div className={`controls ${isHovering ? 'showControls' : 'hideControls'}`}>
+                <div style={{ transition: 'opacity 0.3s' }} className={`controls ${isHovering ? 'showControls' : 'hideControls'}`}>
                     <div className='controls__option' onClick={onPlayPress}>
                         {isPlaying ? (
                             <PauseRoundedIcon />

@@ -48,6 +48,8 @@ export const DELETE_POST = 'DELETE_POST';
 export const CLEAR_POSTS = 'CLEAR_POSTS';
 export const POSTS_LOADING = 'POSTS_LOADING';
 export const POST_LOADING_ERROR = 'POST_LOADING_ERROR';
+export const GET_COMMENTS = 'GET_COMMENTS';
+export const GET_REPLIES = 'GET_REPLIES';
 
 
 export const GET_USERS_FOLLOWERS = "GET_USERS_FOLLOWERS";
