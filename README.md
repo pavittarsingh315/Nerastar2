@@ -174,3 +174,9 @@
 2. Created a new secondary color. Customized scroll bar. Integrated video and img uploading into 1 and added a placeholder gif searcher. Got rid of audio. Got rid of gif profile pics. Removed required astrick on lots of inputs for better look.
 3. Created new types, reducers, and actions to get comments, get replies, and add comments or replies. Replies also load by load more button.
 4. So basically we can gets comments. Create comments. Get replies to comments and load more replies by clicking a button. We can also create replies and reply to other replies.
+
+## 31th Commit
+
+1. Added bookmarked field to post serializer to check if we bookmarked a post. Created a bookmark model, serializer, view to list, create, and delete bookmarks, and urls for it. Created action to add or remove bookmark
+2. Added a private field to profile model to see if profile is private. Added a field in settings to update it. Also created checks to not display private profiles' posts or followers
+3. Brought left widget options into left widget container.

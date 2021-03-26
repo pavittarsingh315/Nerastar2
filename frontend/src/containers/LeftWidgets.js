@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Styles/Home.css';
-import LeftWidgetOption from '../components/LeftWidetOptions';
 import { Link } from "react-router-dom";
 import Comments from './Comments';
 
+// Redux
+import { useDispatch } from 'react-redux';
+import { likeUnlikePost, handleBookmark } from '../redux/actions/posts';
+import { createSuccessAlert } from '../redux/actions/alerts';
 
 // Material Ui
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -13,9 +16,42 @@ import SendIcon from '@material-ui/icons/Send';
 import Avatar from '@material-ui/core/Avatar';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 
 
-function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComments, postSlug, liked, postIsMine}) {
+function LeftWidgets({avatar, username, userSlug, numLikes, numComments, postSlug, liked, postIsMine, bookmarked}) {
+    const dispatch = useDispatch();
+    const [likedPost, setLikedPost] = useState(liked);
+    var [numberLikes, setNumberLikes] = useState(numLikes);
+    const [isBookmarked, setIsBookmarked] = useState(bookmarked);
+    var [bookmark, setBookmark] = useState(`${bookmarked ? 'Bookmarked' : 'Bookmark'}`);
+    
+    const handleLikeClick = () => {
+        if (likedPost) {
+            setNumberLikes(--numberLikes);
+            dispatch(likeUnlikePost(postSlug, false));
+        } else if (!likedPost) {
+            setNumberLikes(++numberLikes);
+            dispatch(likeUnlikePost(postSlug, true));
+        }
+        setLikedPost(!likedPost)
+    }
+
+    const handleBookmarkClick = () => {
+        if(isBookmarked) {
+            setBookmark('Bookmark')
+        } else if (!isBookmarked) {
+            setBookmark('Bookmarked')
+        }
+        dispatch(handleBookmark(postSlug))
+        setIsBookmarked(!isBookmarked)
+    }
+
+    const handleShareClick = () => {
+        navigator.clipboard.writeText('http://localhost:3000/posts/' + postSlug);
+        dispatch(createSuccessAlert("Link Copied!"))
+    }
+    
     return (
         <div className='leftwidgets'>
             <Link to={`/users/${userSlug}`} className='leftwidgets__profile'>
@@ -34,14 +70,29 @@ function LeftWidgets({avatar, username, userSlug, numPlays, numLikes, numComment
                 </div>
             </Link>
 
-            <LeftWidgetOption postSlug={postSlug} liked={liked} objValue={numLikes} uiIcon={liked ? FavoriteIcon : FavoriteBorderIcon} />
+            <div className="leftwidgetoption" onClick={handleLikeClick}>
+                {likedPost ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                <h2>{numberLikes}</h2>
+            </div>
 
             <Comments postSlug={postSlug} objValue={numComments} Icon={ChatOutlinedIcon} />
 
-            <LeftWidgetOption objValue="Bookmark" uiIcon={BookmarkBorderIcon} />
-            <LeftWidgetOption postSlug={postSlug} objValue="Share" uiIcon={SendIcon} />
-            {!postIsMine ? <LeftWidgetOption postSlug={postSlug} objValue="Edit Post" uiIcon={EditIcon} /> : null}
+            <div className="leftwidgetoption" onClick={handleBookmarkClick}>
+                {isBookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+                <h2>{bookmark}</h2>
+            </div>
 
+            <div className="leftwidgetoption" onClick={handleShareClick}>
+                <SendIcon />
+                <h2>Share</h2>
+            </div>
+
+            {!postIsMine ? (
+                <div className="leftwidgetoption" onClick={() => console.log(postSlug)}>
+                    <EditIcon />
+                    <h2>Edit Post</h2>
+                </div>
+            ) : null}
         </div>
     )
 }

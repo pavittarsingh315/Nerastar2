@@ -126,7 +126,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
                                         </Link>
                                     </div>
                                     <div>
-                                        {notification.notificationType === 'Like' ? (
+                                        {notification.notificationType === 'Like' || notification.notificationType === 'Comment' ? (
                                             <IconButton onClick={() => deleteNotification(notification.id)}>
                                                 <CloseIcon />
                                             </IconButton>

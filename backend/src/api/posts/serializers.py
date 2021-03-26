@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from posts.models import Post, Comment, Like, Replies
+from posts.models import Post, Comment, Like, Replies, Bookmark
 
 
 # App: Posts
@@ -9,6 +9,7 @@ class PostSerializer(serializers.ModelSerializer):
     creatorSlug = serializers.SerializerMethodField()
     liked = serializers.SerializerMethodField()
     postIsMine = serializers.SerializerMethodField()
+    bookmarked = serializers.SerializerMethodField()
 
     def get_creator(self, obj):
         return obj.creator.user.username
@@ -23,17 +24,25 @@ class PostSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         profile = request.user.profile
         if profile in obj.liked.all():
-            return 'true'
+            return True
         else:
-            return 'false'
+            return False
 
     def get_postIsMine(self, obj):
         request = self.context.get("request")
         profile = request.user.profile
         if obj.creator == profile:
-            return 'true'
+            return True
         else:
-            return 'false'
+            return False
+
+    def get_bookmarked(self, obj):
+        request = self.context.get("request")
+        profile = request.user.profile
+        if Bookmark.objects.filter(owner=profile, post=obj).exists():
+            return True
+        else:
+            return False
 
     # got rid of created cause its unneccesary cause the objs are already order by date created.
     # got rid of liked cause its can get to be very long, instead lets create a system were only the post creator can know who liked it
@@ -51,7 +60,8 @@ class PostSerializer(serializers.ModelSerializer):
             'number_of_comments',
             'extension',
             'liked',
-            'postIsMine'
+            'postIsMine',
+            'bookmarked'
         ]
 
 class CommentsSerializer(serializers.ModelSerializer):
@@ -93,4 +103,17 @@ class RepliesSerializer(serializers.ModelSerializer):
             'creator',
             'creatorAvatar',
             'number_of_likes'
+        ]
+
+class BookmarkSerializer(serializers.ModelSerializer):
+    post = serializers.SerializerMethodField()
+
+    def get_post(self, obj):
+        serializer_context = {'request': self.context.get('request') }
+        return PostSerializer(obj.post, context=serializer_context).data
+
+    class Meta:
+        model = Bookmark
+        fields = [
+            'post'
         ]

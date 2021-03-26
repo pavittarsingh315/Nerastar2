@@ -7,8 +7,7 @@ from PIL import Image
 
 
 class Post(models.Model):
-    creator = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, related_name='posts')
+    creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     content = models.CharField(max_length=150)
     media = models.FileField(upload_to='posts', blank=True)
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
@@ -111,3 +110,17 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user} -- {self.post} -- {self.value}"
+
+
+class Bookmark(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.owner.slug}'s Bookmark #{self.pk}"
+
+    class Meta:
+        verbose_name = 'Bookmark'
+        verbose_name_plural = 'Bookmarks'
+        ordering = ('-created',)

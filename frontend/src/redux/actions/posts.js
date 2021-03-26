@@ -170,3 +170,13 @@ export const addComment = (comment, slug) => async (dispatch, getState) => {
             })
         })
 }
+
+
+export const handleBookmark = (slug) => async (dispatch, getState) => {
+    // have to send an empty thing cause it throws unauthorized error if we don't.
+    // I guess since its a post request it expects something so just send an empty placeholder
+    var body;
+    await axios.post(`http://localhost:8000/api/posts/handlebookmarks/${slug}/`, body, tokenConfig(getState))
+        .then(res => {})
+        .catch(err => console.log(err.response))
+}

@@ -39,13 +39,13 @@ function HomePage({ getPosts, posts, isLoading, hasMore, error }) {
                             username={post.creator}
                             userAvatar={post.creatorAvatar}
                             userSlug={post.creatorSlug}
-                            numPlays={69}
                             numLikes={post.number_of_likes}
                             numComments={post.number_of_comments}
                             caption={post.content}
                             media={post.media}
-                            liked = {post.liked === 'true' ? true : false}
-                            postIsMine = {post.postIsMine === 'false' ? true : false}
+                            liked = {post.liked}
+                            postIsMine = {!post.postIsMine}
+                            bookmarked={post.bookmarked}
                             video={post.extension === 'video' ? true : false}
                         />
                         <Divider className='homepage__divider' />

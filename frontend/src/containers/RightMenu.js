@@ -24,6 +24,9 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
     const [openFollowers, setOpenFollowers] = useState(false);
 
     const handleOpenFollowers = (username) => {
+        if (displayProfile.private && (!displayProfile.areFollowing || displayProfile.areFollowing === 'requested')) {
+            return
+        }
         setOpenFollowers(!openFollowers);
         if(!openFollowers) {
             // this stops requests being sent everytime modal is openned for current user
@@ -36,6 +39,9 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
     const [openFollowing, setOpenFollowing] = useState(false);
 
     const handleOpenFollowing = (username) => {
+        if (displayProfile.private && (!displayProfile.areFollowing || displayProfile.areFollowing === 'requested')) {
+            return
+        }
         setOpenFollowing(!openFollowing);
         if(!openFollowing) {
             // this stops requests being sent everytime modal is openned for current user
@@ -91,7 +97,7 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                             </div>
                         ) : (
                             <Button className="rightmenu__followBtn" size="small" onClick={e => handleFollowRequest(e)}>
-                                {displayProfile.areFollowing === "true" ? 'Unfollow' : displayProfile.areFollowing === "requested" ? "Cancel Request" : "Follow"}
+                                {displayProfile.areFollowing === "requested" ? "Cancel Request" : displayProfile.areFollowing ? 'Unfollow' : "Follow"}
                             </Button>
                         )}
                         
@@ -142,7 +148,7 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                                 </Link>
                                 {follower.username !== userProfile.user ? (
                                     <Button size='small' className="followBtn" onClick={e => handleFollowRequest(e, follower.username)}>
-                                        {follower.following === "true" ? 'Unfollow' : follower.following === "requested" ? "Cancel Request" : "Follow"}
+                                        {follower.following === "requested" ? "Cancel Request" : follower.following ? 'Unfollow' :  "Follow"}
                                     </Button>
                                 ) : null}
                             </div>
@@ -174,7 +180,7 @@ function RightMenu({ userProfile, displayProfile, followers, following, getFollo
                                 </Link>
                                 {following.username !== userProfile.user ? (
                                     <Button size='small' className="followBtn" onClick={e => handleFollowRequest(e, following.username)}>
-                                        {following.following === "true" ? 'Unfollow' : following.following === "requested" ? "Cancel Request" : "Follow"}
+                                        {following.following ? 'Unfollow' : following.following === "requested" ? "Cancel Request" : "Follow"}
                                     </Button>
                                 ) : null}
                             </div>

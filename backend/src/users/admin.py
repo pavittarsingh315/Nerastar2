@@ -30,7 +30,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
     filter_horizontal = ()
     fieldsets = (
-        ('Account Information', {'fields': ('user', 'full_name', 'slug', 'created', 'following', 'followers')}),
+        ('Account Information', {'fields': ('user', 'full_name', 'slug', 'private', 'created', 'following', 'followers')}),
         ('Customization', {'fields': ('bio', 'avatar')}),
     )
 

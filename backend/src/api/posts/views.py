@@ -4,9 +4,9 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Project imports
-from posts.models import Post, Like, Comment, Replies
+from posts.models import Post, Like, Comment, Replies, Bookmark
 from users.models import Profile, Notifications
-from .serializers import PostSerializer, CommentsSerializer, RepliesSerializer
+from .serializers import PostSerializer, CommentsSerializer, RepliesSerializer, BookmarkSerializer
 from ..permissions import OnlyPostOwnerCanEdit, OnlyProfileOwnerCanCreatePost
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -34,6 +34,15 @@ class Posts(generics.ListAPIView):
         # look up pk__in to see what creator__in does. stackoverflow can explain it better
         posts = Post.objects.filter(creator__in=user_feed_post_id)
         return posts
+
+
+class ListBookmarks(generics.ListAPIView):
+    serializer_class = BookmarkSerializer
+    pagination_class = PostPagination
+    
+    def get_queryset(self):
+        profile = self.request.user.profile
+        return Bookmark.objects.filter(owner=profile)
 
 
 class CreateListProfilePosts(generics.ListCreateAPIView, OnlyProfileOwnerCanCreatePost):
@@ -169,4 +178,24 @@ def CreateCommentOrReply(request, slug):
                     notification = Notifications(post=post, sender=profile, receiver=receiver, notificationType='Comment', message=message)
                     notification.save()
 
+        return Response(msg, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def HandleBookmarks(request, slug):
+    profile = request.user.profile
+    try:
+        post = Post.objects.get(slug=slug)
+    except Post.DoesNotExist:
+        return Response({"error": "Post Does Not Exist!"}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'POST':
+        if Bookmark.objects.filter(owner=profile, post=post).exists():
+            Bookmark.objects.get(owner=profile, post=post).delete()
+            msg = 'Bookmark Removed'
+        else:
+            bookmark = Bookmark(post=post, owner=profile)
+            bookmark.save()
+            msg = 'Bookmark Added'
+        
         return Response(msg, status=status.HTTP_200_OK)

@@ -18,11 +18,11 @@ function Home(props) {
                 avatar={props.userAvatar}
                 username={props.username}
                 userSlug={props.userSlug}
-                numPlays={props.numPlays}
                 numLikes={props.numLikes}
                 numComments={props.numComments}
                 postSlug={props.postSlug}
                 liked = {props.liked}
+                bookmarked={props.bookmarked}
                 postIsMine = {props.postIsMine}
             />
             <Post 

@@ -76,6 +76,7 @@ class Profile(models.Model):
     avatar = models.ImageField(default='avatar.png', upload_to='avatars')
     following = models.ManyToManyField(SiteUser, blank=True, related_name='following')
     followers = models.ManyToManyField(SiteUser, blank=True, related_name='followers')
+    private = models.BooleanField(default=False)
     slug = models.SlugField(unique=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 

@@ -18,6 +18,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 
 const InputField = withStyles({
     root: {
@@ -40,6 +42,22 @@ const InputField = withStyles({
       }
     }
 })(TextField);
+const PrivateSwitch = withStyles({
+    switchBase: {
+        color: "var(--secondary-color)",
+        '&$checked': {
+            color: "var(--primary-color)",
+        },
+        '&$checked + $track': {
+            backgroundColor: "var(--primary-color)",
+        },
+    },
+    checked: {},
+    track: {
+        backgroundColor: 'var(--secondary-color)'
+    },
+})(Switch);
+
 
 function Settings() {
     const dispatch = useDispatch();
@@ -49,6 +67,7 @@ function Settings() {
         full_name: '',
         username: '',
         bio: '',
+        private: null,
         file: null,
         fileName: null
     })
@@ -60,6 +79,7 @@ function Settings() {
             full_name: profile.full_name,
             username: profile.user,
             bio: profile.bio,
+            private: profile.private,
             file: null,
             fileName: null
         })
@@ -102,6 +122,7 @@ function Settings() {
         newProfileData.append('full_name', form.full_name);
         newProfileData.append('slug', form.username);
         newProfileData.append('bio', form.bio);
+        newProfileData.append('private', form.private);
         if(form.file && form.fileName) {
             newProfileData.append('avatar', form.file, form.fileName)
         } 
@@ -176,6 +197,11 @@ function Settings() {
                             fullWidth
                             onChange={handleFormChange}
                             margin="normal"
+                        />
+
+                        <FormControlLabel
+                            control={<PrivateSwitch checked={form.private} onChange={e => setForm({ ...form, [e.target.name]: e.target.checked })} name="private" />}
+                            label="Private Profile"
                         />
                         
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>

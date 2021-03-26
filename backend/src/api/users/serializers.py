@@ -36,11 +36,11 @@ class ProfileFollowingFollowerSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         user = request.user
         if user in obj.profile.followers.all():
-            return 'true'
+            return True
         elif Friendship.objects.filter(sender=user.profile, receiver=obj.profile).exists():
             return 'requested'
         else:
-            return 'false'
+            return False
 
     class Meta:
         model = User
@@ -69,14 +69,16 @@ class ProfileSerializer(serializers.ModelSerializer):
         request = self.context.get("request")
         user = request.user
         if user in obj.followers.all():
-            return 'true'
+            return True
+        elif user.username == obj.slug:
+            return True
         elif not user.is_anonymous:
             if Friendship.objects.filter(sender=user.profile, receiver=obj).exists():
                 return 'requested'
             else:
-                return 'false'
+                return False
         else:
-            return 'false'
+            return False
 
     class Meta:
         model = Profile
@@ -87,6 +89,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             'bio',
             'avatar',
             'slug',
+            'private',
             'number_following',
             'number_followers',
             'unreadNotifications',
