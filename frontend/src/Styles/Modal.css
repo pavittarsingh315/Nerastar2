@@ -1,242 +1,242 @@
 /* General Modal Stlyes */
 
 .modalTitle {
-  margin: 0;
-  padding: 16px;
+   margin: 0;
+   padding: 16px;
 }
 
 .modalCloseBtn {
-  color: var(--primary-color);
-  position: absolute !important;
-  right: 15px !important;
-  top: 8px !important;
+   color: var(--primary-color);
+   position: absolute !important;
+   right: 15px !important;
+   top: 8px !important;
 }
 
 .modalAction {
-  margin: 17px;
-  padding: 8px;
+   margin: 17px;
+   padding: 8px;
 }
 
 .modalLoading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 100px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   padding: 100px;
 }
 
 /* hide the scroll bar for Chrome, Safari, & Opera */
 .generalModal::-webkit-scrollbar {
-  display: none;
+   display: none;
 }
 
 /* hide the scroll bar for IE, Edge, & Firefox. You can add this into the other .feed but for clarity its here */
 .generalModal {
-  -ms-overflow-style: none;
-  /* IE and Edge */
-  scrollbar-width: none;
-  /* Firefox */
+   -ms-overflow-style: none;
+   /* IE and Edge */
+   scrollbar-width: none;
+   /* Firefox */
 }
 
 .generalModal {
-  padding: 16px;
+   padding: 16px;
 }
 
 /* Comments Styles */
 
 .comments__option {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
 }
 
 .comments__option > .MuiSvgIcon-root {
-  padding: 20px;
-  color: var(--primary-color);
+   padding: 20px;
+   color: var(--primary-color);
 }
 
 .comments__option > h2 {
-  font-size: 20px;
-  margin-right: 20px;
+   font-size: 20px;
+   margin-right: 20px;
 }
 
 .comments__option:hover {
-  background-color: var(--third-color);
-  border-radius: 30px;
-  transition: color 100ms ease-out;
+   background-color: var(--third-color);
+   border-radius: 30px;
+   transition: color 100ms ease-out;
 }
 
 .comment {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 10px 20px;
+   display: flex;
+   justify-content: space-between;
+   align-items: flex-start;
+   padding: 10px 20px;
 }
 
 .comment__body {
-  display: flex;
-  align-items: center;
+   display: flex;
+   align-items: center;
 }
 
 .comment__bodyLeft {
-  padding-right: 15px;
+   padding-right: 15px;
 }
 
 .comment__bodyRight > h3 {
-  font-size: 20px;
+   font-size: 20px;
 }
 
 .comment__bodyRight > h5 {
-  font-size: 14px;
+   font-size: 14px;
 }
 
 .comment__right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 
 .comment__like {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 10px 0;
-  cursor: pointer;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 0 10px 0;
+   cursor: pointer;
 }
 
 .comment__replyBtn {
-  display: flex;
-  align-items: center;
-  font-size: 13px;
-  cursor: pointer;
-  margin-top: 17px;
-  justify-content: flex-end;
+   display: flex;
+   align-items: center;
+   font-size: 13px;
+   cursor: pointer;
+   margin-top: 17px;
+   justify-content: flex-end;
 }
 
 .comment__input {
-  flex: 1;
-  border: 1px solid var(--third-color);
-  padding: 10px;
-  border-radius: 30px;
+   flex: 1;
+   border: 1px solid var(--third-color);
+   padding: 10px;
+   border-radius: 30px;
 }
 
 .comment__input:focus {
-  border: 1px solid var(--secondary-color);
-  background-color: #f6f7fb !important;
-  outline: none;
+   border: 1px solid var(--secondary-color);
+   background-color: #f6f7fb !important;
+   outline: none;
 }
 
 .reply__cancelBtn {
-  font-size: 11px;
-  cursor: pointer;
-  padding-right: 10px;
+   font-size: 11px;
+   cursor: pointer;
+   padding-right: 10px;
 }
 
 /* Post Modal */
 
 .postCreateMedia {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: flex-start;
+   display: flex;
+   justify-content: space-evenly;
+   align-items: flex-start;
 }
 
 .postModalIcons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 15px;
-  font-weight: 600;
-  padding: 10px;
-  color: var(--primary-color);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   font-size: 15px;
+   font-weight: 600;
+   padding: 10px;
+   color: var(--primary-color);
 }
 
 .postModalIcons:hover {
-  background-color: var(--third-color);
-  transition: color 100ms ease-out;
-  border-radius: 15px;
+   background-color: var(--third-color);
+   transition: color 100ms ease-out;
+   border-radius: 15px;
 }
 
 .postModalSubmitBtn {
-  margin-top: 24px !important;
-  background-color: var(--primary-color) !important;
-  color: white !important;
-  text-transform: capitalize !important;
+   margin-top: 24px !important;
+   background-color: var(--primary-color) !important;
+   color: white !important;
+   text-transform: capitalize !important;
 }
 
 .postMediaName {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+   display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 /* Notifications */
 
 .notifications {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
 }
 
 .notification__body {
-  display: flex;
-  align-items: center;
+   display: flex;
+   align-items: center;
 }
 
 .notification__bodyLeft {
-  padding-right: 15px;
+   padding-right: 15px;
 }
 
 .notification__bodyRight > h3 {
-  font-size: 20px;
-  color: rgba(0, 0, 0, 0.87);
+   font-size: 20px;
+   color: rgba(0, 0, 0, 0.87);
 }
 
 .notification__bodyRight > h5 {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.87);
+   font-size: 14px;
+   color: rgba(0, 0, 0, 0.87);
 }
 
 .notification__followBtns {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 
 .notification__followOption {
-  margin-top: 5px !important;
-  background-color: var(--primary-color) !important;
-  color: white !important;
-  font-weight: 500 !important;
-  text-transform: capitalize !important;
+   margin-top: 5px !important;
+   background-color: var(--primary-color) !important;
+   color: white !important;
+   font-weight: 500 !important;
+   text-transform: capitalize !important;
 }
 
 /* Followers */
 
 .followers {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
 }
 
 .followBtn {
-  margin-top: 24px !important;
-  margin-bottom: 16px !important;
-  background-color: var(--primary-color) !important;
-  color: white !important;
-  font-weight: 500 !important;
-  text-transform: capitalize !important;
+   margin-top: 24px !important;
+   margin-bottom: 16px !important;
+   background-color: var(--primary-color) !important;
+   color: white !important;
+   font-weight: 500 !important;
+   text-transform: capitalize !important;
 }
 
 .followers__left {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
 }
 
 .followers__leftText {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  color: rgba(0, 0, 0, 0.87);
-  padding: 0 15px;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-start;
+   justify-content: space-between;
+   color: rgba(0, 0, 0, 0.87);
+   padding: 0 15px;
 }

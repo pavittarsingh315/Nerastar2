@@ -1,85 +1,89 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
 
 * {
-  margin: 0;
+   margin: 0;
 }
 
 /* width */
 ::-webkit-scrollbar {
-  width: 11px;
+   width: 11px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #e8e8e8;
+   background: #e8e8e8;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--secondary-color);
-  border-radius: 100px;
+   background: var(--secondary-color);
+   border-radius: 100px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--secondary-color);
+   background: var(--secondary-color);
 }
 
 body {
-  margin: 0;
-  font-family: "Quicksand", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+   margin: 0;
+   font-family: "Quicksand", sans-serif;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
 
-  /* color combo variables */
-  --primary-color: #0070f3;
-  --secondary-color: #bfbfbf;
-  --third-color: #e8e8e8;
+   /* color combo variables */
+   --primary-color: #0070f3;
+   --secondary-color: #bfbfbf;
+   --third-color: #e8e8e8;
+}
+
+a {
+   text-decoration: none;
 }
 
 .alertsUnAuth {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: transparent;
-  z-index: 100000;
+   position: fixed;
+   top: 0;
+   left: 50%;
+   transform: translateX(-50%);
+   background-color: transparent;
+   z-index: 100000;
 }
 
 .alertsAuth {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  right: 50%;
-  width: 350px;
-  transform: translateX(-50%);
-  margin-bottom: 100px;
-  background-color: transparent;
-  z-index: 100000;
+   position: fixed;
+   top: 0;
+   left: 50%;
+   right: 50%;
+   width: 350px;
+   transform: translateX(-50%);
+   margin-bottom: 100px;
+   background-color: transparent;
+   z-index: 100000;
 }
 
 .error {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  top: 0;
-  left: 50%;
-  right: 50%;
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-items: center;
+   top: 0;
+   left: 50%;
+   right: 50%;
 }
 
 .error__link {
-  display: flex;
-  flex-direction: row;
-  font-size: 20px;
-  text-decoration: none;
-  color: white;
+   display: flex;
+   flex-direction: row;
+   font-size: 20px;
+   text-decoration: none;
+   color: white;
 }
 
 .error__homeBtn {
-  background-color: var(--primary-color) !important;
+   background-color: var(--primary-color) !important;
 }
 
 .error_h1 {
-  font-size: 50px;
+   font-size: 50px;
 }

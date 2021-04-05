@@ -34,9 +34,16 @@ export const deleteNotification = (id) => async (dispatch, getState) => {
         .catch(err => console.log(err.response.data, err.response.status))
 }
 
-export const createSuccessAlert = msg => dispatch => {
-    const message = {
-        "success": msg
+export const createAlert = (typeOfAlert, msg) => dispatch => {
+    var message
+    if (typeOfAlert === 'success') {
+        message = {
+            "success": msg
+        }
+    } else if (typeOfAlert === 'error') {
+        message = {
+            "error": msg
+        }
     }
     const alerts = {
         msg: message,

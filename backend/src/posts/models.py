@@ -10,6 +10,7 @@ class Post(models.Model):
     creator = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
     content = models.CharField(max_length=150)
     media = models.FileField(upload_to='posts', blank=True)
+    media_url = models.CharField(max_length=200, blank=True)
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
     slug = models.SlugField(unique=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

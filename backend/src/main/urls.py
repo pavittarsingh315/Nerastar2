@@ -25,6 +25,7 @@ urlpatterns += [
     path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain')),
     path('manifest.json', TemplateView.as_view(template_name='manifest.json', content_type='text/plain')),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('images/favicon.ico'))),
+    path('logo.png', RedirectView.as_view(url=staticfiles_storage.url('images/logo.png'))),
     path('logo192.png', RedirectView.as_view(url=staticfiles_storage.url('images/logo192.png'))),
     path('logo512.png', RedirectView.as_view(url=staticfiles_storage.url('images/logo512.png')))
 ]

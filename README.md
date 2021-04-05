@@ -180,3 +180,9 @@
 1. Added bookmarked field to post serializer to check if we bookmarked a post. Created a bookmark model, serializer, view to list, create, and delete bookmarks, and urls for it. Created action to add or remove bookmark
 2. Added a private field to profile model to see if profile is private. Added a field in settings to update it. Also created checks to not display private profiles' posts or followers
 3. Brought left widget options into left widget container.
+
+## 32th commit
+
+1. Created a media url in post model. Created a popper to get trending gifs. Refined alerts function
+
+# Will Now start work on migrating this app into next js

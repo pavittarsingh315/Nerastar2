@@ -61,10 +61,7 @@ function Navbar({ logout, numNotifications, getNotifications, notifications, isL
     return (
         <div className='navbar'>
             <div className='navbar__left'>
-                <div style={{ maxHeight: '45px', maxWidth: '45px', margin: '0 auto' }}>
-                    <img alt='' style={{ maxHeight: '40px', maxWidth: '40px', borderRadius: '5px' }} src='http://localhost:8000/media/avatars/laferrai.jpg' />
-                </div>
-                <h3>Nerastar</h3>
+                <img alt='' src='/logo.png' />
             </div>
             <div className='navbar__center'>
                 <Searchbar />

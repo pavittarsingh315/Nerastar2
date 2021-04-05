@@ -55,6 +55,7 @@ class PostSerializer(serializers.ModelSerializer):
             'creatorSlug',
             'content',
             'media',
+            'media_url',
             'slug',
             'number_of_likes',
             'number_of_comments',

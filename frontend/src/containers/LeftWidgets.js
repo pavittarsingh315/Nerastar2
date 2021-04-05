@@ -6,7 +6,7 @@ import Comments from './Comments';
 // Redux
 import { useDispatch } from 'react-redux';
 import { likeUnlikePost, handleBookmark } from '../redux/actions/posts';
-import { createSuccessAlert } from '../redux/actions/alerts';
+import { createAlert } from '../redux/actions/alerts';
 
 // Material Ui
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
@@ -49,7 +49,7 @@ function LeftWidgets({avatar, username, userSlug, numLikes, numComments, postSlu
 
     const handleShareClick = () => {
         navigator.clipboard.writeText('http://localhost:3000/posts/' + postSlug);
-        dispatch(createSuccessAlert("Link Copied!"))
+        dispatch(createAlert("success", "Link Copied!"))
     }
     
     return (
